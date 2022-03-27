@@ -15,7 +15,6 @@ final class NoteSettings {
         case description = "Description"
     }
     
-    
     static var title: String! {
         
         get {
@@ -27,7 +26,6 @@ final class NoteSettings {
             }
         }
     }
-    
     
     static var description: String! {
         
