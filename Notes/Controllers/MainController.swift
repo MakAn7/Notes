@@ -16,13 +16,19 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
+        setNavigationBar()
         mainView.noteTextView.becomeFirstResponder()
-        addTarget()
         getNote()
     }
     
-    private func addTarget() {
-        mainView.completedButton.addTarget(self, action: #selector(saveNote), for: .touchUpInside)
+
+    private func setNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово",
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(saveNote))
+        
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font : UIFont(name: "Helvetica-bold", size: 20) ?? ""], for: .normal)
     }
     
     private func getNote() {

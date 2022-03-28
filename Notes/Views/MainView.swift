@@ -11,8 +11,7 @@ class MainView: UIView {
     
     let titleTextField = UITextField(placeholder: "Заголовок заметки")
     let noteTextView = UITextView()
-    let completedButton = UIButton()
-    
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -35,14 +34,7 @@ class MainView: UIView {
         noteTextView.layer.borderColor = UIColor.gray.cgColor
         noteTextView.layer.borderWidth = 2
         noteTextView.backgroundColor = .lightGray.withAlphaComponent(0.2)
-        
-        completedButton.setTitle("Готово", for: .normal)
-        completedButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        completedButton.setTitleColor(.systemBlue, for: .normal)
-        completedButton.layer.cornerRadius = 8
-        completedButton.layer.borderWidth = 1
-        completedButton.layer.borderColor = UIColor.systemBlue.cgColor
-        
+
     }
     
     private func setConstraints() {
@@ -52,25 +44,16 @@ class MainView: UIView {
         stackTF.spacing = 20
         
         stackTF.translatesAutoresizingMaskIntoConstraints = false
-        completedButton.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(stackTF)
-        addSubview(completedButton)
-        
+       
         titleTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         NSLayoutConstraint.activate([
-            stackTF.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,constant: 60),
+            stackTF.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,constant: 10),
             stackTF.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10),
             stackTF.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackTF.bottomAnchor.constraint(equalTo:safeAreaLayoutGuide.bottomAnchor, constant: -10)
-        ])
-        
-        NSLayoutConstraint.activate([
-            completedButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
-            completedButton.rightAnchor.constraint(equalTo:safeAreaLayoutGuide.rightAnchor, constant: -10),
-            completedButton.widthAnchor.constraint(equalToConstant: 80),
-            
         ])
         
     }
