@@ -14,7 +14,6 @@ final class NoteSettings {
         case title = "Title"
         case description = "Description"
     }
-    
     static var title: String! {
         
         get {

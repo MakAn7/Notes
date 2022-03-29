@@ -17,11 +17,11 @@ class MainView: UIView {
         backgroundColor = .white
         setViews()
         setConstraints()
-        
+
     }
     
     private func setViews() {
-        
+
         titleTextField.font = .boldSystemFont(ofSize: 22)
         titleTextField.textAlignment = .center
         titleTextField.layer.cornerRadius = 8
@@ -36,28 +36,28 @@ class MainView: UIView {
         noteTextView.backgroundColor = .lightGray.withAlphaComponent(0.2)
 
     }
-    
+
     private func setConstraints() {
-        
-        let stackTF = UIStackView(arrangedSubviews: [titleTextField,noteTextView])
+
+        let stackTF = UIStackView(arrangedSubviews: [titleTextField, noteTextView])
         stackTF.axis = .vertical
         stackTF.spacing = 20
-        
+
         stackTF.translatesAutoresizingMaskIntoConstraints = false
-        
+
         addSubview(stackTF)
-       
+
         titleTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
+
         NSLayoutConstraint.activate([
-            stackTF.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,constant: 10),
+            stackTF.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             stackTF.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10),
             stackTF.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackTF.bottomAnchor.constraint(equalTo:safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            stackTF.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
-        
+
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

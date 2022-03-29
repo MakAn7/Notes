@@ -7,14 +7,13 @@
 
 import UIKit
 
-
 extension UITextField {
     
-    convenience init(placeholder:String,isShadow: Bool = true) {
+    convenience init(placeholder: String, isShadow: Bool = true) {
         
         self.init(frame: CGRect())
         self.placeholder = placeholder
-   
+
         if isShadow {
             layer.shadowColor = UIColor.black.cgColor
             layer.shadowRadius = 5
@@ -22,5 +21,4 @@ extension UITextField {
             layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         }
     }
-    
 }
