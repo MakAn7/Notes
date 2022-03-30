@@ -15,7 +15,7 @@
 		E26D4D0727EDC44F008233F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26D4D0527EDC44F008233F8 /* LaunchScreen.storyboard */; };
 		E26D4D1027EDC7AB008233F8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D0F27EDC7AB008233F8 /* MainView.swift */; };
 		E26D4D1927EE1C20008233F8 /* NoteSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D1827EE1C20008233F8 /* NoteSettings.swift */; };
-		E2A3071B27EF2F3A00BEEACB /* TextField + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3071A27EF2F3A00BEEACB /* TextField + Extension.swift */; };
+		E2A3071B27EF2F3A00BEEACB /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3071A27EF2F3A00BEEACB /* TextFieldExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 		E26D4D0827EDC44F008233F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E26D4D0F27EDC7AB008233F8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E26D4D1827EE1C20008233F8 /* NoteSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettings.swift; sourceTree = "<group>"; };
-		E2A3071A27EF2F3A00BEEACB /* TextField + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField + Extension.swift"; sourceTree = "<group>"; };
+		E2A3071A27EF2F3A00BEEACB /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +140,7 @@
 		E2A3071C27EF349C00BEEACB /* Extensions + Elements */ = {
 			isa = PBXGroup;
 			children = (
-				E2A3071A27EF2F3A00BEEACB /* TextField + Extension.swift */,
+				E2A3071A27EF2F3A00BEEACB /* TextFieldExtension.swift */,
 			);
 			path = "Extensions + Elements";
 			sourceTree = "<group>";
@@ -272,7 +272,7 @@
 				E26D4D1027EDC7AB008233F8 /* MainView.swift in Sources */,
 				E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */,
 				E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */,
-				E2A3071B27EF2F3A00BEEACB /* TextField + Extension.swift in Sources */,
+				E2A3071B27EF2F3A00BEEACB /* TextFieldExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

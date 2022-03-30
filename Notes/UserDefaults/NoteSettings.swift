@@ -8,14 +8,11 @@
 import UIKit
 
 final class NoteSettings {
-    
     private enum DefaultsKeys: String {
-        
         case title = "Title"
         case description = "Description"
     }
     static var title: String! {
-        
         get {
             return UserDefaults.standard.string(forKey: DefaultsKeys.title.rawValue)
         } set {
@@ -25,9 +22,8 @@ final class NoteSettings {
             }
         }
     }
-    
+
     static var description: String! {
-        
         get {
             return UserDefaults.standard.string(forKey: DefaultsKeys.description.rawValue)
         } set {

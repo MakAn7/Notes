@@ -8,9 +8,8 @@
 import UIKit
 
 class MainController: UIViewController {
-    
     private let defaults = UserDefaults.standard
-    
+
     let mainView = MainView()
 
     override func viewDidLoad() {
@@ -22,16 +21,17 @@ class MainController: UIViewController {
     }
 
     private func setNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово",
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(saveNote))
-        
-   navigationItem.rightBarButtonItem?.setTitleTextAttributes([
-    .font: UIFont(name: "Helvetica-bold", size: 20) ?? ""],
-                                                             for: .normal)
-    }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Готово",
+            style: .plain,
+            target: self,
+            action: #selector(saveNote)
+        )
 
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes(
+            [.font: UIFont(name: "Helvetica-bold", size: 20) ?? ""], for: .normal
+        )
+    }
     private func getNote() {
         mainView.titleTextField.text = NoteSettings.title
         mainView.noteTextView.text = NoteSettings.description
@@ -39,13 +39,10 @@ class MainController: UIViewController {
 
     @objc
     private func saveNote() {
-
         guard let titleText = mainView.titleTextField.text else { return }
         NoteSettings.title = titleText
-
         guard let descriptionText = mainView.noteTextView.text else { return }
         NoteSettings.description = descriptionText
-
         mainView.endEditing(true)
     }
 }

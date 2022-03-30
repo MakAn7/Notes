@@ -8,37 +8,32 @@
 import UIKit
 
 class MainView: UIView {
-    
     let titleTextField = UITextField(placeholder: "Заголовок заметки")
     let noteTextView = UITextView()
-   
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         setViews()
         setConstraints()
-
     }
-    
-    private func setViews() {
 
+    private func setViews() {
         titleTextField.font = .boldSystemFont(ofSize: 22)
         titleTextField.textAlignment = .center
         titleTextField.layer.cornerRadius = 8
         titleTextField.layer.borderWidth = 2
         titleTextField.layer.borderColor = UIColor.gray.cgColor
         titleTextField.backgroundColor = .lightGray.withAlphaComponent(0.1)
-        
+
         noteTextView.font = .systemFont(ofSize: 14, weight: .regular)
         noteTextView.layer.cornerRadius = 8
         noteTextView.layer.borderColor = UIColor.gray.cgColor
         noteTextView.layer.borderWidth = 2
         noteTextView.backgroundColor = .lightGray.withAlphaComponent(0.2)
-
     }
 
     private func setConstraints() {
-
         let stackTF = UIStackView(arrangedSubviews: [titleTextField, noteTextView])
         stackTF.axis = .vertical
         stackTF.spacing = 20
@@ -55,7 +50,6 @@ class MainView: UIView {
             stackTF.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackTF.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
-
     }
 
     required init?(coder: NSCoder) {

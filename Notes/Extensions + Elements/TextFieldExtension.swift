@@ -1,5 +1,5 @@
 //
-//  TextField + Extension.swift
+// TextFieldExtension.swift
 //  Notes
 //
 //  Created by Антон Макаров on 26.03.2022.
@@ -8,9 +8,7 @@
 import UIKit
 
 extension UITextField {
-    
     convenience init(placeholder: String, isShadow: Bool = true) {
-        
         self.init(frame: CGRect())
         self.placeholder = placeholder
 
