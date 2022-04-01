@@ -39,9 +39,11 @@ class MainController: UIViewController {
 
     @objc
     private func saveNote() {
-        guard let titleText = mainView.titleTextField.text else { return }
+        
+        let titleText = mainView.titleTextField.text ?? ""
         NoteSettings.title = titleText
-        guard let descriptionText = mainView.noteTextView.text else { return }
+        
+        let descriptionText = mainView.noteTextView.text ?? ""
         NoteSettings.description = descriptionText
         mainView.endEditing(true)
     }
