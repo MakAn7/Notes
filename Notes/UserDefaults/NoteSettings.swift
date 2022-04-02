@@ -8,9 +8,10 @@
 import UIKit
 
 final class NoteSettings {
-    private enum DefaultsKeys: String {
+     enum DefaultsKeys: String {
         case title = "Title"
         case description = "Description"
+        case date = "Date"
     }
     static var title: String! {
         get {
@@ -30,6 +31,20 @@ final class NoteSettings {
             let defaults = UserDefaults.standard
             if let descriptionText = newValue {
                 defaults.setValue(descriptionText, forKey: DefaultsKeys.description.rawValue)
+            }
+        }
+    }
+
+    static var date: Date! {
+        get {
+            guard let date = UserDefaults.standard.object(forKey: DefaultsKeys.date.rawValue) as? Date else {
+            fatalError("nil when pull date from UserDefualts")
+            }
+            return  date
+        } set {
+            let defaults = UserDefaults.standard
+            if let date = newValue {
+                defaults.setValue(date, forKey: DefaultsKeys.date.rawValue)
             }
         }
     }

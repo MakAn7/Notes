@@ -10,6 +10,8 @@ import UIKit
 class MainView: UIView {
     let titleTextField = UITextField(placeholder: "Заголовок заметки")
     let noteTextView = UITextView()
+    let dateTextField = UITextField()
+    let datePicker = UIDatePicker()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,6 +21,12 @@ class MainView: UIView {
     }
 
     private func setViews() {
+        dateTextField.inputView = datePicker
+        dateTextField.font = .boldSystemFont(ofSize: 22)
+        dateTextField.textAlignment = .center
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.datePickerMode = .date
+
         titleTextField.font = .boldSystemFont(ofSize: 22)
         titleTextField.textAlignment = .center
         titleTextField.layer.cornerRadius = 8
@@ -34,14 +42,12 @@ class MainView: UIView {
     }
 
     private func setConstraints() {
-        let stackTF = UIStackView(arrangedSubviews: [titleTextField, noteTextView])
+        let stackTF = UIStackView(arrangedSubviews: [titleTextField, dateTextField, noteTextView])
         stackTF.axis = .vertical
-        stackTF.spacing = 20
+        stackTF.spacing = 10
 
         stackTF.translatesAutoresizingMaskIntoConstraints = false
-
         addSubview(stackTF)
-
         titleTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         NSLayoutConstraint.activate([

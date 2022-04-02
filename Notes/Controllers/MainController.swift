@@ -15,9 +15,10 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
+        setCurrentDate()
         setNavigationBar()
         mainView.noteTextView.becomeFirstResponder()
-        getNote()
+        getDateFromPicker()
     }
 
     private func setNavigationBar() {
@@ -25,26 +26,49 @@ class MainController: UIViewController {
             title: "Готово",
             style: .plain,
             target: self,
-            action: #selector(saveNote)
+            action: #selector(pushNote)
         )
-
         navigationItem.rightBarButtonItem?.setTitleTextAttributes(
             [.font: UIFont(name: "Helvetica-bold", size: 20) ?? ""], for: .normal
         )
     }
-    private func getNote() {
-        mainView.titleTextField.text = NoteSettings.title
-        mainView.noteTextView.text = NoteSettings.description
+
+    func setCurrentDate() {
+        if defaults.value(forKey: NoteSettings.DefaultsKeys.date.rawValue) == nil {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        let day = dateFormatter.string(from: date)
+        mainView.dateTextField.text = day
+        } else {
+            getNote()
+        }
     }
 
     @objc
-    private func saveNote() {
-        
-        let titleText = mainView.titleTextField.text ?? ""
-        NoteSettings.title = titleText
-        
-        let descriptionText = mainView.noteTextView.text ?? ""
-        NoteSettings.description = descriptionText
+    private func pushNote() {
+        checkNote()
         mainView.endEditing(true)
+    }
+
+    private func getDateFromPicker() {
+        mainView.datePicker.addTarget(self, action: #selector(dateChange), for: .valueChanged)
+    }
+
+    @objc
+    private func dateChange() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM yyyy"
+        mainView.dateTextField.text = formatter.string(from: mainView.datePicker.date)
+    }
+
+    private func getNote() {
+        mainView.titleTextField.text = NoteSettings.title
+        mainView.noteTextView.text = NoteSettings.description
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        let stringDate = dateFormatter.string(from: NoteSettings.date )
+        mainView.dateTextField.text = stringDate
     }
 }
