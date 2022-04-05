@@ -39,7 +39,7 @@ class MainController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM yyyy"
         let day = dateFormatter.string(from: date)
-        mainView.dateTextField.text = day
+        mainView.dateTextField.text = "Дата: \(day)"
         } else {
             getNote()
         }
@@ -59,7 +59,8 @@ class MainController: UIViewController {
     private func dateChange() {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM yyyy"
-        mainView.dateTextField.text = formatter.string(from: mainView.datePicker.date)
+        let currentDate = formatter.string(from: mainView.datePicker.date)
+        mainView.dateTextField.text = "Дата: \(currentDate)"
     }
 
     private func getNote() {
@@ -69,6 +70,6 @@ class MainController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM yyyy"
         let stringDate = dateFormatter.string(from: NoteSettings.date )
-        mainView.dateTextField.text = stringDate
+        mainView.dateTextField.text = "Дата: \(stringDate)"
     }
 }
