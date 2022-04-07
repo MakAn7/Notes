@@ -35,12 +35,12 @@ final class NoteSettings {
         }
     }
 
-    static var date: Date! {
+    static var date: String! {
         get {
-            guard let date = UserDefaults.standard.object(forKey: DefaultsKeys.date.rawValue) as? Date else {
-            fatalError("nil when pull date from UserDefualts")
+            if let date = UserDefaults.standard.object(forKey: DefaultsKeys.date.rawValue) as? String {
+            return date
             }
-            return  date
+            return  ""
         } set {
             let defaults = UserDefaults.standard
             if let date = newValue {

@@ -24,6 +24,12 @@ class MainView: UIView {
         dateTextField.inputView = datePicker
         dateTextField.font = .boldSystemFont(ofSize: 22)
         dateTextField.textAlignment = .center
+        dateTextField.clearButtonMode = .whileEditing
+        dateTextField.attributedPlaceholder = NSAttributedString(
+            string: "Введите дату...",
+            attributes: [.font: UIFont(name: "Avenir-medium", size: 16) ?? "" ]
+        )
+
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
 

@@ -1,5 +1,5 @@
 //
-//  CheckNote.swift
+//  ExtensionsMainController.swift
 //  Notes
 //
 //  Created by Антон Макаров on 01.04.2022.
@@ -11,12 +11,12 @@ extension MainController {
     func checkNote() {
         let titleText = mainView.titleTextField.text ?? ""
         let descriptionText = mainView.noteTextView.text ?? ""
-        let date = mainView.datePicker.date
+        let dateString = mainView.dateTextField.text ?? ""
 
         let note = Note(
             title: titleText,
             description: descriptionText,
-            date: date
+            date: dateString
         )
 
         if note.isEmpty {
@@ -24,7 +24,14 @@ extension MainController {
         } else {
             NoteSettings.title = titleText
             NoteSettings.description = descriptionText
-            NoteSettings.date = date
+            NoteSettings.date = dateString
         }
+    }
+
+    func alertShowError(message: String, title: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Хорошо", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }

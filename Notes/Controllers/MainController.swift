@@ -33,13 +33,13 @@ class MainController: UIViewController {
         )
     }
 
-    func setCurrentDate() {
-        if defaults.value(forKey: NoteSettings.DefaultsKeys.date.rawValue) == nil {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMMM yyyy"
-        let day = dateFormatter.string(from: date)
-        mainView.dateTextField.text = "Дата: \(day)"
+    private func setCurrentDate() {
+        if defaults.value(forKey: NoteSettings.DefaultsKeys.title.rawValue) == nil {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "d MMMM yyyy"
+            let day = dateFormatter.string(from: date)
+            mainView.dateTextField.text = "Дата: \(day)"
         } else {
             getNote()
         }
@@ -66,10 +66,6 @@ class MainController: UIViewController {
     private func getNote() {
         mainView.titleTextField.text = NoteSettings.title
         mainView.noteTextView.text = NoteSettings.description
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMMM yyyy"
-        let stringDate = dateFormatter.string(from: NoteSettings.date )
-        mainView.dateTextField.text = "Дата: \(stringDate)"
+        mainView.dateTextField.text = "\(NoteSettings.date ?? "" )"
     }
 }
