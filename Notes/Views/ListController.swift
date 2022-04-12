@@ -17,6 +17,7 @@ class ListController: UIViewController, UpdateListDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.backButtonDisplayMode = .minimal
         view = listView
         updateViews()
         addTargets()

@@ -19,10 +19,10 @@ class ListView: UIView {
         setConstraints()
     }
     private func setViews() {
+        self.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         titleLabel.text = "Заметки"
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: "SFProText-Semibold", size: 17)
-        backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fillProportionally

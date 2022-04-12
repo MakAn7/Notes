@@ -46,7 +46,7 @@ class ToDoController: UIViewController {
                 action: #selector(pushNote)
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes(
-                [.font: UIFont(name: "Helvetica", size: 16) ?? ""], for: .normal
+                [.font: UIFont(name: "SFProText-Regular", size: 17) ?? ""], for: .normal
             )
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

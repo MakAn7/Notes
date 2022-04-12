@@ -20,7 +20,9 @@ class ToDoView: UIView {
     }
 
     private func setViews() {
+        self.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         noteTextView.font = UIFont(name: "SFProText-Regular", size: 16)
+        noteTextView.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
 
         dateTextField.textColor = UIColor(red: 0.675, green: 0.675, blue: 0.675, alpha: 1)
         dateTextField.font = UIFont(name: "SFProText-Medium", size: 14)
@@ -28,7 +30,10 @@ class ToDoView: UIView {
         dateTextField.isUserInteractionEnabled = false
 
         titleTextField.font = UIFont(name: "SFProText-Medium", size: 24)
-        titleTextField.placeholder = "Название заметки"
+        titleTextField.attributedPlaceholder = NSAttributedString(
+            string: "Введите название",
+            attributes: [NSAttributedString.Key.font: UIFont(name: "SFProText-Medium", size: 24) ?? ""]
+        )
     }
 
     private func setConstraints() {
