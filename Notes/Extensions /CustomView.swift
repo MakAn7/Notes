@@ -7,19 +7,54 @@
 
 import UIKit
 
-class CustomView: UIView {
-    let todo: ToDo
+// class NoteView: UIView {
+//    private var note: Note
+//    private var tapCompletion: (Note)->()
+//
+//    init(
+//        frame: CGRect,
+//        note: Note,
+//        tapCompletion: @escaping (Note)->()
+//    ) {
+//        self.note = note
+//        self.tapCompletion = tapCompletion
+//        super.init(frame: frame)
+//        configure()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError()
+//    }
+//
+//    func didTap() {
+//        tapCompletion(note)
+//    }
+//
+//    func configure() { }
+// }
 
+class CustomView: UIView {
+    private var todo: ToDo
+    private var tapCompletion: (ToDo) -> Void
+
+    init(
+        frame: CGRect,
+        todo: ToDo,
+        tapCompletion: @escaping (ToDo) -> Void
+    ) {
+            self.todo = todo
+            self.tapCompletion = tapCompletion
+            super.init(frame: frame)
+            setViews()
+            setConstraints()
+        }
+    @objc
+    func didTap() {
+        tapCompletion(todo)
+    }
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
-
-    init(todo: ToDo) {
-        self.todo = todo
-         super.init(frame: CGRect())
-         setViews()
-         setConstraints()
-    }
 
     private func setViews() {
         backgroundColor = .white
@@ -58,7 +93,7 @@ class CustomView: UIView {
             allStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
     }
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+}

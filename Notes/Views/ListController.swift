@@ -35,14 +35,20 @@ class ListController: UIViewController, UpdateListDelegate {
         for view in listView.stack.arrangedSubviews {
             listView.stack.removeArrangedSubview(view)
         }
+
         for (index, todo) in todosArray.enumerated() {
-            let cell = CustomView(todo: todo)
-            let tap = TapWithTag(
-                tag: index,
-                target: self,
-                action: #selector(updateToDo)
-            )
+            let cell = CustomView(frame: CGRect(x: 0, y: 0, width: 358, height: 90), todo: todo) { (todo) in
+                let toDoVC = ToDoController()
+                toDoVC.todo = todo
+                toDoVC.isNew = false
+                toDoVC.index = index
+                toDoVC.delegate = self
+                toDoVC.modalPresentationStyle = .fullScreen
+                self.navigationController?.show(toDoVC, sender: nil)
+            }
+            let tap = UITapGestureRecognizer(target: self, action: #selector(cell.didTap))
             cell.addGestureRecognizer(tap)
+            cell.isUserInteractionEnabled = true
             listView.stack.addArrangedSubview(cell)
         }
     }
@@ -53,15 +59,19 @@ class ListController: UIViewController, UpdateListDelegate {
         toDoVC.delegate = self
         navigationController?.show(toDoVC, sender: nil)
     }
-
-    @objc
-    private func updateToDo(_ sender: TapWithTag) {
-        let toDoVC = ToDoController()
-        toDoVC.modalPresentationStyle = .fullScreen
-        toDoVC.todo = todosArray[sender.tag]
-        toDoVC.isNew = false
-        toDoVC.index = sender.tag
-        toDoVC.delegate = self
-        navigationController?.show(toDoVC, sender: nil)
-    }
+    //            let tap = TapWithTag(
+    //                tag: index,
+    //                target: self,
+    //                action: nil
+    //            )
+//    @objc
+//    private func updateToDo(_ sender: TapWithTag) {
+//        let toDoVC = ToDoController()
+//        toDoVC.modalPresentationStyle = .fullScreen
+//        toDoVC.todo = todosArray[sender.tag]
+//        toDoVC.isNew = false
+//        toDoVC.index = sender.tag
+//        toDoVC.delegate = self
+//        navigationController?.show(toDoVC, sender: nil)
+//    }
 }
