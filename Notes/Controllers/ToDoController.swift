@@ -8,9 +8,9 @@
 import UIKit
 
 class ToDoController: UIViewController {
-    lazy var isNew = true
     var todo: ToDo?
-    var index: Int = 0
+    lazy var indexToDo: Int = 0
+    lazy var isNew = true
     weak var delegate: UpdateListDelegate?
     let mainView = ToDoView()
 
@@ -24,8 +24,8 @@ class ToDoController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
+        pushNote()
     }
-
     private func setViews() {
         if let todo = todo {
             mainView.titleTextField.text = todo.title
@@ -36,37 +36,33 @@ class ToDoController: UIViewController {
         }
         setCurrentDate()
     }
-
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: "Готово",
                 style: .plain,
                 target: self,
-                action: #selector(pushNote)
+                action: #selector(updateToDo)
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes(
-                [.font: UIFont(name: "SFProText-Regular", size: 17) ?? ""], for: .normal
+                [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
             )
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }
-
-    @objc
     private func pushNote() {
         if let toDo = createNote() {
             if isNew {
                 NoteSettings.shared.setArray(dictToDo: toDo.dictionaryOfToDo)
             } else {
-                NoteSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, index: index)
+                NoteSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
         mainView.endEditing(true)
         delegate?.updateViews()
     }
-
-   private func createNote() -> ToDo? {
+    private func createNote() -> ToDo? {
         let titleText = mainView.titleTextField.text ?? ""
         let descriptionText = mainView.noteTextView.text ?? ""
         let dateString = mainView.dateTextField.text ?? ""
@@ -78,12 +74,18 @@ class ToDoController: UIViewController {
         )
 
         if toDo.isEmpty {
+            self.isMovingFromParent ? nil :
             alertShowError(message: "Заполните заголовок и поле заметки .", title: "Внимание !")
             return nil
         } else {
             let toDo = ToDo(title: titleText, description: descriptionText, date: dateString)
             return toDo
         }
+    }
+    @objc
+    private func updateToDo() {
+        self.todo = createNote()
+        mainView.endEditing(true)
     }
 }
 

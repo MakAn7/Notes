@@ -19,16 +19,15 @@ class ListView: UIView {
         setConstraints()
     }
     private func setViews() {
-        self.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        self.backgroundColor = ColorsLibrary.viewBackgroundColor
         titleLabel.text = "Заметки"
         titleLabel.textAlignment = .center
-        titleLabel.font = UIFont(name: "SFProText-Semibold", size: 17)
+        titleLabel.font = UIFont(name: FontsLibrary.SFProTextSemibold.rawValue, size: 17)
+
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fillProportionally
         stack.spacing = 5
-
-        scrollView.showsVerticalScrollIndicator = false
 
         addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = addButton.layer.frame.height / 2
@@ -36,36 +35,31 @@ class ListView: UIView {
         addButton.tintColor = .white
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
         addButton.layer.cornerRadius = 25
+
+        scrollView.showsVerticalScrollIndicator = false
     }
     private func setConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(titleLabel)
+        Helper.tamicOff(views: [scrollView, titleLabel, stack, addButton])
+        Helper.add(subviews: [scrollView, titleLabel], superView: self)
+        Helper.add(subviews: [stack, addButton], superView: scrollView)
+
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 57),
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 130),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(scrollView)
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             scrollView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 10),
             scrollView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10),
             scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
-        scrollView.addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 10),
             stack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -10),
             stack.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
-
-      scrollView.addSubview(addButton)
-      addButton.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             addButton.rightAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.rightAnchor),
             addButton.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor, constant: -20),

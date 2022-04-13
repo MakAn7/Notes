@@ -7,17 +7,17 @@
 
 import UIKit
 
+enum DefaultsKeys: String {
+    case title = "Title"
+    case description = "Description"
+    case date = "Date"
+    case array = "Array"
+}
+
 final class NoteSettings {
     static let shared = NoteSettings()
     private init() { }
     let defaults = UserDefaults.standard
-
-    enum DefaultsKeys: String {
-        case title = "Title"
-        case description = "Description"
-        case date = "Date"
-        case array = "Array"
-    }
 
     func setArray(dictToDo: [String: Any]) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
@@ -29,9 +29,9 @@ final class NoteSettings {
         }
     }
 
-    func updateToDo(dictToDo: [String: Any], index: Int) {
+    func updateToDo(dictToDo: [String: Any], indexToDo: Int) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            array[index] = dictToDo
+            array[indexToDo] = dictToDo
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
             let array: [[String: Any]] = [dictToDo]

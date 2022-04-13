@@ -7,65 +7,46 @@
 
 import UIKit
 
-// class NoteView: UIView {
-//    private var note: Note
-//    private var tapCompletion: (Note)->()
-//
-//    init(
-//        frame: CGRect,
-//        note: Note,
-//        tapCompletion: @escaping (Note)->()
-//    ) {
-//        self.note = note
-//        self.tapCompletion = tapCompletion
-//        super.init(frame: frame)
-//        configure()
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError()
-//    }
-//
-//    func didTap() {
-//        tapCompletion(note)
-//    }
-//
-//    func configure() { }
-// }
-
 class CustomView: UIView {
     private var todo: ToDo
     private var tapCompletion: (ToDo) -> Void
 
+    let headerLabel = UILabel()
+    let descriptionLabel = UILabel()
+    let dateLabel = UILabel()
     init(
         frame: CGRect,
         todo: ToDo,
         tapCompletion: @escaping (ToDo) -> Void
     ) {
-            self.todo = todo
-            self.tapCompletion = tapCompletion
-            super.init(frame: frame)
-            setViews()
-            setConstraints()
-        }
+        self.todo = todo
+        self.tapCompletion = tapCompletion
+        super.init(frame: frame)
+        setViews()
+        setConstraints()
+        tapGestureToView()
+        updateToDo()
+    }
+    private func tapGestureToView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
+        addGestureRecognizer(tap)
+    }
     @objc
-    func didTap() {
+    func didTap(_ sender: UITapGestureRecognizer) {
         tapCompletion(todo)
     }
-    let headerLabel = UILabel()
-    let descriptionLabel = UILabel()
-    let dateLabel = UILabel()
-
+    private func updateToDo() {
+        headerLabel.text = todo.title
+        dateLabel.text = todo.date
+        descriptionLabel.text = todo.description
+    }
     private func setViews() {
         backgroundColor = .white
         self.layer.cornerRadius = 14
-        dateLabel.font = UIFont(name: "SFProText-Medium", size: 10)
-        headerLabel.font = UIFont(name: "SFProText-Medium", size: 16)
-        descriptionLabel.font = UIFont(name: "SFProText-Medium", size: 10)
-        descriptionLabel.textColor = UIColor(red: 0.675, green: 0.675, blue: 0.675, alpha: 1)
-        dateLabel.text = todo.date
-        descriptionLabel.text = todo.description
-        headerLabel.text = todo.title
+        headerLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 16)
+        dateLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
+        descriptionLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
+        descriptionLabel.textColor = ColorsLibrary.textColor
     }
     private func setConstraints() {
         let stackTextLabel = UIStackView(
@@ -84,8 +65,10 @@ class CustomView: UIView {
         )
         allStack.alignment = .fill
         allStack.distribution = .fillProportionally
-        allStack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(allStack)
+
+        Helper.tamicOff(views: [allStack])
+        Helper.add(subviews: [allStack], superView: self)
+
         NSLayoutConstraint.activate([
             allStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             allStack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),

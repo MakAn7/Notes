@@ -5,7 +5,7 @@
 //  Created by Антон Макаров on 12.04.2022.
 //
 
-import Foundation
+import UIKit
 
 protocol UpdateListDelegate: AnyObject {
     func updateViews()

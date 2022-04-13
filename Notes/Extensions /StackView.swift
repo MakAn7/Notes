@@ -2,7 +2,7 @@
 //  StackView.swift
 //  Notes
 //
-//  Created by Антон Макаров on 08.04.2022.
+//  Created by Антон Макаров on 13.04.2022.
 //
 
 import UIKit

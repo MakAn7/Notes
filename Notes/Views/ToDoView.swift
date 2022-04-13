@@ -18,21 +18,20 @@ class ToDoView: UIView {
         setViews()
         setConstraints()
     }
-
     private func setViews() {
-        self.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
-        noteTextView.font = UIFont(name: "SFProText-Regular", size: 16)
-        noteTextView.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        self.backgroundColor = ColorsLibrary.viewBackgroundColor
+        noteTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
+        noteTextView.backgroundColor = ColorsLibrary.viewBackgroundColor
 
-        dateTextField.textColor = UIColor(red: 0.675, green: 0.675, blue: 0.675, alpha: 1)
-        dateTextField.font = UIFont(name: "SFProText-Medium", size: 14)
+        dateTextField.textColor = ColorsLibrary.textColor
+        dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
         dateTextField.textAlignment = .center
         dateTextField.isUserInteractionEnabled = false
 
-        titleTextField.font = UIFont(name: "SFProText-Medium", size: 24)
+        titleTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24)
         titleTextField.attributedPlaceholder = NSAttributedString(
-            string: "Введите название",
-            attributes: [NSAttributedString.Key.font: UIFont(name: "SFProText-Medium", size: 24) ?? ""]
+        string: "Введите название",
+        attributes: [NSAttributedString.Key.font: UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24) ?? ""]
         )
     }
 
@@ -40,9 +39,9 @@ class ToDoView: UIView {
         let stackTF = UIStackView(arrangedSubviews: [dateTextField, titleTextField])
         stackTF.axis = .vertical
         stackTF.spacing = 5
+        Helper.tamicOff(views: [stackTF, noteTextView])
+        Helper.add(subviews: [stackTF, noteTextView], superView: self)
 
-        stackTF.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackTF)
         titleTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         NSLayoutConstraint.activate([
@@ -51,17 +50,13 @@ class ToDoView: UIView {
             stackTF.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackTF.heightAnchor.constraint(equalToConstant: 100)
         ])
-        addSubview(noteTextView)
         NSLayoutConstraint.activate([
             noteTextView.topAnchor.constraint(equalTo: stackTF.bottomAnchor, constant: 10),
             noteTextView.rightAnchor.constraint(equalTo: rightAnchor),
             noteTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
             noteTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-
-        noteTextView.translatesAutoresizingMaskIntoConstraints = false
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
