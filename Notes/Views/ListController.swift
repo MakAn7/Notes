@@ -22,6 +22,15 @@ class ListController: UIViewController, UpdateListDelegate {
         updateViews()
         addTargets()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
     private func setupNavigationBar () {
         navigationItem.backButtonDisplayMode = .minimal
@@ -41,7 +50,7 @@ class ListController: UIViewController, UpdateListDelegate {
 
         for (indexToDo, todo) in todosArray.enumerated() {
             let cell = CustomView(
-                frame: CGRect(x: 0, y: 0, width: listView.stack.frame.width, height: 90),
+                frame: CGRect(),
                 todo: todo) { [weak self](todo) in
                 let toDoVC = ToDoController()
                 toDoVC.todo = todo
@@ -51,6 +60,8 @@ class ListController: UIViewController, UpdateListDelegate {
                 toDoVC.modalPresentationStyle = .fullScreen
                 self?.navigationController?.show(toDoVC, sender: nil)
             }
+            cell.layer.cornerRadius = 14
+            cell.clipsToBounds = true
             listView.stack.addArrangedSubview(cell)
         }
     }

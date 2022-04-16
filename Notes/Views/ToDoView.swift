@@ -9,7 +9,7 @@ import UIKit
 
 class ToDoView: UIView {
     let titleTextField = UITextField()
-    let noteTextView = UITextView()
+    let toDoTextView = UITextView()
     let dateTextField = UITextField()
 
     override init(frame: CGRect) {
@@ -20,8 +20,9 @@ class ToDoView: UIView {
     }
     private func setViews() {
         self.backgroundColor = ColorsLibrary.viewBackgroundColor
-        noteTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
-        noteTextView.backgroundColor = ColorsLibrary.viewBackgroundColor
+        toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
+        toDoTextView.backgroundColor = ColorsLibrary.viewBackgroundColor
+        toDoTextView.layer.sublayerTransform = CATransform3DMakeTranslation(15, 0, 0)
 
         dateTextField.textColor = ColorsLibrary.textColor
         dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
@@ -36,25 +37,27 @@ class ToDoView: UIView {
     }
 
     private func setConstraints() {
-        let stackTF = UIStackView(arrangedSubviews: [dateTextField, titleTextField])
-        stackTF.axis = .vertical
-        stackTF.spacing = 5
-        Helper.tamicOff(views: [stackTF, noteTextView])
-        Helper.add(subviews: [stackTF, noteTextView], superView: self)
-
-        titleTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        Helper.tamicOff(views: [dateTextField, titleTextField, toDoTextView])
+        Helper.add(subviews: [dateTextField, titleTextField, toDoTextView], superView: self)
 
         NSLayoutConstraint.activate([
-            stackTF.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
-            stackTF.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10),
-            stackTF.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackTF.heightAnchor.constraint(equalToConstant: 100)
+            dateTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            dateTextField.widthAnchor.constraint(equalToConstant: 350),
+            dateTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dateTextField.heightAnchor.constraint(equalToConstant: 16)
         ])
         NSLayoutConstraint.activate([
-            noteTextView.topAnchor.constraint(equalTo: stackTF.bottomAnchor, constant: 10),
-            noteTextView.rightAnchor.constraint(equalTo: rightAnchor),
-            noteTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            noteTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            titleTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 22),
+            titleTextField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20),
+            titleTextField.heightAnchor.constraint(equalToConstant: 24),
+            titleTextField.widthAnchor.constraint(equalToConstant: 300)
+        ])
+
+        NSLayoutConstraint.activate([
+            toDoTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 9),
+            toDoTextView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            toDoTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            toDoTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     required init?(coder: NSCoder) {

@@ -41,39 +41,37 @@ class CustomView: UIView {
         descriptionLabel.text = todo.description
     }
     private func setViews() {
-        backgroundColor = .white
         self.layer.cornerRadius = 14
+        self.clipsToBounds = true
+        backgroundColor = .white
         headerLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 16)
         dateLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
         descriptionLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
         descriptionLabel.textColor = ColorsLibrary.textColor
     }
     private func setConstraints() {
-        let stackTextLabel = UIStackView(
-            views: [headerLabel, descriptionLabel],
-            axis: .vertical,
-            spacing: 10
-        )
-        stackTextLabel.alignment = .fill
-        stackTextLabel.distribution = .fillProportionally
+        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel])
+        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: self)
 
-        let allStack = UIStackView(
-            views: [stackTextLabel,
-                    dateLabel],
-            axis: .vertical,
-            spacing: 24
-        )
-        allStack.alignment = .fill
-        allStack.distribution = .fillProportionally
-
-        Helper.tamicOff(views: [allStack])
-        Helper.add(subviews: [allStack], superView: self)
+        self.heightAnchor.constraint(equalToConstant: 90).isActive = true
 
         NSLayoutConstraint.activate([
-            allStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            allStack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
-            allStack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            allStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            headerLabel.widthAnchor.constraint(equalToConstant: 300),
+            headerLabel.heightAnchor.constraint(equalToConstant: 18)
+        ])
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 3),
+            descriptionLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            descriptionLabel.widthAnchor.constraint(equalToConstant: 326),
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 14)
+        ])
+        NSLayoutConstraint.activate([
+            dateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            dateLabel.heightAnchor.constraint(equalToConstant: 10),
+            dateLabel.widthAnchor.constraint(equalToConstant: 68),
+            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9)
         ])
     }
     required init?(coder: NSCoder) {
