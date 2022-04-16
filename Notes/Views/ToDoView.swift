@@ -23,6 +23,8 @@ class ToDoView: UIView {
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
         toDoTextView.backgroundColor = ColorsLibrary.viewBackgroundColor
         toDoTextView.layer.sublayerTransform = CATransform3DMakeTranslation(15, 0, 0)
+        toDoTextView.autocorrectionType = .no
+        toDoTextView.spellCheckingType = .no
 
         dateTextField.textColor = ColorsLibrary.textColor
         dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
