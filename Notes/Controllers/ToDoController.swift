@@ -39,17 +39,10 @@ class ToDoController: UIViewController, UITextViewDelegate {
     }
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "Готово",
-                style: .plain,
-                target: self,
-                action: #selector(updateToDo)
-            )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes(
-                [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
-            )
+            let readyButton = createRightBarButton(image: "readyButton", selector: #selector(updateToDo))
+            navigationItem.rightBarButtonItem = readyButton
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationItem.rightBarButtonItems?.removeAll()
         }
     }
     private func pushToDo() {
@@ -149,6 +142,9 @@ extension ToDoController {
         toDoView.toDoTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrameSize.height, right: 0)
         toDoView.toDoTextView.scrollIndicatorInsets = toDoView.toDoTextView.contentInset
         toDoView.toDoTextView.scrollRangeToVisible(toDoView.toDoTextView.selectedRange)
+        toDoView.toDoTextView.autocorrectionType = .no
+        toDoView.titleTextField.autocorrectionType = .no
+        toDoView.titleTextField.spellCheckingType = .no
         setNavigationRightItem(isOn: true)
         setLongCurrentDate()
     }

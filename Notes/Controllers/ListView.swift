@@ -30,9 +30,11 @@ class ListView: UIView {
         stack.distribution = .fillProportionally
         stack.spacing = 4
 
-        addButton.backgroundColor = .systemBlue
+        addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
         addButton.layer.cornerRadius = addButton.layer.frame.height / 2
         addButton.setImage(UIImage(named: "Plus"), for: .normal)
+        addButton.clipsToBounds = true
+        addButton.contentVerticalAlignment = .center
         addButton.tintColor = .white
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
         addButton.layer.cornerRadius = 25
