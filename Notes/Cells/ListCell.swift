@@ -7,53 +7,40 @@
 
 import UIKit
 
-class CustomView: UIView {
-    private var todo: ToDo
-    private var tapCompletion: (ToDo) -> Void
+class ListCell: UITableViewCell {
+    static let reuseId = "ListCell"
 
+    lazy var subbbView = UIView()
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
-    init(
-        frame: CGRect,
-        todo: ToDo,
-        tapCompletion: @escaping (ToDo) -> Void
-    ) {
-        self.todo = todo
-        self.tapCompletion = tapCompletion
-        super.init(frame: frame)
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setViews()
         setConstraints()
-        tapGestureToView()
-        updateToDo()
-    }
-    private func tapGestureToView() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        addGestureRecognizer(tap)
-    }
-    @objc
-    func didTap(_ sender: UITapGestureRecognizer) {
-        tapCompletion(todo)
-    }
-    private func updateToDo() {
-        headerLabel.text = todo.title
-        dateLabel.text = todo.date
-        descriptionLabel.text = todo.description
     }
     private func setViews() {
-        self.layer.cornerRadius = 14
-        self.clipsToBounds = true
-        backgroundColor = .white
+        subbbView.backgroundColor = .white
+        subbbView.layer.cornerRadius = 14
+        subbbView.clipsToBounds = true
+        contentView.addSubview(subbbView)
         headerLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 16)
         dateLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
         descriptionLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
         descriptionLabel.textColor = ColorsLibrary.textColor
+        selectionStyle = .none
+        backgroundColor = .clear
     }
     private func setConstraints() {
-        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel])
-        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: self)
-
-        self.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel, subbbView])
+        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subbbView)
+        NSLayoutConstraint.activate([
+            subbbView.topAnchor.constraint(equalTo: topAnchor),
+            subbbView.leftAnchor.constraint(equalTo: leftAnchor),
+            subbbView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            subbbView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+        ])
 
         NSLayoutConstraint.activate([
             headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
@@ -71,7 +58,7 @@ class CustomView: UIView {
             dateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             dateLabel.heightAnchor.constraint(equalToConstant: 10),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9)
+            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -13)
         ])
     }
     required init?(coder: NSCoder) {
