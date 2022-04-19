@@ -1,5 +1,5 @@
 //
-//  NoteSettings.swift
+//  ToDoSettings.swift
 //  Notes
 //
 //  Created by Антон Макаров on 25.03.2022.
@@ -14,8 +14,8 @@ enum DefaultsKeys: String {
     case array = "Array"
 }
 
-final class NoteSettings {
-    static let shared = NoteSettings()
+final class ToDoSettings {
+    static let shared = ToDoSettings()
     private init() { }
     let defaults = UserDefaults.standard
 
@@ -52,5 +52,13 @@ final class NoteSettings {
         } else {
             return []
         }
+    }
+
+    func removeToDo (indexToDo: Int) {
+        guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
+            fatalError("Don't fetch array of ToDo")
+        }
+        array.remove(at: indexToDo)
+        defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
     }
 }

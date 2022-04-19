@@ -19,11 +19,13 @@ class ListView: UIView {
     }
 
     private func setViews() {
+        self.backgroundColor = ColorsLibrary.viewBackgroundColor
+
         toDoTableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
         toDoTableView.separatorStyle = .none
         toDoTableView.showsVerticalScrollIndicator = false
         toDoTableView.backgroundColor = ColorsLibrary.viewBackgroundColor
-        self.backgroundColor = ColorsLibrary.viewBackgroundColor
+
         titleLabel.text = "Заметки"
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: FontsLibrary.SFProTextSemibold.rawValue, size: 17)
@@ -37,7 +39,8 @@ class ListView: UIView {
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
         addButton.layer.cornerRadius = 25
     }
-      func setConstraints() {
+
+    private func setConstraints() {
         Helper.tamicOff(views: [toDoTableView, titleLabel, addButton])
         Helper.add(subviews: [toDoTableView, titleLabel], superView: self)
         Helper.add(subviews: [addButton], superView: toDoTableView)

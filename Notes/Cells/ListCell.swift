@@ -1,8 +1,8 @@
 //
-//  CustomImageView.swift
+//  ListCell.swift
 //  Notes
 //
-//  Created by Антон Макаров on 08.04.2022.
+//  Created by Антон Макаров on 18.04.2022.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 class ListCell: UITableViewCell {
     static let reuseId = "ListCell"
 
-    lazy var subbbView = UIView()
+    let subContentView = UIView()
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
@@ -20,26 +20,33 @@ class ListCell: UITableViewCell {
         setViews()
         setConstraints()
     }
+
     private func setViews() {
-        subbbView.backgroundColor = .white
-        subbbView.layer.cornerRadius = 14
-        subbbView.clipsToBounds = true
-        contentView.addSubview(subbbView)
+        subContentView.backgroundColor = .white
+        subContentView.layer.cornerRadius = 14
+        subContentView.clipsToBounds = true
+
+        contentView.addSubview(subContentView)
+
         headerLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 16)
+
         dateLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
+
         descriptionLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
         descriptionLabel.textColor = ColorsLibrary.textColor
+
         selectionStyle = .none
         backgroundColor = .clear
     }
     private func setConstraints() {
-        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel, subbbView])
-        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subbbView)
+        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel, subContentView])
+        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subContentView)
+
         NSLayoutConstraint.activate([
-            subbbView.topAnchor.constraint(equalTo: topAnchor),
-            subbbView.leftAnchor.constraint(equalTo: leftAnchor),
-            subbbView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subbbView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+            subContentView.topAnchor.constraint(equalTo: topAnchor),
+            subContentView.leftAnchor.constraint(equalTo: leftAnchor),
+            subContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            subContentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
         ])
 
         NSLayoutConstraint.activate([
@@ -48,12 +55,14 @@ class ListCell: UITableViewCell {
             headerLabel.widthAnchor.constraint(equalToConstant: 300),
             headerLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
+
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 3),
             descriptionLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             descriptionLabel.widthAnchor.constraint(equalToConstant: 326),
             descriptionLabel.heightAnchor.constraint(equalToConstant: 14)
         ])
+
         NSLayoutConstraint.activate([
             dateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             dateLabel.heightAnchor.constraint(equalToConstant: 10),

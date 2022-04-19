@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ToDoController: UIViewController, UITextViewDelegate {
-    var todo: ToDo?
+class ToDoController: UIViewController {
+    var todo: ToDo!
     lazy var indexToDo: Int = 0
     lazy var isNew = true
     weak var delegate: UpdateListDelegate?
@@ -21,11 +21,13 @@ class ToDoController: UIViewController, UITextViewDelegate {
         registerKeybordNotification()
         setViews()
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
         pushToDo()
     }
+
     private func setViews() {
         if let todo = todo {
             toDoView.titleTextField.text = todo.title
@@ -37,6 +39,7 @@ class ToDoController: UIViewController, UITextViewDelegate {
             toDoView.dateTextField.text = ""
         }
     }
+
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
             let readyButton = createRightBarButton(image: "readyButton", selector: #selector(updateToDo))
@@ -45,17 +48,19 @@ class ToDoController: UIViewController, UITextViewDelegate {
             navigationItem.rightBarButtonItems?.removeAll()
         }
     }
+
     private func pushToDo() {
         if let toDo = createToDo() {
             if isNew {
-                NoteSettings.shared.setArray(dictToDo: toDo.dictionaryOfToDo)
+                ToDoSettings.shared.setArray(dictToDo: toDo.dictionaryOfToDo)
             } else {
-                NoteSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
+                ToDoSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
         toDoView.endEditing(true)
         delegate?.updateViews()
     }
+
     private func createToDo() -> ToDo? {
         let titleText = toDoView.titleTextField.text ?? ""
         let descriptionText = toDoView.toDoTextView.text ?? ""
@@ -80,6 +85,7 @@ class ToDoController: UIViewController, UITextViewDelegate {
             return toDo
         }
     }
+
     @objc
     private func updateToDo() {
         self.todo = createToDo()
@@ -105,6 +111,7 @@ extension ToDoController {
         return day
     }
 }
+
 // MARK: - Setup settings with keyboard
 extension ToDoController {
     func registerKeybordNotification() {
@@ -121,6 +128,7 @@ extension ToDoController {
             object: nil
         )
     }
+
     func removeKeyboardNotifications() {
         NotificationCenter.default.removeObserver(
             self,
@@ -133,6 +141,7 @@ extension ToDoController {
             object: nil
         )
     }
+
     @objc
     private func keyboardWillShow(notification: NSNotification) {
         guard

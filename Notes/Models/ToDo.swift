@@ -27,6 +27,7 @@ struct ToDo {
         dictToDo["date"] = date
         return dictToDo
     }
+
     init(title: String, description: String, date: String?) {
         self.title = title
         self.description = description
@@ -37,8 +38,9 @@ struct ToDo {
         guard let title = dictToDo["title"] as? String,
               let description = dictToDo["description"] as? String,
               let date = dictToDo["date"] as? String else {
-            return nil
-        }
+                  return nil
+              }
+
         self.title = title
         self.description = description
         self.date = date

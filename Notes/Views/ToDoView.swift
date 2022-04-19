@@ -18,6 +18,7 @@ class ToDoView: UIView {
         setViews()
         setConstraints()
     }
+
     private func setViews() {
         self.backgroundColor = ColorsLibrary.viewBackgroundColor
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
@@ -31,6 +32,8 @@ class ToDoView: UIView {
         dateTextField.textAlignment = .center
         dateTextField.isUserInteractionEnabled = false
 
+        titleTextField.autocorrectionType = .no
+        titleTextField.spellCheckingType = .no
         titleTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24)
         titleTextField.attributedPlaceholder = NSAttributedString(
         string: "Введите название",

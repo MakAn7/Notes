@@ -17,8 +17,8 @@
 		E26D4D0427EDC44F008233F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E26D4D0327EDC44F008233F8 /* Assets.xcassets */; };
 		E26D4D0727EDC44F008233F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26D4D0527EDC44F008233F8 /* LaunchScreen.storyboard */; };
 		E26D4D1027EDC7AB008233F8 /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D0F27EDC7AB008233F8 /* ToDoView.swift */; };
-		E26D4D1927EE1C20008233F8 /* NoteSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D1827EE1C20008233F8 /* NoteSettings.swift */; };
-		E280AB81280B4D4A00502FE5 /* createRightBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280AB80280B4D4A00502FE5 /* createRightBarButton.swift */; };
+		E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */; };
+		E280AB81280B4D4A00502FE5 /* CreateRightBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280AB80280B4D4A00502FE5 /* CreateRightBarButton.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
 		E2F82F182805BE8900621B67 /* UpdateListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F172805BE8900621B67 /* UpdateListDelegate.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
@@ -27,7 +27,6 @@
 		E2F82F222806EB8400621B67 /* FontsLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F212806EB8400621B67 /* FontsLibrary.swift */; };
 		E2F82F252806EEED00621B67 /* ColorsLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F242806EEED00621B67 /* ColorsLibrary.swift */; };
 		E2F82F27280723C100621B67 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F26280723C100621B67 /* Helper.swift */; };
-		E2F82F2A280728BB00621B67 /* StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F29280728BB00621B67 /* StackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +44,8 @@
 		E26D4D0627EDC44F008233F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E26D4D0827EDC44F008233F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E26D4D0F27EDC7AB008233F8 /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
-		E26D4D1827EE1C20008233F8 /* NoteSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettings.swift; sourceTree = "<group>"; };
-		E280AB80280B4D4A00502FE5 /* createRightBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createRightBarButton.swift; sourceTree = "<group>"; };
+		E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSettings.swift; sourceTree = "<group>"; };
+		E280AB80280B4D4A00502FE5 /* CreateRightBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRightBarButton.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		E2F82F172805BE8900621B67 /* UpdateListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateListDelegate.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
@@ -55,7 +54,6 @@
 		E2F82F212806EB8400621B67 /* FontsLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsLibrary.swift; sourceTree = "<group>"; };
 		E2F82F242806EEED00621B67 /* ColorsLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsLibrary.swift; sourceTree = "<group>"; };
 		E2F82F26280723C100621B67 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		E2F82F29280728BB00621B67 /* StackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,8 +178,7 @@
 		E2A3071C27EF349C00BEEACB /* Extensions  */ = {
 			isa = PBXGroup;
 			children = (
-				E280AB80280B4D4A00502FE5 /* createRightBarButton.swift */,
-				E2F82F29280728BB00621B67 /* StackView.swift */,
+				E280AB80280B4D4A00502FE5 /* CreateRightBarButton.swift */,
 			);
 			path = "Extensions ";
 			sourceTree = "<group>";
@@ -189,7 +186,7 @@
 		E2A3071E27EF451C00BEEACB /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
-				E26D4D1827EE1C20008233F8 /* NoteSettings.swift */,
+				E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */,
 			);
 			path = UserDefaults;
 			sourceTree = "<group>";
@@ -354,8 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E26D4D1927EE1C20008233F8 /* NoteSettings.swift in Sources */,
-				E2F82F2A280728BB00621B67 /* StackView.swift in Sources */,
+				E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E26D4CFF27EDC44E008233F8 /* ToDoController.swift in Sources */,
 				E2F82F182805BE8900621B67 /* UpdateListDelegate.swift in Sources */,
@@ -363,7 +359,7 @@
 				E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */,
 				E2F82F222806EB8400621B67 /* FontsLibrary.swift in Sources */,
 				E26D4D1027EDC7AB008233F8 /* ToDoView.swift in Sources */,
-				E280AB81280B4D4A00502FE5 /* createRightBarButton.swift in Sources */,
+				E280AB81280B4D4A00502FE5 /* CreateRightBarButton.swift in Sources */,
 				E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */,
 				E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */,
 				E2F82F252806EEED00621B67 /* ColorsLibrary.swift in Sources */,

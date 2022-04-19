@@ -24,22 +24,14 @@ class ListController: UIViewController, UpdateListDelegate {
         listView.toDoTableView.delegate = self
         listView.toDoTableView.dataSource = self
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
     private func setupNavigationBar () {
         navigationItem.backButtonDisplayMode = .minimal
     }
-    func updateViews() {
-        todosArray = NoteSettings.shared.getArray()
-    }
 
+    func updateViews() {
+        todosArray = ToDoSettings.shared.getArray()
+    }
     private func addTargets() {
         listView.addButton.addTarget(self, action: #selector(addToDo), for: .touchUpInside)
     }
@@ -80,6 +72,18 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         toDoVC.todo = todosArray[indexPath.row]
         toDoVC.indexToDo = indexPath.row
         toDoVC.isNew = false
+        toDoVC.delegate = self
         navigationController?.show(toDoVC, sender: nil)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Удалить") { (_, _, _) in
+            ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
+            self.todosArray.remove(at: indexPath.row)
+        }
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
