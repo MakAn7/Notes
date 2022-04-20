@@ -46,24 +46,18 @@ class ListCell: UITableViewCell {
             subContentView.topAnchor.constraint(equalTo: topAnchor),
             subContentView.leftAnchor.constraint(equalTo: leftAnchor),
             subContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subContentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
-        ])
+            subContentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
 
-        NSLayoutConstraint.activate([
             headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             headerLabel.widthAnchor.constraint(equalToConstant: 300),
-            headerLabel.heightAnchor.constraint(equalToConstant: 18)
-        ])
+            headerLabel.heightAnchor.constraint(equalToConstant: 18),
 
-        NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 3),
             descriptionLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             descriptionLabel.widthAnchor.constraint(equalToConstant: 326),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 14)
-        ])
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 14),
 
-        NSLayoutConstraint.activate([
             dateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             dateLabel.heightAnchor.constraint(equalToConstant: 10),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),

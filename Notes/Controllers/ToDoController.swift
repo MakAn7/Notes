@@ -42,8 +42,7 @@ class ToDoController: UIViewController {
 
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
-            let readyButton = createRightBarButton(image: "readyButton", selector: #selector(updateToDo))
-            navigationItem.rightBarButtonItem = readyButton
+            navigationItem.rightBarButtonItem = UIBarButtonItem()
         } else {
             navigationItem.rightBarButtonItems?.removeAll()
         }

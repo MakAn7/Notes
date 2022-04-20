@@ -15,10 +15,9 @@ struct ToDo {
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {
             return true
-        } else {
+        }
             return false
         }
-    }
 
     var dictionaryOfToDo: [String: Any] {
         var dictToDo: [String: Any] = [:]
@@ -35,11 +34,13 @@ struct ToDo {
     }
 
     init?(dictToDo: [String: Any]) {
-        guard let title = dictToDo["title"] as? String,
-              let description = dictToDo["description"] as? String,
-              let date = dictToDo["date"] as? String else {
-                  return nil
-              }
+        guard
+            let title = dictToDo["title"] as? String,
+            let description = dictToDo["description"] as? String,
+            let date = dictToDo["date"] as? String
+        else {
+            return nil
+        }
 
         self.title = title
         self.description = description

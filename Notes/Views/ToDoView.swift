@@ -49,16 +49,13 @@ class ToDoView: UIView {
             dateTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             dateTextField.widthAnchor.constraint(equalToConstant: 350),
             dateTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dateTextField.heightAnchor.constraint(equalToConstant: 16)
-        ])
-        NSLayoutConstraint.activate([
+            dateTextField.heightAnchor.constraint(equalToConstant: 16),
+
             titleTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 22),
             titleTextField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20),
             titleTextField.heightAnchor.constraint(equalToConstant: 24),
-            titleTextField.widthAnchor.constraint(equalToConstant: 300)
-        ])
+            titleTextField.widthAnchor.constraint(equalToConstant: 300),
 
-        NSLayoutConstraint.activate([
             toDoTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 9),
             toDoTextView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
             toDoTextView.centerXAnchor.constraint(equalTo: centerXAnchor),

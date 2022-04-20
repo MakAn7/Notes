@@ -49,15 +49,13 @@ class ListView: UIView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 57),
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 130),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 22)
-        ])
-        NSLayoutConstraint.activate([
+            titleLabel.heightAnchor.constraint(equalToConstant: 22),
+
             toDoTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 26),
             toDoTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
             toDoTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
-            toDoTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -9)
-        ])
-        NSLayoutConstraint.activate([
+            toDoTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -9),
+
             addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -3),
             addButton.bottomAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.bottomAnchor, constant: -17),
             addButton.heightAnchor.constraint(equalToConstant: 50),
