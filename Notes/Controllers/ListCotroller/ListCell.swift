@@ -33,7 +33,7 @@ class ListCell: UITableViewCell {
         dateLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
 
         descriptionLabel.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 10)
-        descriptionLabel.textColor = ColorsLibrary.textColor
+        descriptionLabel.textColor = Colors.shared.textColor
 
         selectionStyle = .none
         backgroundColor = .clear

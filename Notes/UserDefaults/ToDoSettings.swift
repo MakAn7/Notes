@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum DefaultsKeys: String {
+ private enum DefaultsKeys: String {
     case title = "Title"
     case description = "Description"
     case date = "Date"
@@ -19,7 +19,7 @@ final class ToDoSettings {
     private init() { }
     let defaults = UserDefaults.standard
 
-    func setArray(dictToDo: [String: Any]) {
+    func pushArray(dictToDo: [String: Any]) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             array.append(dictToDo)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
@@ -39,7 +39,7 @@ final class ToDoSettings {
         }
     }
 
-    func getArray() -> [ToDo] {
+    func fetchArray() -> [ToDo] {
         var todos = [ToDo]()
         if let array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             for dictToDo in array {

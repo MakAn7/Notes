@@ -10,7 +10,7 @@ import Foundation
 struct ToDo {
     let title: String
     let description: String
-    let date: String?
+    let date: Date?
 
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {
@@ -27,7 +27,7 @@ struct ToDo {
         return dictToDo
     }
 
-    init(title: String, description: String, date: String?) {
+    init(title: String, description: String, date: Date?) {
         self.title = title
         self.description = description
         self.date = date
@@ -37,11 +37,10 @@ struct ToDo {
         guard
             let title = dictToDo["title"] as? String,
             let description = dictToDo["description"] as? String,
-            let date = dictToDo["date"] as? String
+            let date = dictToDo["date"] as? Date
         else {
             return nil
         }
-
         self.title = title
         self.description = description
         self.date = date

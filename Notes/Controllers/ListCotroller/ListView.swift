@@ -19,12 +19,12 @@ class ListView: UIView {
     }
 
     private func setViews() {
-        self.backgroundColor = ColorsLibrary.viewBackgroundColor
+        self.backgroundColor = Colors.shared.viewBackround
 
         toDoTableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
         toDoTableView.separatorStyle = .none
         toDoTableView.showsVerticalScrollIndicator = false
-        toDoTableView.backgroundColor = ColorsLibrary.viewBackgroundColor
+        toDoTableView.backgroundColor = Colors.shared.viewBackround
 
         titleLabel.text = "Заметки"
         titleLabel.textAlignment = .center

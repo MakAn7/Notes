@@ -20,14 +20,14 @@ class ToDoView: UIView {
     }
 
     private func setViews() {
-        self.backgroundColor = ColorsLibrary.viewBackgroundColor
+        self.backgroundColor = Colors.shared.viewBackround
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
-        toDoTextView.backgroundColor = ColorsLibrary.viewBackgroundColor
+        toDoTextView.backgroundColor = Colors.shared.viewBackround
         toDoTextView.layer.sublayerTransform = CATransform3DMakeTranslation(15, 0, 0)
         toDoTextView.autocorrectionType = .no
         toDoTextView.spellCheckingType = .no
 
-        dateTextField.textColor = ColorsLibrary.textColor
+        dateTextField.textColor = Colors.shared.textColor
         dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
         dateTextField.textAlignment = .center
         dateTextField.isUserInteractionEnabled = false

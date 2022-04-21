@@ -8,11 +8,34 @@
 import UIKit
 
 class ToDoController: UIViewController {
+    enum State {
+        case new
+        case edit(todo: ToDo, index: Int)
+    }
+
     var todo: ToDo!
+    let state: State
     lazy var indexToDo: Int = 0
-    lazy var isNew = true
     weak var delegate: UpdateListDelegate?
     let toDoView = ToDoView()
+
+    init(state: State, delegate: UpdateListDelegate) {
+        self.delegate = delegate
+        self.state = state
+        super.init(nibName: nil, bundle: nil)
+
+        switch state {
+        case .new:
+            self.todo = ToDo(title: "", description: "", date: nil)
+        case .edit(let todo, let index):
+            self.todo = todo
+            self.indexToDo = index
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,20 +52,24 @@ class ToDoController: UIViewController {
     }
 
     private func setViews() {
-        if let todo = todo {
-            toDoView.titleTextField.text = todo.title
-            toDoView.toDoTextView.text = todo.description
-            toDoView.dateTextField.text = todo.date
-        } else {
-            toDoView.titleTextField.text = ""
-            toDoView.toDoTextView.text = ""
-            toDoView.dateTextField.text = ""
+        toDoView.titleTextField.text = todo.title
+        toDoView.toDoTextView.text = todo.description
+        if let date = todo.date {
+            toDoView.dateTextField.text = convertDateToString(date: date, short: false)
         }
     }
 
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
-            navigationItem.rightBarButtonItem = UIBarButtonItem()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Готово",
+                style: .plain,
+                target: self,
+                action: #selector(updateToDo)
+            )
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes(
+                [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
+            )
         } else {
             navigationItem.rightBarButtonItems?.removeAll()
         }
@@ -50,9 +77,10 @@ class ToDoController: UIViewController {
 
     private func pushToDo() {
         if let toDo = createToDo() {
-            if isNew {
-                ToDoSettings.shared.setArray(dictToDo: toDo.dictionaryOfToDo)
-            } else {
+            switch state {
+            case .new:
+                ToDoSettings.shared.pushArray(dictToDo: toDo.dictionaryOfToDo)
+            case .edit:
                 ToDoSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
@@ -63,12 +91,11 @@ class ToDoController: UIViewController {
     private func createToDo() -> ToDo? {
         let titleText = toDoView.titleTextField.text ?? ""
         let descriptionText = toDoView.toDoTextView.text ?? ""
-        let dateString = toDoView.dateTextField.text ?? ""
 
         let toDo = ToDo(
             title: titleText,
             description: descriptionText,
-            date: dateString
+            date: nil
         )
 
         if toDo.isEmpty {
@@ -76,12 +103,12 @@ class ToDoController: UIViewController {
             alertShowError(message: "Заполните заголовок и поле заметки .", title: "Внимание !")
             return nil
         } else {
-            let toDo = ToDo(
+            let currentToDo = ToDo(
                 title: titleText,
                 description: descriptionText,
-                date: setShortCurrentDate()
+                date: setLongCurrentDate()
             )
-            return toDo
+            return currentToDo
         }
     }
 
@@ -94,20 +121,11 @@ class ToDoController: UIViewController {
 
 // MARK: - Setup current date
 extension ToDoController {
-    private func setLongCurrentDate() {
+    private func setLongCurrentDate() -> Date? {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy EEEE H:mm"
-        let day = dateFormatter.string(from: date)
-        toDoView.dateTextField.text = day
-    }
-
-    private func setShortCurrentDate() -> String? {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let day = dateFormatter.string(from: date)
-        return day
+        return date
     }
 }
 
@@ -154,7 +172,6 @@ extension ToDoController {
         toDoView.titleTextField.autocorrectionType = .no
         toDoView.titleTextField.spellCheckingType = .no
         setNavigationRightItem(isOn: true)
-        setLongCurrentDate()
     }
 
     @objc
