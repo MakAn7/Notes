@@ -102,14 +102,13 @@ class ToDoController: UIViewController {
             self.isMovingFromParent ? nil :
             alertShowError(message: "Заполните заголовок и поле заметки .", title: "Внимание !")
             return nil
-        } else {
+        }
             let currentToDo = ToDo(
                 title: titleText,
                 description: descriptionText,
                 date: setLongCurrentDate()
             )
             return currentToDo
-        }
     }
 
     @objc
