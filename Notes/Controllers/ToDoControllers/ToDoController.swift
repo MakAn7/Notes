@@ -7,12 +7,35 @@
 
 import UIKit
 
-class ToDoController: UIViewController, UITextViewDelegate {
-    var todo: ToDo?
+class ToDoController: UIViewController {
+    enum State {
+        case new
+        case edit(todo: ToDo, index: Int)
+    }
+
+    var todo: ToDo!
+    let state: State
     lazy var indexToDo: Int = 0
-    lazy var isNew = true
     weak var delegate: UpdateListDelegate?
     let toDoView = ToDoView()
+
+    init(state: State, delegate: UpdateListDelegate) {
+        self.delegate = delegate
+        self.state = state
+        super.init(nibName: nil, bundle: nil)
+
+        switch state {
+        case .new:
+            self.todo = ToDo(title: "", description: "", date: nil)
+        case .edit(let todo, let index):
+            self.todo = todo
+            self.indexToDo = index
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +44,21 @@ class ToDoController: UIViewController, UITextViewDelegate {
         registerKeybordNotification()
         setViews()
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
         pushToDo()
     }
+
     private func setViews() {
-        if let todo = todo {
-            toDoView.titleTextField.text = todo.title
-            toDoView.toDoTextView.text = todo.description
-            toDoView.dateTextField.text = todo.date
-        } else {
-            toDoView.titleTextField.text = ""
-            toDoView.toDoTextView.text = ""
-            toDoView.dateTextField.text = ""
+        toDoView.titleTextField.text = todo.title
+        toDoView.toDoTextView.text = todo.description
+        if let date = todo.date {
+            toDoView.dateTextField.text = convertDateToString(date: date, short: false)
         }
     }
+
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -49,44 +71,46 @@ class ToDoController: UIViewController, UITextViewDelegate {
                 [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
             )
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationItem.rightBarButtonItems?.removeAll()
         }
     }
+
     private func pushToDo() {
         if let toDo = createToDo() {
-            if isNew {
-                NoteSettings.shared.setArray(dictToDo: toDo.dictionaryOfToDo)
-            } else {
-                NoteSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
+            switch state {
+            case .new:
+                ToDoSettings.shared.pushArray(dictToDo: toDo.dictionaryOfToDo)
+            case .edit:
+                ToDoSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
         toDoView.endEditing(true)
         delegate?.updateViews()
     }
+
     private func createToDo() -> ToDo? {
         let titleText = toDoView.titleTextField.text ?? ""
         let descriptionText = toDoView.toDoTextView.text ?? ""
-        let dateString = toDoView.dateTextField.text ?? ""
 
         let toDo = ToDo(
             title: titleText,
             description: descriptionText,
-            date: dateString
+            date: nil
         )
 
         if toDo.isEmpty {
             self.isMovingFromParent ? nil :
             alertShowError(message: "Заполните заголовок и поле заметки .", title: "Внимание !")
             return nil
-        } else {
-            let toDo = ToDo(
+        }
+            let currentToDo = ToDo(
                 title: titleText,
                 description: descriptionText,
-                date: setShortCurrentDate()
+                date: setLongCurrentDate()
             )
-            return toDo
-        }
+            return currentToDo
     }
+
     @objc
     private func updateToDo() {
         self.todo = createToDo()
@@ -96,22 +120,14 @@ class ToDoController: UIViewController, UITextViewDelegate {
 
 // MARK: - Setup current date
 extension ToDoController {
-    private func setLongCurrentDate() {
+    private func setLongCurrentDate() -> Date? {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy EEEE H:mm"
-        let day = dateFormatter.string(from: date)
-        toDoView.dateTextField.text = day
-    }
-
-    private func setShortCurrentDate() -> String? {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let day = dateFormatter.string(from: date)
-        return day
+        return date
     }
 }
+
 // MARK: - Setup settings with keyboard
 extension ToDoController {
     func registerKeybordNotification() {
@@ -128,6 +144,7 @@ extension ToDoController {
             object: nil
         )
     }
+
     func removeKeyboardNotifications() {
         NotificationCenter.default.removeObserver(
             self,
@@ -140,6 +157,7 @@ extension ToDoController {
             object: nil
         )
     }
+
     @objc
     private func keyboardWillShow(notification: NSNotification) {
         guard
@@ -149,8 +167,10 @@ extension ToDoController {
         toDoView.toDoTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrameSize.height, right: 0)
         toDoView.toDoTextView.scrollIndicatorInsets = toDoView.toDoTextView.contentInset
         toDoView.toDoTextView.scrollRangeToVisible(toDoView.toDoTextView.selectedRange)
+        toDoView.toDoTextView.autocorrectionType = .no
+        toDoView.titleTextField.autocorrectionType = .no
+        toDoView.titleTextField.spellCheckingType = .no
         setNavigationRightItem(isOn: true)
-        setLongCurrentDate()
     }
 
     @objc

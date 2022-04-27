@@ -13,6 +13,7 @@ class Helper {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
     }
+
     static func add(subviews: [UIView], superView: UIView) {
         for subview in subviews {
             superView.addSubview(subview)
