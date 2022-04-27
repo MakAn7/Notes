@@ -44,7 +44,7 @@ final class ToDoSettings {
         if let array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             for dictToDo in array {
                 guard let todo = ToDo(dictToDo: dictToDo) else {
-                    return []
+                    continue
                 }
                 todos.append(todo)
             }
