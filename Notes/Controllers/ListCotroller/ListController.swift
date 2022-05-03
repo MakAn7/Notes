@@ -25,24 +25,47 @@ class ListController: UIViewController, UpdateListDelegate {
         listView.toDoTableView.dataSource = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        listView.addButtonBottomConstraint.constant += view.bounds.height
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showAddButtonWithAnimation()
+    }
+
     private func setupNavigationBar () {
         navigationItem.backButtonDisplayMode = .minimal
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Выбрать",
+            style: .plain,
+            target: self,
+            action: #selector(updateSelectButton)
+        )
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes(
+            [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
+        )
+    }
+    @objc
+    func updateSelectButton() {
     }
 
     func updateViews() {
         todosArray = ToDoSettings.shared.fetchArray()
     }
+
     private func addTargets() {
         listView.addButton.addTarget(self, action: #selector(addToDo), for: .touchUpInside)
     }
+
     @objc
     private func addToDo() {
-        let toDoVC = ToDoController(state: .new, delegate: self)
-        toDoVC.modalPresentationStyle = .fullScreen
-        navigationController?.show(toDoVC, sender: nil)
+        tapAddButtonWithAnimation()
     }
 }
 
+// MARK: UITableViewDelegate, UITableViewDataSource
 extension ListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         todosArray.count
@@ -72,8 +95,8 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let toDoVC = ToDoController(
             state: .edit(
-            todo: todosArray[indexPath.row],
-            index: indexPath.row
+                todo: todosArray[indexPath.row],
+                index: indexPath.row
             ),
             delegate: self
         )
@@ -89,5 +112,61 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
             self.todosArray.remove(at: indexPath.row)
         }
         return UISwipeActionsConfiguration(actions: [delete])
+    }
+}
+
+// MARK: Animations
+extension ListController {
+    func showAddButtonWithAnimation() {
+        listView.addButton.layer.cornerRadius = listView.addButton.frame.width / 2
+        UIView.animate(
+            withDuration: 2,
+            delay: 0,
+            options: .curveEaseOut
+        ) {
+            self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            UIView.animate(
+                withDuration: 1,
+                delay: 0.5,
+                options: [.curveEaseInOut]
+            ) {
+                self.listView.addButton.transform = CGAffineTransform(
+                    scaleX: 0.7,
+                    y: 0.7
+                )
+            } completion: { _ in
+                UIView.animate(
+                    withDuration: 1,
+                    delay: 0,
+                    options: .curveEaseInOut
+                ) {
+                    self.listView.addButton.transform = CGAffineTransform(
+                        scaleX: 1,
+                        y: 1
+                    )
+                }
+            }
+        }
+    }
+
+    func tapAddButtonWithAnimation() {
+        UIView.animate(withDuration: 2) {
+            self.listView.addButtonBottomConstraint.constant -= self.listView.addButton.frame.height
+            self.view.layoutIfNeeded()
+        }
+        UIView.animate(
+            withDuration: 1,
+            delay: 1,
+            options: .curveEaseIn
+        ) {
+            self.listView.addButtonBottomConstraint.constant += self.view.frame.height
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            let toDoVC = ToDoController(state: .new, delegate: self)
+            toDoVC.modalPresentationStyle = .fullScreen
+            self.navigationController?.show(toDoVC, sender: nil)
+        }
     }
 }

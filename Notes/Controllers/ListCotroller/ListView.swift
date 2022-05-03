@@ -12,6 +12,8 @@ class ListView: UIView {
     let toDoTableView = UITableView()
     var addButton = UIButton()
 
+    var addButtonBottomConstraint: NSLayoutConstraint!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
@@ -20,7 +22,6 @@ class ListView: UIView {
 
     private func setViews() {
         self.backgroundColor = Colors.shared.viewBackround
-
         toDoTableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
         toDoTableView.separatorStyle = .none
         toDoTableView.showsVerticalScrollIndicator = false
@@ -30,14 +31,11 @@ class ListView: UIView {
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: FontsLibrary.SFProTextSemibold.rawValue, size: 17)
 
-        addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
-        addButton.layer.cornerRadius = addButton.layer.frame.height / 2
         addButton.setImage(UIImage(named: "Plus"), for: .normal)
         addButton.clipsToBounds = true
-        addButton.contentVerticalAlignment = .center
-        addButton.tintColor = .white
+        addButton.contentMode = .scaleAspectFill
+        addButton.backgroundColor = .systemGreen
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
-        addButton.layer.cornerRadius = 25
     }
 
     private func setConstraints() {
@@ -56,11 +54,21 @@ class ListView: UIView {
             toDoTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
             toDoTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -9),
 
-            addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -3),
-            addButton.bottomAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.bottomAnchor, constant: -17),
+            addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -4),
             addButton.heightAnchor.constraint(equalToConstant: 50),
             addButton.widthAnchor.constraint(equalToConstant: 50)
         ])
+
+        addButtonBottomConstraint = NSLayoutConstraint(
+            item: addButton,
+            attribute: .bottom ,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: -60
+        )
+        self.addConstraint(addButtonBottomConstraint)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
