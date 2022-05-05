@@ -47,8 +47,32 @@ class ListController: UIViewController, UpdateListDelegate {
             [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
         )
     }
+
     @objc
-    func updateSelectButton() {
+    func updateSelectButton () {
+        if !listView.toDoTableView.isEditing {
+            listView.toDoTableView.setEditing(true, animated: true)
+            UIView.transition(
+                with: listView.addButton,
+                duration: 1,
+                options: .transitionCrossDissolve
+            ) {
+                self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
+            } completion: { _ in
+                self.navigationItem.rightBarButtonItem?.title = "Готово"
+            }
+        } else {
+            UIView.transition(
+                with: listView.addButton,
+                duration: 1,
+                options: .transitionFlipFromBottom
+            ) {
+                self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+                self.listView.toDoTableView.isEditing = false
+            } completion: { _ in
+                self.navigationItem.rightBarButtonItem?.title = "Выбрать"
+            }
+        }
     }
 
     func updateViews() {
@@ -78,12 +102,14 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         ) as? ListCell else {
             fatalError("Don't get cell")
         }
+
         let currentToDo = todosArray[indexPath.row]
         cell.headerLabel.text = currentToDo.title
         cell.descriptionLabel.text = currentToDo.description
         guard let date = currentToDo.date else {
             fatalError("\(#function) Don't get Date ")
         }
+
         cell.dateLabel.text = convertDateToString(date: date, short: true)
         return cell
     }
@@ -93,6 +119,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(#function)
         let toDoVC = ToDoController(
             state: .edit(
                 todo: todosArray[indexPath.row],
@@ -101,6 +128,31 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
             delegate: self
         )
         navigationController?.show(toDoVC, sender: nil)
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print(#function)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        editingStyleForRowAt indexPath: IndexPath
+    ) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
+            todosArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else {
+            print("123333")
+        }
     }
 
     func tableView(
@@ -123,7 +175,8 @@ extension ListController {
             withDuration: 2,
             delay: 0,
             options: .curveEaseOut
-        ) {
+        ) { [weak self] in
+            guard let self = self else { return }
             self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
             self.view.layoutIfNeeded()
         } completion: { _ in

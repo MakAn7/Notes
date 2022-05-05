@@ -21,7 +21,8 @@ class ListView: UIView {
     }
 
     private func setViews() {
-        self.backgroundColor = Colors.shared.viewBackround
+        backgroundColor = Colors.shared.viewBackround
+        toDoTableView.allowsMultipleSelectionDuringEditing = true
         toDoTableView.register(ListCell.self, forCellReuseIdentifier: ListCell.reuseId)
         toDoTableView.separatorStyle = .none
         toDoTableView.showsVerticalScrollIndicator = false
@@ -49,12 +50,12 @@ class ListView: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.heightAnchor.constraint(equalToConstant: 22),
 
-            toDoTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 26),
-            toDoTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
-            toDoTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
+            toDoTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
+            toDoTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 14),
+            toDoTableView.centerXAnchor.constraint(equalTo: centerXAnchor),
             toDoTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -9),
 
-            addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -4),
+            addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -6),
             addButton.heightAnchor.constraint(equalToConstant: 50),
             addButton.widthAnchor.constraint(equalToConstant: 50)
         ])
