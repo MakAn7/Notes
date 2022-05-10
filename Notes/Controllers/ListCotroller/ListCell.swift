@@ -21,18 +21,29 @@ class ListCell: UITableViewCell {
         setConstraints()
     }
 
-//    override func layoutSubviews() {
-//          super.layoutSubviews()
-//          let margins = UIEdgeInsets(top: -5, left: 0, bottom: -10, right: 40)
-//          contentView.frame = contentView.frame.inset(by: margins)
-//
-//        contentView.backgroundColor = .red
-//    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        for control in self.subviews {
+            if control.isMember(of: NSClassFromString("UITableViewCellEditControl")!) {
+                for view in control.subviews {
+                    if view.isKind(of: UIImageView.self) {
+                        guard let image = view as? UIImageView else { return }
+                        if self.isSelected {
+                            image.image = UIImage(named: "blueCircle")
+                        } else {
+                            image.image = UIImage(named: "grayCircle")
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private func setViews() {
         layer.borderWidth = 2
         layer.borderColor = Colors.shared.viewBackround?.cgColor
         layer.cornerRadius = 15
+        layer.masksToBounds = true
 
         subContentView.backgroundColor = .white
         subContentView.layer.cornerRadius = 15
@@ -62,20 +73,20 @@ class ListCell: UITableViewCell {
             subContentView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             subContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
 
-            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            headerLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 16),
-            headerLabel.widthAnchor.constraint(equalToConstant: 300),
+            headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            headerLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
+            headerLabel.widthAnchor.constraint(equalToConstant: 250),
             headerLabel.heightAnchor.constraint(equalToConstant: 18),
 
             descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 3),
-            descriptionLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 16),
+            descriptionLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
             descriptionLabel.widthAnchor.constraint(equalToConstant: 326),
             descriptionLabel.heightAnchor.constraint(equalToConstant: 14),
 
-            dateLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 16),
+            dateLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
             dateLabel.heightAnchor.constraint(equalToConstant: 10),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -13)
+            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -7)
         ])
     }
     required init?(coder: NSCoder) {

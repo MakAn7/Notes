@@ -76,6 +76,7 @@ class ToDoController: UIViewController {
     }
 
     private func pushToDo() {
+        delegate?.updateConstraints()
         if let toDo = createToDo() {
             switch state {
             case .new:
@@ -179,7 +180,7 @@ extension ToDoController {
         setNavigationRightItem(isOn: false)
     }
 }
-// MARK: - Error alert
+// MARK: - Info Alert
 extension ToDoController {
     func alertShowError(message: String, title: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

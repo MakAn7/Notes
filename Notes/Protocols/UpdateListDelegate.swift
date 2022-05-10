@@ -7,4 +7,5 @@
 
 protocol UpdateListDelegate: AnyObject {
     func updateViews()
+    func updateConstraints()
 }
