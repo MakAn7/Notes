@@ -101,7 +101,7 @@ class ToDoController: UIViewController {
 
         if toDo.isEmpty {
             self.isMovingFromParent ? nil :
-            alertShowError(message: "Заполните заголовок и поле заметки .", title: "Внимание !")
+            alertShowError(message: "Заполните заголовок и поле заметки .", title: nil)
             return nil
         }
             let currentToDo = ToDo(
@@ -178,14 +178,5 @@ extension ToDoController {
     private func keyboardDidHide() {
         toDoView.toDoTextView.contentInset = .zero
         setNavigationRightItem(isOn: false)
-    }
-}
-// MARK: - Info Alert
-extension ToDoController {
-    func alertShowError(message: String, title: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Хорошо", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true)
     }
 }

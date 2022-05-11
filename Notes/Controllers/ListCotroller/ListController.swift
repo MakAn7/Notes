@@ -11,7 +11,9 @@ class ListController: UIViewController, UpdateListDelegate {
     let listView = ListView()
     var todosArray: [ToDo] = [] {
         didSet {
-            listView.toDoTableView.reloadData()
+            if todosArray.count >= oldValue.count {
+                listView.toDoTableView.reloadData()
+            }
         }
     }
     var selectRows = [IndexPath]()
@@ -42,7 +44,7 @@ class ListController: UIViewController, UpdateListDelegate {
             title: "Выбрать",
             style: .plain,
             target: self,
-            action: #selector(updateSelectRightButton)
+            action: #selector(updateStateRightButton)
         )
         navigationItem.rightBarButtonItem?.setTitleTextAttributes(
             [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
@@ -50,8 +52,8 @@ class ListController: UIViewController, UpdateListDelegate {
     }
 
     @objc
-    func updateSelectRightButton () {
-        if !todosArray.isEmpty && !listView.toDoTableView.isEditing {
+    func updateStateRightButton () {
+        if todosArray.count >= 1 && listView.toDoTableView.isEditing == false {
             listView.toDoTableView.setEditing(true, animated: true)
             UIView.transition(
                 with: listView.addButton,
@@ -59,18 +61,16 @@ class ListController: UIViewController, UpdateListDelegate {
                 options: .transitionCrossDissolve
             ) {
                 self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
-            } completion: { _ in
                 self.navigationItem.rightBarButtonItem?.title = "Готово"
             }
         } else {
             UIView.transition(
                 with: listView.addButton,
-                duration: 1,
+                duration: 0.4,
                 options: .transitionFlipFromBottom
             ) {
                 self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
                 self.listView.toDoTableView.isEditing = false
-            } completion: { _ in
                 self.navigationItem.rightBarButtonItem?.title = "Выбрать"
             }
         }
@@ -90,30 +90,35 @@ class ListController: UIViewController, UpdateListDelegate {
 
     private func didSelectAndDeselectMultipleRows(tableView: UITableView, indexPath: IndexPath) {
         selectRows.removeAll()
-        guard let indexRow = tableView.indexPathsForSelectedRows else { return }
-        selectRows = indexRow
+        if let indexRow = tableView.indexPathsForSelectedRows {
+            selectRows = indexRow
+        }
     }
 
     @objc
     private func addOrRemoveToDo() {
         if listView.toDoTableView.isEditing {
-            switch selectRows.count {
-            case  0:
-                alertShowError(message: "Вы не выбрали ни одной заметки", title: "Внимание")
-            default :
-                selectRows.sort { $0.row > $1.row }
-                for indexPath in selectRows {
-                    ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-                    todosArray.remove(at: indexPath.row)
-                    listView.toDoTableView.setEditing(false, animated: true)
-                    navigationItem.rightBarButtonItem?.title = "Выбрать"
-                    listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                }
+            if selectRows.isEmpty {
+                alertShowError(message: "Вы не выбрали ни одной заметки .", title: "Внимание .")
+            }
+            selectRows.sort { $0.row > $1.row }
+            for indexPath in selectRows {
+                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
+                todosArray.remove(at: indexPath.row)
+                listView.toDoTableView.beginUpdates()
+                listView.toDoTableView.deleteRows(
+                    at: [IndexPath(row: indexPath.row, section: 0)],
+                    with: .top
+                )
+                listView.toDoTableView.endUpdates()
+                listView.toDoTableView.setEditing(false, animated: true)
+                navigationItem.rightBarButtonItem?.title = "Выбрать"
+                listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
             }
         } else {
-        tapAddButtonWithAnimation()
+            tapAddButtonWithAnimation()
+        }
     }
-  }
 }
 
 // MARK: UITableViewDelegate, UITableViewDataSource
@@ -148,21 +153,21 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
-        let toDoVC = ToDoController(
-            state: .edit(
-                todo: todosArray[indexPath.row],
-                index: indexPath.row
-            ),
-            delegate: self
-        )
-        navigationController?.show(toDoVC, sender: nil)
+            let toDoVC = ToDoController(
+                state: .edit(
+                    todo: todosArray[indexPath.row],
+                    index: indexPath.row
+                ),
+                delegate: self
+            )
+            navigationController?.show(toDoVC, sender: nil)
         } else {
             didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
         }
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-          didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
+            didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
     }
 
     func tableView(
@@ -182,38 +187,14 @@ extension ListController {
     func showAddButtonWithAnimation() {
         listView.addButton.layer.cornerRadius = listView.addButton.frame.width / 2
         UIView.animate(
-            withDuration: 1,
+            withDuration: 0.2,
             delay: 0,
             options: .curveEaseOut
-        ) { [weak self] in
-            guard let self = self else { return }
+        ) {
             self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
             self.view.layoutIfNeeded()
-        } completion: { _ in
-            UIView.animate(
-                withDuration: 0.8,
-                delay: 0.1,
-                usingSpringWithDamping: 0.1,
-                initialSpringVelocity: 0.1,
-                options: [.allowUserInteraction]
-            ) {
-                self.listView.addButton.transform = CGAffineTransform(
-                    scaleX: 0.8,
-                    y: 0.8
-                )
-            } completion: { _ in
-                UIView.animate(
-                    withDuration: 0.25,
-                    delay: 0,
-                    options: .curveEaseInOut
-                ) {
-                    self.listView.addButton.transform = CGAffineTransform(
-                        scaleX: 1,
-                        y: 1
-                    )
-                }
-            }
         }
+        springAnimationWithAddButton()
     }
 
     func tapAddButtonWithAnimation() {
@@ -222,8 +203,8 @@ extension ListController {
             self.view.layoutIfNeeded()
         }
         UIView.animate(
-            withDuration: 0.7,
-            delay: 0.7,
+            withDuration: 0.5,
+            delay: 0.5,
             options: .curveEaseIn
         ) {
             self.listView.addButtonBottomConstraint.constant += self.view.frame.height
@@ -234,13 +215,30 @@ extension ListController {
             self.navigationController?.show(toDoVC, sender: nil)
         }
     }
-}
-// MARK: - Info Alert
-extension ListController {
-    func alertShowError(message: String, title: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Хорошо", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true)
+
+    func springAnimationWithAddButton() {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.6,
+            usingSpringWithDamping: 0.1,
+            initialSpringVelocity: 0.1,
+            options: [.allowUserInteraction]
+        ) {
+            self.listView.addButton.transform = CGAffineTransform(
+                scaleX: 0.8,
+                y: 0.8
+            )
+        } completion: { _ in
+            UIView.animate(
+                withDuration: 0.1,
+                delay: 0,
+                options: .curveEaseInOut
+            ) {
+                self.listView.addButton.transform = CGAffineTransform(
+                    scaleX: 1,
+                    y: 1
+                )
+            }
+        }
     }
 }

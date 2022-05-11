@@ -23,9 +23,9 @@ class ToDoView: UIView {
         self.backgroundColor = Colors.shared.viewBackround
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
         toDoTextView.backgroundColor = Colors.shared.viewBackround
-        toDoTextView.layer.sublayerTransform = CATransform3DMakeTranslation(15, 0, 0)
         toDoTextView.autocorrectionType = .no
         toDoTextView.spellCheckingType = .no
+        toDoTextView.textContainer.lineFragmentPadding = 15
 
         dateTextField.textColor = Colors.shared.textColor
         dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
@@ -53,10 +53,10 @@ class ToDoView: UIView {
 
             titleTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 22),
             titleTextField.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20),
-            titleTextField.heightAnchor.constraint(equalToConstant: 24),
+            titleTextField.heightAnchor.constraint(equalToConstant: 26),
             titleTextField.widthAnchor.constraint(equalToConstant: 300),
 
-            toDoTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 9),
+            toDoTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 7),
             toDoTextView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
             toDoTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
             toDoTextView.bottomAnchor.constraint(equalTo: bottomAnchor)

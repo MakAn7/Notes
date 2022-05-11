@@ -28,6 +28,7 @@ class ListCell: UITableViewCell {
                 for view in control.subviews {
                     if view.isKind(of: UIImageView.self) {
                         guard let image = view as? UIImageView else { return }
+                        image.frame = CGRect(x: 7, y: 5, width: 16, height: 16)
                         if self.isSelected {
                             image.image = UIImage(named: "blueCircle")
                         } else {
@@ -40,13 +41,9 @@ class ListCell: UITableViewCell {
     }
 
     private func setViews() {
-        layer.borderWidth = 2
-        layer.borderColor = Colors.shared.viewBackround?.cgColor
-        layer.cornerRadius = 15
-        layer.masksToBounds = true
+        layer.backgroundColor = .none
 
-        subContentView.backgroundColor = .white
-        subContentView.layer.cornerRadius = 15
+        subContentView.backgroundColor = .clear
         subContentView.clipsToBounds = true
 
         contentView.addSubview(subContentView)
@@ -60,7 +57,8 @@ class ListCell: UITableViewCell {
 
         selectionStyle = .gray
         backgroundConfiguration?.backgroundColor = .white
-        backgroundConfiguration?.cornerRadius = 15
+        backgroundConfiguration?.cornerRadius = 14
+        backgroundConfiguration?.backgroundInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
             }
 
     private func setConstraints() {
@@ -71,7 +69,7 @@ class ListCell: UITableViewCell {
             subContentView.topAnchor.constraint(equalTo: topAnchor),
             subContentView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             subContentView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            subContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            subContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             headerLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
@@ -80,13 +78,13 @@ class ListCell: UITableViewCell {
 
             descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 3),
             descriptionLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
-            descriptionLabel.widthAnchor.constraint(equalToConstant: 326),
+            descriptionLabel.rightAnchor.constraint(equalTo: subContentView.rightAnchor, constant: -20),
             descriptionLabel.heightAnchor.constraint(equalToConstant: 14),
 
             dateLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
-            dateLabel.heightAnchor.constraint(equalToConstant: 10),
+            dateLabel.heightAnchor.constraint(equalToConstant: 11),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
-            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -7)
+            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10)
         ])
     }
     required init?(coder: NSCoder) {
