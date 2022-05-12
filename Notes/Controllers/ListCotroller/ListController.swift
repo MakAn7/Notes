@@ -78,6 +78,7 @@ class ListController: UIViewController, UpdateListDelegate {
 
     func updateViews() {
         todosArray = ToDoSettings.shared.fetchArray()
+        print("количество заметок тудос аррэй \(todosArray.count) " )
     }
 
     func updateConstraints() {
@@ -104,7 +105,7 @@ class ListController: UIViewController, UpdateListDelegate {
             selectRows.sort { $0.row > $1.row }
             for indexPath in selectRows {
                 ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-                todosArray.remove(at: indexPath.row)
+                todosArray = ToDoSettings.shared.fetchArray()
                 listView.toDoTableView.beginUpdates()
                 listView.toDoTableView.deleteRows(
                     at: [IndexPath(row: indexPath.row, section: 0)],
@@ -174,10 +175,13 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Удалить") { (_, _, _) in
+        let delete = UIContextualAction(style: .destructive, title: nil) { (_, _, _) in
             ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
             self.todosArray.remove(at: indexPath.row)
+            self.listView.toDoTableView.reloadData()
         }
+        delete.backgroundColor = Colors.shared.viewBackround
+        delete.image = UIImage(named: "trash")
         return UISwipeActionsConfiguration(actions: [delete])
     }
 }
@@ -217,28 +221,23 @@ extension ListController {
     }
 
     func springAnimationWithAddButton() {
+        let frame = listView.addButton.frame
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 1,
             delay: 0.6,
             usingSpringWithDamping: 0.1,
-            initialSpringVelocity: 0.1,
-            options: [.allowUserInteraction]
+            initialSpringVelocity: 5,
+            options: [.allowUserInteraction, .curveEaseOut]
         ) {
-            self.listView.addButton.transform = CGAffineTransform(
-                scaleX: 0.8,
-                y: 0.8
+            self.listView.addButton.frame = CGRect(
+                x: frame.origin.x,
+                y: frame.origin.y - 5,
+                width: frame.width ,
+                height: frame.height
             )
-        } completion: { _ in
-            UIView.animate(
-                withDuration: 0.1,
-                delay: 0,
-                options: .curveEaseInOut
-            ) {
-                self.listView.addButton.transform = CGAffineTransform(
-                    scaleX: 1,
-                    y: 1
-                )
-            }
+        }
+        UIView.animate(withDuration: 0.2) {
+            self.listView.addButton.frame.origin.y += 5
         }
     }
 }
