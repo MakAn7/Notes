@@ -70,7 +70,7 @@ class ListController: UIViewController, UpdateListDelegate {
                 options: .transitionFlipFromBottom
             ) {
                 self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                self.listView.toDoTableView.isEditing = false
+                self.listView.toDoTableView.setEditing(false, animated: true)
                 self.navigationItem.rightBarButtonItem?.title = "Выбрать"
             }
         }
@@ -78,7 +78,6 @@ class ListController: UIViewController, UpdateListDelegate {
 
     func updateViews() {
         todosArray = ToDoSettings.shared.fetchArray()
-        print("количество заметок тудос аррэй \(todosArray.count) " )
     }
 
     func updateConstraints() {
@@ -105,7 +104,7 @@ class ListController: UIViewController, UpdateListDelegate {
             selectRows.sort { $0.row > $1.row }
             for indexPath in selectRows {
                 ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-                todosArray = ToDoSettings.shared.fetchArray()
+                updateViews()
                 listView.toDoTableView.beginUpdates()
                 listView.toDoTableView.deleteRows(
                     at: [IndexPath(row: indexPath.row, section: 0)],
@@ -115,6 +114,7 @@ class ListController: UIViewController, UpdateListDelegate {
                 listView.toDoTableView.setEditing(false, animated: true)
                 navigationItem.rightBarButtonItem?.title = "Выбрать"
                 listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+                selectRows.removeAll()
             }
         } else {
             tapAddButtonWithAnimation()
