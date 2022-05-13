@@ -125,7 +125,7 @@ class ListController: UIViewController, UpdateListDelegate {
 // MARK: UITableViewDelegate, UITableViewDataSource
 extension ListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        todosArray.count
+            todosArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -191,14 +191,16 @@ extension ListController {
     func showAddButtonWithAnimation() {
         listView.addButton.layer.cornerRadius = listView.addButton.frame.width / 2
         UIView.animate(
-            withDuration: 0.2,
+            withDuration: 0.5,
             delay: 0,
-            options: .curveEaseOut
-        ) {
-            self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
-            self.view.layoutIfNeeded()
-        }
-        springAnimationWithAddButton()
+            options: .curveEaseOut,
+            animations: {
+                self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                self.springAnimationWithAddButton()
+            }
+        )
     }
 
     func tapAddButtonWithAnimation() {
@@ -209,35 +211,42 @@ extension ListController {
         UIView.animate(
             withDuration: 0.5,
             delay: 0.5,
-            options: .curveEaseIn
-        ) {
-            self.listView.addButtonBottomConstraint.constant += self.view.frame.height
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            let toDoVC = ToDoController(state: .new, delegate: self)
-            toDoVC.modalPresentationStyle = .fullScreen
-            self.navigationController?.show(toDoVC, sender: nil)
-        }
+            options: .curveEaseIn,
+            animations: {
+                self.listView.addButtonBottomConstraint.constant += self.view.frame.height
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                let toDoVC = ToDoController(state: .new, delegate: self)
+                toDoVC.modalPresentationStyle = .fullScreen
+                self.navigationController?.show(toDoVC, sender: nil)
+            }
+        )
     }
 
     func springAnimationWithAddButton() {
         let frame = listView.addButton.frame
         UIView.animate(
             withDuration: 1,
-            delay: 0.6,
+            delay: 0,
             usingSpringWithDamping: 0.1,
             initialSpringVelocity: 5,
-            options: [.allowUserInteraction, .curveEaseOut]
-        ) {
-            self.listView.addButton.frame = CGRect(
-                x: frame.origin.x,
-                y: frame.origin.y - 5,
-                width: frame.width ,
-                height: frame.height
-            )
-        }
-        UIView.animate(withDuration: 0.2) {
-            self.listView.addButton.frame.origin.y += 5
-        }
+            options: [.allowUserInteraction, .curveEaseOut],
+            animations: {
+                self.listView.addButton.frame = CGRect(
+                    x: frame.origin.x,
+                    y: frame.origin.y - 15,
+                    width: frame.width ,
+                    height: frame.height
+                )
+            }
+        )
+        UIView.animate(
+            withDuration: 0.1,
+            delay: 0,
+            options: [.curveEaseOut],
+            animations: {
+                self.listView.addButton.frame.origin.y += 15
+            }
+        )
     }
 }
