@@ -168,7 +168,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-            didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
+        didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
     }
 
     func tableView(

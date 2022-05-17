@@ -29,7 +29,6 @@ class ListCell: UITableViewCell {
                     if view.isKind(of: UIImageView.self) {
                         guard let image = view as? UIImageView else { return }
                         if self.isEditing {
-                            image.isHidden = false
                             image.frame = CGRect(x: 7, y: 5, width: 16, height: 16)
                             if self.isSelected {
                                 image.image = UIImage(named: "blueCircle")
