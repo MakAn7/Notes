@@ -24,13 +24,9 @@ class Worker {
         }
 
         URLSession.shared.dataTask(with: url) { date, _, error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-
             guard let date = date else {
                 completion(.failure(.noDate))
-                print(error?.localizedDescription ?? "NoDate")
+                print(error?.localizedDescription ?? "No error description")
                 return
             }
 
