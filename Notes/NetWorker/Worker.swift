@@ -29,7 +29,6 @@ class Worker {
             }
             return
         }
-
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
                 DispatchQueue.main.async {

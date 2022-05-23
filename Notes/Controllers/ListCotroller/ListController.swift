@@ -231,6 +231,7 @@ extension ListController {
             self.listView.addButtonBottomConstraint.constant -= self.listView.addButton.frame.height
             self.view.layoutIfNeeded()
         }
+
         UIView.animate(
             withDuration: 0.5,
             delay: 0.5,
@@ -263,6 +264,7 @@ extension ListController {
                 )
             }
         )
+
         UIView.animate(
             withDuration: 0.1,
             delay: 0,
