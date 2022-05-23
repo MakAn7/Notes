@@ -9,7 +9,7 @@ import Foundation
 
 enum CurrentError: Error {
     case invalidUrl
-    case noDate
+    case noData
     case decodingError
 }
 
@@ -17,15 +17,24 @@ class Worker {
     static let shared = Worker()
     private init() {}
 
-    func fetchToDos(from url: String, completion: @escaping(Result<[ToDo], CurrentError>) -> Void) {
-        guard let url = URL(string: url) else {
-            completion(.failure(.invalidUrl))
+    func fetchToDos<T: Decodable>(
+        dataType: T.Type,
+        from url: URL?,
+        onSuccess: @escaping([T]) -> Void,
+        onError: @escaping(CurrentError) -> Void
+    ) {
+        guard let url = url else {
+            DispatchQueue.main.async {
+                onError(.invalidUrl)
+            }
             return
         }
 
-        URLSession.shared.dataTask(with: url) { date, _, error in
-            guard let date = date else {
-                completion(.failure(.noDate))
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    onError(.noData)
+                }
                 print(error?.localizedDescription ?? "No error description")
                 return
             }
@@ -33,13 +42,14 @@ class Worker {
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
-                let todo = try decoder.decode([ToDo].self, from: date)
+                let todo = try decoder.decode([T].self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(todo))
+                    onSuccess(todo)
                 }
             } catch {
-                completion(.failure(.decodingError))
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    onError(.decodingError)
+                }
             }
         }.resume()
     }

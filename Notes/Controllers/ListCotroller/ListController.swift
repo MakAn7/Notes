@@ -18,15 +18,17 @@ class ListController: UIViewController, UpdateListDelegate {
     }
     var selectRows = [IndexPath]()
 
-    fileprivate func getURL(
-        tunnel: String,
-        domen: String,
-        method: String,
-        parameters: String,
-        apiKey: String
-    )
-    -> String {
-        return tunnel + domen + method + parameters + apiKey
+    fileprivate func getURL() -> URL? {
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "firebasestorage.googleapis.com"
+        component.path = "/v0/b/ios-test-ce687.appspot.com/o/Empty.json"
+        component.queryItems = [
+            URLQueryItem(name: "alt", value: "media"),
+            URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
+        ]
+
+        return component.url
     }
 
     override func viewDidLoad() {
@@ -42,13 +44,7 @@ class ListController: UIViewController, UpdateListDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listView.addButtonBottomConstraint.constant += view.bounds.height
-        fetchTodos(url: getURL(
-            tunnel: "https://",
-            domen: "firebasestorage.googleapis.com",
-            method: "/v0/b/ios-test-ce687.appspot.com/o/Empty.json",
-            parameters: "?alt=media&token=",
-            apiKey: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18"
-        ))
+        fetchTodos(url: getURL())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -64,15 +60,14 @@ class ListController: UIViewController, UpdateListDelegate {
         listView.addButtonBottomConstraint.constant  = -60
     }
 
-    private func fetchTodos(url: String) {
-        Worker.shared.fetchToDos(from: url) { result in
-            switch result {
-            case .success(let todo):
-                self.todosArray += todo
-            case .failure(let error):
-                print(error)
+    private func fetchTodos(url: URL?) {
+        Worker.shared.fetchToDos(
+            dataType: ToDo.self,
+            from: url,
+            onSuccess: { self.todosArray += $0 },
+            onError: { print($0.localizedDescription)
             }
-        }
+        )
     }
 
     private func setupNavigationBar () {
