@@ -18,6 +18,19 @@ class ListController: UIViewController, UpdateListDelegate {
     }
     var selectRows = [IndexPath]()
 
+    fileprivate func getURL() -> URL? {
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "firebasestorage.googleapis.com"
+        component.path = "/v0/b/ios-test-ce687.appspot.com/o/Empty.json"
+        component.queryItems = [
+            URLQueryItem(name: "alt", value: "media"),
+            URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
+        ]
+
+        return component.url
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view = listView
@@ -31,11 +44,30 @@ class ListController: UIViewController, UpdateListDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listView.addButtonBottomConstraint.constant += view.bounds.height
+        fetchTodos(url: getURL())
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showAddButtonWithAnimation()
+    }
+
+    func updateViews() {
+        todosArray = ToDoSettings.shared.fetchArray()
+    }
+
+    func updateConstraints() {
+        listView.addButtonBottomConstraint.constant  = -60
+    }
+
+    private func fetchTodos(url: URL?) {
+        Worker.shared.fetchToDos(
+            dataType: ToDo.self,
+            from: url,
+            onSuccess: { self.todosArray += $0 },
+            onError: { print($0.localizedDescription)
+            }
+        )
     }
 
     private func setupNavigationBar () {
@@ -74,14 +106,6 @@ class ListController: UIViewController, UpdateListDelegate {
                 self.navigationItem.rightBarButtonItem?.title = "Выбрать"
             }
         }
-    }
-
-    func updateViews() {
-        todosArray = ToDoSettings.shared.fetchArray()
-    }
-
-    func updateConstraints() {
-        listView.addButtonBottomConstraint.constant  = -60
     }
 
     private func addTargets() {
@@ -185,7 +209,6 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [delete])
     }
 }
-
 // MARK: Animations
 extension ListController {
     func showAddButtonWithAnimation() {
@@ -208,6 +231,7 @@ extension ListController {
             self.listView.addButtonBottomConstraint.constant -= self.listView.addButton.frame.height
             self.view.layoutIfNeeded()
         }
+
         UIView.animate(
             withDuration: 0.5,
             delay: 0.5,
@@ -240,6 +264,7 @@ extension ListController {
                 )
             }
         )
+
         UIView.animate(
             withDuration: 0.1,
             delay: 0,

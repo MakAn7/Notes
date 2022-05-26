@@ -21,6 +21,7 @@
 		E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */; };
 		E26F9045282C7654006761C2 /* InfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F9044282C7654006761C2 /* InfoAlert.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
+		E2CC579D283405A4002C99A5 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CC579C283405A4002C99A5 /* Worker.swift */; };
 		E2F82F182805BE8900621B67 /* UpdateListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F82F172805BE8900621B67 /* UpdateListDelegate.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
 		E2F82F1D2805CBA700621B67 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1C2805CBA700621B67 /* SFProText-Regular.ttf */; };
@@ -49,6 +50,7 @@
 		E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSettings.swift; sourceTree = "<group>"; };
 		E26F9044282C7654006761C2 /* InfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlert.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
+		E2CC579C283405A4002C99A5 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		E2F82F172805BE8900621B67 /* UpdateListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateListDelegate.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
 		E2F82F1C2805CBA700621B67 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 				AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E20FC219283502D300CE052C /* NetWorker */ = {
+			isa = PBXGroup;
+			children = (
+				E2CC579C283405A4002C99A5 /* Worker.swift */,
+			);
+			path = NetWorker;
 			sourceTree = "<group>";
 		};
 		E23F49AD28115778004D7B5E /* ListCotroller */ = {
@@ -129,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				E26D4D0E27EDC701008233F8 /* Controllers */,
+				E20FC219283502D300CE052C /* NetWorker */,
 				E2A3076C27F7523C00BEEACB /* Models */,
 				E26F9046282C766D006761C2 /* Extensions */,
 				E2A3071E27EF451C00BEEACB /* UserDefaults */,
@@ -355,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */,
+				E2CC579D283405A4002C99A5 /* Worker.swift in Sources */,
 				E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E26D4CFF27EDC44E008233F8 /* ToDoController.swift in Sources */,

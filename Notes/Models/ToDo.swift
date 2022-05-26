@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ToDo {
+struct ToDo: Decodable {
     let title: String
     let description: String
     let date: Date?
@@ -18,6 +18,12 @@ struct ToDo {
         }
             return false
         }
+
+    enum CodingKeys: String, CodingKey {
+        case title = "header"
+        case description = "text"
+        case date
+    }
 
     var dictionaryOfToDo: [String: Any] {
         var dictToDo: [String: Any] = [:]
