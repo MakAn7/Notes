@@ -26,7 +26,7 @@ class ToDoController: UIViewController {
 
         switch state {
         case .new:
-            self.todo = ToDo(title: "", description: "", date: nil)
+            self.todo = ToDo(title: "", description: "", date: nil, userShareIcon: nil)
         case .edit(let todo, let index):
             self.todo = todo
             self.indexToDo = index
@@ -96,7 +96,8 @@ class ToDoController: UIViewController {
         let toDo = ToDo(
             title: titleText,
             description: descriptionText,
-            date: nil
+            date: nil,
+            userShareIcon: nil
         )
 
         if toDo.isEmpty {
@@ -107,7 +108,8 @@ class ToDoController: UIViewController {
             let currentToDo = ToDo(
                 title: titleText,
                 description: descriptionText,
-                date: setLongCurrentDate()
+                date: setLongCurrentDate(),
+                userShareIcon: nil
             )
             return currentToDo
     }

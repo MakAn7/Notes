@@ -14,6 +14,21 @@ class ListCell: UITableViewCell {
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
+    let activityIndicator = UIActivityIndicatorView()
+    var iconImageView = UIImageView()
+
+    var image: UIImage? {
+        get {
+            return iconImageView.image
+        }
+        set {
+            iconImageView.image = newValue
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+        }
+    }
+
+    var addIconImageRightConstraint: NSLayoutConstraint!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,6 +59,21 @@ class ListCell: UITableViewCell {
         }
     }
 
+    func fetchIcon (from todo: ToDo) {
+        if todo.userShareIcon != nil {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            Worker.shared.fetchImage(
+                with: todo.userShareIcon,
+                onSuccess: { self.image = UIImage(data: $0) },
+                onError: { print($0.localizedDescription)
+                }
+            )
+        } else {
+            iconImageView.isHidden = true
+        }
+    }
+
     private func setViews() {
         layer.backgroundColor = .none
 
@@ -63,11 +93,27 @@ class ListCell: UITableViewCell {
         backgroundConfiguration?.backgroundColor = .white
         backgroundConfiguration?.cornerRadius = 14
         backgroundConfiguration?.backgroundInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+
+        iconImageView.backgroundColor = .clear
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.clipsToBounds = true
+        iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
     }
 
     private func setConstraints() {
-        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel, subContentView])
-        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subContentView)
+        Helper.tamicOff(
+            views:
+                [headerLabel,
+                 descriptionLabel,
+                 dateLabel,
+                 subContentView,
+                 iconImageView,
+                 activityIndicator
+                ]
+        )
+
+        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel, iconImageView], superView: subContentView)
+        Helper.add(subviews: [activityIndicator], superView: iconImageView)
 
         NSLayoutConstraint.activate([
             subContentView.topAnchor.constraint(equalTo: topAnchor),
@@ -88,8 +134,26 @@ class ListCell: UITableViewCell {
             dateLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
             dateLabel.heightAnchor.constraint(equalToConstant: 11),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
-            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10)
+            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10),
+
+            iconImageView.widthAnchor.constraint(equalToConstant: 24),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24),
+            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -15),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
         ])
+
+        addIconImageRightConstraint = NSLayoutConstraint(
+            item: iconImageView,
+            attribute: .right,
+            relatedBy: .equal,
+            toItem: subContentView,
+            attribute: .right,
+            multiplier: 1,
+            constant: -15
+        )
+        subContentView.addConstraint(addIconImageRightConstraint)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

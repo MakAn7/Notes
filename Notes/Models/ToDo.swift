@@ -11,6 +11,7 @@ struct ToDo: Decodable {
     let title: String
     let description: String
     let date: Date?
+    let userShareIcon: String?
 
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {
@@ -22,7 +23,8 @@ struct ToDo: Decodable {
     enum CodingKeys: String, CodingKey {
         case title = "header"
         case description = "text"
-        case date
+        case date = "date"
+        case userShareIcon = "userShareIcon"
     }
 
     var dictionaryOfToDo: [String: Any] {
@@ -33,10 +35,11 @@ struct ToDo: Decodable {
         return dictToDo
     }
 
-    init(title: String, description: String, date: Date?) {
+    init(title: String, description: String, date: Date?, userShareIcon: String?) {
         self.title = title
         self.description = description
         self.date = date
+        self.userShareIcon = userShareIcon
     }
 
     init?(dictToDo: [String: Any]) {
@@ -47,8 +50,12 @@ struct ToDo: Decodable {
         else {
             return nil
         }
+
+        let userShareIcon = (dictToDo["userShareIcon"] as? String) ?? nil
+
         self.title = title
         self.description = description
         self.date = date
+        self.userShareIcon = userShareIcon
     }
 }

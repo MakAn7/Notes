@@ -18,19 +18,6 @@ class ListController: UIViewController, UpdateListDelegate {
     }
     var selectRows = [IndexPath]()
 
-    fileprivate func getURL() -> URL? {
-        var component = URLComponents()
-        component.scheme = "https"
-        component.host = "firebasestorage.googleapis.com"
-        component.path = "/v0/b/ios-test-ce687.appspot.com/o/Empty.json"
-        component.queryItems = [
-            URLQueryItem(name: "alt", value: "media"),
-            URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
-        ]
-
-        return component.url
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view = listView
@@ -60,7 +47,19 @@ class ListController: UIViewController, UpdateListDelegate {
         listView.addButtonBottomConstraint.constant  = -60
     }
 
-    private func fetchTodos(url: URL?) {
+    fileprivate func getURL() -> String? {
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "firebasestorage.googleapis.com"
+        component.path = "/v0/b/ios-test-ce687.appspot.com/o/lesson8.json"
+        component.queryItems = [
+            URLQueryItem(name: "alt", value: "media"),
+            URLQueryItem(name: "token", value: "215055df-172d-4b98-95a0-b353caca1424")
+        ]
+        return component.string
+    }
+
+    private func fetchTodos(url: String?) {
         Worker.shared.fetchToDos(
             dataType: ToDo.self,
             from: url,
@@ -90,21 +89,23 @@ class ListController: UIViewController, UpdateListDelegate {
             UIView.transition(
                 with: listView.addButton,
                 duration: 1,
-                options: .transitionCrossDissolve
-            ) {
+                options: .transitionCrossDissolve,
+                animations: {
                 self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
-                self.navigationItem.rightBarButtonItem?.title = "Готово"
-            }
+                    self.navigationItem.rightBarButtonItem?.title = "Готово"
+                }
+            )
         } else {
             UIView.transition(
                 with: listView.addButton,
                 duration: 0.4,
-                options: .transitionFlipFromBottom
-            ) {
+                options: .transitionFlipFromBottom,
+                animations: {
                 self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
                 self.listView.toDoTableView.setEditing(false, animated: true)
                 self.navigationItem.rightBarButtonItem?.title = "Выбрать"
-            }
+                }
+            )
         }
     }
 
@@ -169,6 +170,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         }
 
         cell.dateLabel.text = convertDateToString(date: date, short: true)
+        cell.fetchIcon(from: todosArray[indexPath.row])
         return cell
     }
 

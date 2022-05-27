@@ -19,16 +19,19 @@ class Worker {
 
     func fetchToDos<T: Decodable>(
         dataType: T.Type,
-        from url: URL?,
+        from url: String?,
         onSuccess: @escaping([T]) -> Void,
         onError: @escaping(CurrentError) -> Void
     ) {
-        guard let url = url else {
+        guard
+            let stringUrl = url,
+            let url = URL(string: stringUrl) else {
             DispatchQueue.main.async {
                 onError(.invalidUrl)
             }
             return
         }
+
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -51,5 +54,30 @@ class Worker {
                 }
             }
         }.resume()
+    }
+
+    func fetchImage(with url: String?, onSuccess: @escaping(Data) -> Void, onError: @escaping(CurrentError) -> Void) {
+        DispatchQueue.global(qos: .utility).async {
+            guard let url = URL(string: url ?? "") else {
+                DispatchQueue.main.async {
+                    onError(.invalidUrl)
+                }
+                return
+            }
+
+            guard let imageDate = try? Data(contentsOf: url) else {
+                DispatchQueue.main.async {
+                    onError(.noData)
+                }
+                return
+            }
+
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + .seconds(10),
+                execute: {
+                    onSuccess(imageDate)
+                }
+            )
+        }
     }
 }

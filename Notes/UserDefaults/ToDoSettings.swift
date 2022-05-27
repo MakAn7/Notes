@@ -11,6 +11,7 @@ import UIKit
     case title = "Title"
     case description = "Description"
     case date = "Date"
+    case userShareIcon = "UserShareIcon"
     case array = "Array"
 }
 
