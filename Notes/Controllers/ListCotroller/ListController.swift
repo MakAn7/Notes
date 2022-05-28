@@ -161,7 +161,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Don't get cell")
         }
 
-        cell.fetchIcon(from: todosArray[indexPath.row])
+        cell.setContentToListCell(from: todosArray[indexPath.row])
         return cell
     }
 

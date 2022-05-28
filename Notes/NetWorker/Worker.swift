@@ -10,6 +10,7 @@ import Foundation
 enum CurrentError: Error {
     case invalidUrl
     case noData
+    case noResponse
     case decodingError
 }
 
@@ -56,28 +57,37 @@ class Worker {
         }.resume()
     }
 
-    func fetchImage(with url: String?, onSuccess: @escaping(Data) -> Void, onError: @escaping(CurrentError) -> Void) {
+    func fetchImage(
+        with url: URL,
+        onSuccess: @escaping(Data, URLResponse) -> Void,
+        onError: @escaping(CurrentError) -> Void
+    ) {
         DispatchQueue.global(qos: .utility).async {
-            guard let url = URL(string: url ?? "") else {
-                DispatchQueue.main.async {
-                    onError(.invalidUrl)
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        onError(.noData)
+                    }
+                    print(error?.localizedDescription ?? "No error description")
+                    return
                 }
-                return
-            }
+                guard let response = response else {
+                    DispatchQueue.main.async {
+                        onError(.noResponse)
+                    }
+                    return
+                }
+                guard url == response.url else {
+                    return
+                }
 
-            guard let imageDate = try? Data(contentsOf: url) else {
-                DispatchQueue.main.async {
-                    onError(.noData)
-                }
-                return
-            }
-
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + .seconds(10),
-                execute: {
-                    onSuccess(imageDate)
-                }
-            )
+                DispatchQueue.main.asyncAfter(
+                    deadline: .now() + .seconds(10),
+                    execute: {
+                        onSuccess(data, response)
+                    }
+                )
+            }.resume()
         }
     }
 }

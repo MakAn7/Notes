@@ -15,18 +15,18 @@ class ListCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView()
-    var iconImageView = UIImageView()
+    var iconImageView = UserShareIconImageView()
 
-    var image: UIImage? {
-        get {
-            return iconImageView.image
-        }
-        set {
-            iconImageView.image = newValue
-            activityIndicator.stopAnimating()
-            activityIndicator.isHidden = true
-        }
-    }
+//    var image: UIImage? {
+//        get {
+//            return iconImageView.image
+//        }
+//        set {
+//            iconImageView.image = newValue
+//            activityIndicator.stopAnimating()
+//            activityIndicator.isHidden = true
+//        }
+//    }
 
     var addIconImageRightConstraint: NSLayoutConstraint!
 
@@ -59,7 +59,7 @@ class ListCell: UITableViewCell {
         }
     }
 
-    func fetchIcon (from todo: ToDo) {
+    func setContentToListCell (from todo: ToDo) {
         headerLabel.text = todo.title
         descriptionLabel.text = todo.description
 
@@ -72,12 +72,7 @@ class ListCell: UITableViewCell {
         if todo.userShareIcon != nil {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
-            Worker.shared.fetchImage(
-                with: todo.userShareIcon,
-                onSuccess: { self.image = UIImage(data: $0) },
-                onError: { print($0.localizedDescription)
-                }
-            )
+            iconImageView.fetchImage(with: todo.userShareIcon)
         } else {
             iconImageView.isHidden = true
         }
@@ -148,21 +143,11 @@ class ListCell: UITableViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 24),
             iconImageView.heightAnchor.constraint(equalToConstant: 24),
             iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -15),
+            iconImageView.rightAnchor.constraint(equalTo: subContentView.rightAnchor, constant: -15),
 
             activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
         ])
-
-        addIconImageRightConstraint = NSLayoutConstraint(
-            item: iconImageView,
-            attribute: .right,
-            relatedBy: .equal,
-            toItem: subContentView,
-            attribute: .right,
-            multiplier: 1,
-            constant: -15
-        )
-        subContentView.addConstraint(addIconImageRightConstraint)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
