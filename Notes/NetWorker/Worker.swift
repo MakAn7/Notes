@@ -13,7 +13,8 @@ enum CurrentError: Error {
     case noResponse
     case decodingError
 }
-
+// В данном классе в closure  нет необходимости ставить слабые ссылки или безхозные,
+// поскольку нет в области захвата свойств класса.
 class Worker {
     static let shared = Worker()
     private init() {}
@@ -62,7 +63,7 @@ class Worker {
         onSuccess: @escaping(Data, URLResponse) -> Void,
         onError: @escaping(CurrentError) -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data else {
                     DispatchQueue.main.async {

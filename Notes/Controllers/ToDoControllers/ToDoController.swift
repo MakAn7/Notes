@@ -26,7 +26,7 @@ class ToDoController: UIViewController {
 
         switch state {
         case .new:
-            self.todo = ToDo(title: "", description: "", date: nil, userShareIcon: nil)
+            todo = ToDo(title: "", description: "", date: nil, userShareIcon: nil)
         case .edit(let todo, let index):
             self.todo = todo
             self.indexToDo = index
@@ -116,7 +116,7 @@ class ToDoController: UIViewController {
 
     @objc
     private func updateToDo() {
-        self.todo = createToDo()
+        todo = createToDo()
         toDoView.endEditing(true)
     }
 }

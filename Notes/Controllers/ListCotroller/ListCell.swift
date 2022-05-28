@@ -17,19 +17,6 @@ class ListCell: UITableViewCell {
     let activityIndicator = UIActivityIndicatorView()
     var iconImageView = UserShareIconImageView()
 
-//    var image: UIImage? {
-//        get {
-//            return iconImageView.image
-//        }
-//        set {
-//            iconImageView.image = newValue
-//            activityIndicator.stopAnimating()
-//            activityIndicator.isHidden = true
-//        }
-//    }
-
-    var addIconImageRightConstraint: NSLayoutConstraint!
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setViews()
@@ -70,7 +57,6 @@ class ListCell: UITableViewCell {
         dateLabel.text = convertDateToString(date: date, short: true)
 
         if todo.userShareIcon != nil {
-            activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             iconImageView.fetchImage(with: todo.userShareIcon)
         } else {
@@ -98,8 +84,8 @@ class ListCell: UITableViewCell {
         backgroundConfiguration?.cornerRadius = 14
         backgroundConfiguration?.backgroundInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
 
-        iconImageView.backgroundColor = .clear
-        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.backgroundColor = .red
+        iconImageView.contentMode = .scaleAspectFill
         iconImageView.clipsToBounds = true
         iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
     }

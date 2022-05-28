@@ -21,9 +21,10 @@ class UserShareIconImageView: UIImageView {
         }
         Worker.shared.fetchImage(
             with: imageURl,
-            onSuccess: {
-                self.image = UIImage(data: $0)
-                self.pushDataToCache(with: $0, and: $1)
+            // image опциональное свойство, поэтому weak ставлю в области захвата .
+            onSuccess: { [weak self] in
+                self?.image = UIImage(data: $0)
+                self?.pushDataToCache(with: $0, and: $1)
             },
             onError: { print($0.localizedDescription)
             }
