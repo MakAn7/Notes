@@ -161,15 +161,6 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Don't get cell")
         }
 
-        let currentToDo = todosArray[indexPath.row]
-        cell.headerLabel.text = currentToDo.title
-        cell.descriptionLabel.text = currentToDo.description
-
-        guard let date = currentToDo.date else {
-            fatalError("\(#function) Don't get Date ")
-        }
-
-        cell.dateLabel.text = convertDateToString(date: date, short: true)
         cell.fetchIcon(from: todosArray[indexPath.row])
         return cell
     }

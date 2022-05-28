@@ -60,6 +60,15 @@ class ListCell: UITableViewCell {
     }
 
     func fetchIcon (from todo: ToDo) {
+        headerLabel.text = todo.title
+        descriptionLabel.text = todo.description
+
+        guard let date = todo.date else {
+            fatalError("\(#function) Don't get Date ")
+        }
+
+        dateLabel.text = convertDateToString(date: date, short: true)
+
         if todo.userShareIcon != nil {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
