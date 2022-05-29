@@ -14,13 +14,12 @@ class ToDoView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
         setViews()
         setConstraints()
     }
 
     private func setViews() {
-        self.backgroundColor = Colors.shared.viewBackround
+        backgroundColor = Colors.shared.viewBackround
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
         toDoTextView.backgroundColor = Colors.shared.viewBackround
         toDoTextView.autocorrectionType = .no

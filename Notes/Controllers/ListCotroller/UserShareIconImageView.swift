@@ -19,12 +19,13 @@ class UserShareIconImageView: UIImageView {
             image = cachedImage
             return
         }
+
         Worker.shared.fetchImage(
             with: imageURl,
-            // image опциональное свойство, поэтому weak ставлю в области захвата .
-            onSuccess: { [weak self] in
-                self?.image = UIImage(data: $0)
-                self?.pushDataToCache(with: $0, and: $1)
+            // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
+            onSuccess: {
+                self.image = UIImage(data: $0)
+                self.pushDataToCache(with: $0, and: $1)
             },
             onError: { print($0.localizedDescription)
             }

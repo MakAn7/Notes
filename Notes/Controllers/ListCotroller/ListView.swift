@@ -8,9 +8,9 @@
 import UIKit
 
 class ListView: UIView {
-    let titleLabel = UILabel()
     let toDoTableView = UITableView()
-    var addButton = UIButton()
+    let addButton = UIButton()
+    let spinner = UIActivityIndicatorView()
 
     var addButtonBottomConstraint: NSLayoutConstraint!
 
@@ -28,36 +28,34 @@ class ListView: UIView {
         toDoTableView.showsVerticalScrollIndicator = false
         toDoTableView.backgroundColor = Colors.shared.viewBackround
 
-        titleLabel.text = "Заметки"
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont(name: FontsLibrary.SFProTextSemibold.rawValue, size: 17)
-
         addButton.setImage(UIImage(named: "Plus"), for: .normal)
         addButton.clipsToBounds = true
-        addButton.contentMode = .scaleAspectFill
-        addButton.backgroundColor = .systemGreen
+        addButton.contentMode = .scaleAspectFit
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
+
+        spinner.hidesWhenStopped = true
+        spinner.startAnimating()
+        spinner.style = .large
+        spinner.color = .darkGray
     }
 
     private func setConstraints() {
-        Helper.tamicOff(views: [toDoTableView, titleLabel, addButton])
-        Helper.add(subviews: [toDoTableView, titleLabel], superView: self)
+        Helper.tamicOff(views: [toDoTableView, addButton, spinner])
+        Helper.add(subviews: [toDoTableView, spinner], superView: self)
         Helper.add(subviews: [addButton], superView: toDoTableView)
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 57),
-            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 130),
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 22),
-
-            toDoTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
+            toDoTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
             toDoTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 14),
             toDoTableView.centerXAnchor.constraint(equalTo: centerXAnchor),
             toDoTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -9),
 
             addButton.rightAnchor.constraint(equalTo: toDoTableView.safeAreaLayoutGuide.rightAnchor, constant: -6),
             addButton.heightAnchor.constraint(equalToConstant: 50),
-            addButton.widthAnchor.constraint(equalToConstant: 50)
+            addButton.widthAnchor.constraint(equalToConstant: 50),
+
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         addButtonBottomConstraint = NSLayoutConstraint(

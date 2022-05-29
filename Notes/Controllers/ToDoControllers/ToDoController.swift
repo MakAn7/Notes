@@ -12,17 +12,19 @@ class ToDoController: UIViewController {
         case new
         case edit(todo: ToDo, index: Int)
     }
-
     var todo: ToDo!
     let state: State
-    lazy var indexToDo: Int = 0
-    weak var delegate: UpdateListDelegate?
+    var indexToDo: Int = 0
+    // обратной ссылки нет поэтому weak var delegate: UpdateListDelegate? не ставлю .
+    var delegate: UpdateListDelegate?
     let toDoView = ToDoView()
 
     init(state: State, delegate: UpdateListDelegate) {
         self.delegate = delegate
         self.state = state
         super.init(nibName: nil, bundle: nil)
+
+        print("init - \(ToDoController.self)")
 
         switch state {
         case .new:
@@ -31,6 +33,10 @@ class ToDoController: UIViewController {
             self.todo = todo
             self.indexToDo = index
         }
+    }
+
+    deinit {
+        print("deinit - \(ToDoController.self)")
     }
 
     required init?(coder: NSCoder) {

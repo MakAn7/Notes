@@ -15,7 +15,7 @@ class ListCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView()
-    var iconImageView = UserShareIconImageView()
+    let iconImageView = UserShareIconImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,6 +43,9 @@ class ListCell: UITableViewCell {
                     }
                 }
             }
+        }
+        if iconImageView.image != nil {
+            activityIndicator.stopAnimating()
         }
     }
 
@@ -84,10 +87,14 @@ class ListCell: UITableViewCell {
         backgroundConfiguration?.cornerRadius = 14
         backgroundConfiguration?.backgroundInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
 
-        iconImageView.backgroundColor = .red
-        iconImageView.contentMode = .scaleAspectFill
+        iconImageView.backgroundColor = .clear
+        iconImageView.contentMode = .scaleAspectFit
         iconImageView.clipsToBounds = true
         iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
+
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .medium
+        activityIndicator.color = .systemBlue
     }
 
     private func setConstraints() {
@@ -126,10 +133,10 @@ class ListCell: UITableViewCell {
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
             dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10),
 
-            iconImageView.widthAnchor.constraint(equalToConstant: 24),
-            iconImageView.heightAnchor.constraint(equalToConstant: 24),
-            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -15),
+            iconImageView.widthAnchor.constraint(equalToConstant: 30),
+            iconImageView.heightAnchor.constraint(equalToConstant: 30),
             iconImageView.rightAnchor.constraint(equalTo: subContentView.rightAnchor, constant: -15),
+            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -9),
 
             activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)

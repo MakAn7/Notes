@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListController: UIViewController, UpdateListDelegate {
+class ListController: UIViewController {
     let listView = ListView()
     var todosArray: [ToDo] = [] {
         didSet {
@@ -16,10 +16,24 @@ class ListController: UIViewController, UpdateListDelegate {
             }
         }
     }
+
+    init() {
+        print("init - \(ListController.self)")
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    deinit {
+        print("deinit - \(ListController.self)")
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var selectRows = [IndexPath]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Заметки"
         view = listView
         setupNavigationBar()
         updateViews()
@@ -39,14 +53,6 @@ class ListController: UIViewController, UpdateListDelegate {
         showAddButtonWithAnimation()
     }
 
-    func updateViews() {
-        todosArray = ToDoSettings.shared.fetchArray()
-    }
-
-    func updateConstraints() {
-        listView.addButtonBottomConstraint.constant  = -60
-    }
-
     fileprivate func getURL() -> String? {
         var component = URLComponents()
         component.scheme = "https"
@@ -63,12 +69,8 @@ class ListController: UIViewController, UpdateListDelegate {
         Worker.shared.fetchToDos(
             dataType: ToDo.self,
             from: url,
-            /*
-             Ставлю список захвата потому,что образуется сильная ссылка на контролер, которая является 2 по счету
-             и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-             unowned потому что todosArray не обциональное свойство.
-             */
-            onSuccess: { [unowned self] in
+            // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
+            onSuccess: {
                 self.todosArray += $0
             },
             onError: { print($0.localizedDescription)
@@ -82,7 +84,7 @@ class ListController: UIViewController, UpdateListDelegate {
             title: "Выбрать",
             style: .plain,
             target: self,
-            action: #selector(updateStateRightButton)
+            action: #selector(updateStateRightAndAddButtons)
         )
         navigationItem.rightBarButtonItem?.setTitleTextAttributes(
             [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
@@ -90,30 +92,8 @@ class ListController: UIViewController, UpdateListDelegate {
     }
 
     @objc
-    func updateStateRightButton () {
-        if todosArray.count >= 1 && listView.toDoTableView.isEditing == false {
-            listView.toDoTableView.setEditing(true, animated: true)
-            UIView.transition(
-                with: listView.addButton,
-                duration: 1,
-                options: .transitionCrossDissolve,
-                animations: {
-                self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
-                    self.navigationItem.rightBarButtonItem?.title = "Готово"
-                }
-            )
-        } else {
-            UIView.transition(
-                with: listView.addButton,
-                duration: 0.4,
-                options: .transitionFlipFromBottom,
-                animations: {
-                self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                self.listView.toDoTableView.setEditing(false, animated: true)
-                self.navigationItem.rightBarButtonItem?.title = "Выбрать"
-                }
-            )
-        }
+    func updateStateRightAndAddButtons () {
+        changeTitleFromButtonsWithAnimation()
     }
 
     private func addTargets() {
@@ -167,8 +147,9 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         ) as? ListCell else {
             fatalError("Don't get cell")
         }
-
+        listView.spinner.stopAnimating()
         cell.setContentToListCell(from: todosArray[indexPath.row])
+
         return cell
     }
 
@@ -185,6 +166,8 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
                 ),
                 delegate: self
             )
+            // deinit ListController не сработает при переходе,
+            // потому что контроллер не выгрузится из памяти, а ToDocontrоller откроется поверх ListController .
             navigationController?.show(toDoVC, sender: nil)
         } else {
             didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
@@ -199,77 +182,92 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        /*
-         Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-         и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-         unowned потому что не опциональные свойства. Согласно синтаксису при unowned self
-         у свойств в closure можно убрать.
-         */
-        let delete = UIContextualAction(style: .destructive, title: nil) { [unowned self](_, _, _) in
+        // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
+        let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, _) in
             ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-            todosArray.remove(at: indexPath.row)
-            listView.toDoTableView.reloadData()
+            self.todosArray.remove(at: indexPath.row)
+            self.listView.toDoTableView.reloadData()
         }
         delete.backgroundColor = Colors.shared.viewBackround
         delete.image = UIImage(named: "trash")
         return UISwipeActionsConfiguration(actions: [delete])
     }
 }
+
+// MARK: Delegate
+extension ListController: UpdateListDelegate {
+    func updateViews() {
+        todosArray = ToDoSettings.shared.fetchArray()
+    }
+
+    func updateConstraints() {
+        listView.addButtonBottomConstraint.constant  = -60
+    }
+}
+
 // MARK: Animations
 extension ListController {
+    func changeTitleFromButtonsWithAnimation() {
+        if todosArray.count >= 1 && listView.toDoTableView.isEditing == false {
+            listView.toDoTableView.setEditing(true, animated: true)
+            UIView.transition(
+                with: listView.addButton,
+                duration: 1,
+                options: .transitionCrossDissolve,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
+                    self.navigationItem.rightBarButtonItem?.title = "Готово"
+                }
+            )
+        } else {
+            UIView.transition(
+                with: listView.addButton,
+                duration: 0.4,
+                options: .transitionFlipFromBottom,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+                    self.listView.toDoTableView.setEditing(false, animated: true)
+                    self.navigationItem.rightBarButtonItem?.title = "Выбрать"
+                }
+            )
+        }
+    }
+
     func showAddButtonWithAnimation() {
         listView.addButton.layer.cornerRadius = listView.addButton.frame.width / 2
         UIView.animate(
             withDuration: 0.5,
             delay: 0,
             options: .curveEaseOut,
-            /*
-             Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-             и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-             unowned потому что не опциональные свойства. Согласно синтаксису при unowned self
-             у свойств в closure можно убрать.
-             */
-            animations: { [unowned self] in
-                listView.addButtonBottomConstraint.constant -= view.bounds.height
-                view.layoutIfNeeded()
-            }, completion: { [unowned self] _ in
-                springAnimationWithAddButton()
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            animations: {
+                self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                self.springAnimationWithAddButton()
             }
         )
     }
 
     func tapAddButtonWithAnimation() {
-        /*
-         Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-         и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-         unowned потому что не опциональные свойства. Согласно синтаксису при unowned self
-         у свойств в closure можно убрать.
-         */
-        UIView.animate(withDuration: 1.5) { [unowned self] in
-            listView.addButtonBottomConstraint.constant -= listView.addButton.frame.height
-            view.layoutIfNeeded()
+        // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+        UIView.animate(withDuration: 1.5) {
+            self.listView.addButtonBottomConstraint.constant -= self.listView.addButton.frame.height
+            self.view.layoutIfNeeded()
         }
 
         UIView.animate(
             withDuration: 0.5,
             delay: 0.5,
             options: .curveEaseIn,
-            /*
-             Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-             и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-             unowned потому что не опциональные свойства. Согласно синтаксису при unowned self
-             у свойств в closure можно убрать.
-             */
-            animations: { [unowned self] in
-                listView.addButtonBottomConstraint.constant += view.frame.height
-                view.layoutIfNeeded()
-                /*
-                 Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-                 и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-                 weak потому что опциональное свойство.
-                 */
-            }, completion: { [weak self] _ in
-                guard let self = self else { return } // избавился от опционала, т.к. контроллер не опциональный
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            animations: {
+                self.listView.addButtonBottomConstraint.constant += self.view.frame.height
+                self.view.layoutIfNeeded()
+                // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            }, completion: {_ in
                 let toDoVC = ToDoController(state: .new, delegate: self)
                 toDoVC.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(toDoVC, sender: nil)
@@ -285,14 +283,9 @@ extension ListController {
             usingSpringWithDamping: 0.1,
             initialSpringVelocity: 5,
             options: [.allowUserInteraction, .curveEaseOut],
-            /*
-             Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-             и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-             unowned потому что не опциональные свойства. Согласно синтаксису при unowned self у
-             свойств в closure можно убрать.
-             */
-            animations: { [unowned self] in
-                listView.addButton.frame = CGRect(
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            animations: {
+                self.listView.addButton.frame = CGRect(
                     x: frame.origin.x,
                     y: frame.origin.y - 15,
                     width: frame.width ,
@@ -305,14 +298,9 @@ extension ListController {
             withDuration: 0.1,
             delay: 0,
             options: [.curveEaseOut],
-            /*
-             Ставлю список захвата потому,что образуется сильная ссылка на контроллер, которая является 2 по счету
-             и при деинициализации освободиться только 1-на сильная ссылка, а вторая останется.
-             unowned потому что не опциональные свойства. Согласно синтаксису при unowned self у
-             свойств в closure можно убрать.
-             */
-            animations: { [unowned self] in
-                listView.addButton.frame.origin.y += 15
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            animations: {
+                self.listView.addButton.frame.origin.y += 15
             }
         )
     }
