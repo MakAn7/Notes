@@ -9,5 +9,5 @@
 - URLSession
 - Grand central dispatch (GCD)
 - Верстку Кодом
-- Хранение данныз UserDefault
+- Хранение данных в UserDefault
 - Кэширование image из сети
