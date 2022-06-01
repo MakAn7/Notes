@@ -47,9 +47,12 @@ class Worker {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
                 let todo = try decoder.decode([T].self, from: data)
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(
+                    deadline: .now() + .seconds(10),
+                    execute: {
                     onSuccess(todo)
-                }
+                    }
+                )
             } catch {
                 DispatchQueue.main.async {
                     onError(.decodingError)
@@ -82,12 +85,9 @@ class Worker {
                     return
                 }
 
-                DispatchQueue.main.asyncAfter(
-                    deadline: .now() + .seconds(10),
-                    execute: {
-                        onSuccess(data, response)
-                    }
-                )
+                DispatchQueue.main.async {
+                   onSuccess(data, response)
+                }
             }.resume()
         }
     }

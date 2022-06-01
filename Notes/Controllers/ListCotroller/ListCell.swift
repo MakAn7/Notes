@@ -17,6 +17,8 @@ class ListCell: UITableViewCell {
     let activityIndicator = UIActivityIndicatorView()
     let iconImageView = UserShareIconImageView()
 
+    var delegate: UpdateActivityIndicatorDelegate?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setViews()
@@ -46,6 +48,7 @@ class ListCell: UITableViewCell {
         }
         if iconImageView.image != nil {
             activityIndicator.stopAnimating()
+            delegate?.stopActivityIndicator()
         }
     }
 

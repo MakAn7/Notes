@@ -36,6 +36,7 @@ class UserShareIconImageView: UIImageView {
         guard let url = response.url else {
             fatalError("No URL in response")
         }
+
         let request = URLRequest(url: url)
         let cachedObject = CachedURLResponse(response: response, data: data)
         URLCache.shared.storeCachedResponse(cachedObject, for: request)

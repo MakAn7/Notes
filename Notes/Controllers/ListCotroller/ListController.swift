@@ -40,12 +40,12 @@ class ListController: UIViewController {
         addTargets()
         listView.toDoTableView.delegate = self
         listView.toDoTableView.dataSource = self
+        firstFetchTodos()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listView.addButtonBottomConstraint.constant += view.bounds.height
-        fetchTodos(url: getURL())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -65,6 +65,12 @@ class ListController: UIViewController {
         return component.string
     }
 
+    private func firstFetchTodos() {
+        todosArray.isEmpty ?
+        fetchTodos(url: getURL()) :
+        listView.activityIndicator.stopAnimating()
+    }
+
     private func fetchTodos(url: String?) {
         Worker.shared.fetchToDos(
             dataType: ToDo.self,
@@ -72,6 +78,11 @@ class ListController: UIViewController {
             // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
             onSuccess: {
                 self.todosArray += $0
+                for todo in self.todosArray {
+                    ToDoSettings.shared.pushArray(dictToDo: todo.dictionaryOfToDo)
+                    print("количесвто массив - \(self.todosArray.count) ")
+                    self.listView.toDoTableView.reloadData()
+                }
             },
             onError: { print($0.localizedDescription)
             }
@@ -147,7 +158,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         ) as? ListCell else {
             fatalError("Don't get cell")
         }
-        listView.spinner.stopAnimating()
+        cell.delegate = self
         cell.setContentToListCell(from: todosArray[indexPath.row])
 
         return cell
@@ -195,13 +206,17 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: Delegate
-extension ListController: UpdateListDelegate {
+extension ListController: UpdateListDelegate, UpdateActivityIndicatorDelegate {
     func updateViews() {
         todosArray = ToDoSettings.shared.fetchArray()
     }
 
     func updateConstraints() {
         listView.addButtonBottomConstraint.constant  = -60
+    }
+
+    func stopActivityIndicator() {
+        listView.activityIndicator.stopAnimating()
     }
 }
 

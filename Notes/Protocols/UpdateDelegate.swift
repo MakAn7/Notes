@@ -9,3 +9,7 @@ protocol UpdateListDelegate: AnyObject {
     func updateViews()
     func updateConstraints()
 }
+
+protocol UpdateActivityIndicatorDelegate: AnyObject {
+    func stopActivityIndicator()
+}

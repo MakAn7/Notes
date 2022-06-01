@@ -10,7 +10,7 @@ import UIKit
 class ListView: UIView {
     let toDoTableView = UITableView()
     let addButton = UIButton()
-    let spinner = UIActivityIndicatorView()
+    let activityIndicator = UIActivityIndicatorView()
 
     var addButtonBottomConstraint: NSLayoutConstraint!
 
@@ -33,15 +33,15 @@ class ListView: UIView {
         addButton.contentMode = .scaleAspectFit
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .semibold)
 
-        spinner.hidesWhenStopped = true
-        spinner.startAnimating()
-        spinner.style = .large
-        spinner.color = .darkGray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        activityIndicator.style = .large
+        activityIndicator.color = .darkGray
     }
 
     private func setConstraints() {
-        Helper.tamicOff(views: [toDoTableView, addButton, spinner])
-        Helper.add(subviews: [toDoTableView, spinner], superView: self)
+        Helper.tamicOff(views: [toDoTableView, addButton, activityIndicator])
+        Helper.add(subviews: [toDoTableView, activityIndicator], superView: self)
         Helper.add(subviews: [addButton], superView: toDoTableView)
 
         NSLayoutConstraint.activate([
@@ -54,8 +54,8 @@ class ListView: UIView {
             addButton.heightAnchor.constraint(equalToConstant: 50),
             addButton.widthAnchor.constraint(equalToConstant: 50),
 
-            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         addButtonBottomConstraint = NSLayoutConstraint(
