@@ -63,10 +63,12 @@ class ListCell: UITableViewCell {
         dateLabel.text = convertDateToString(date: date, short: true)
 
         guard let todo = todo.userShareIcon else {
+            iconImageView.isHidden = true
            return
         }
-            activityIndicator.startAnimating()
-            iconImageView.fetchImage(with: todo)
+        iconImageView.isHidden = false
+        activityIndicator.startAnimating()
+        iconImageView.fetchImage(with: todo)
         }
 
     private func setViews() {

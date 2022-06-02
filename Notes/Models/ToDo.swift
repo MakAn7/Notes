@@ -20,18 +20,26 @@ struct ToDo: Decodable {
             return false
         }
 
-    enum CodingKeys: String, CodingKey {
+   private enum CodingKeys: String, CodingKey {
         case title = "header"
         case description = "text"
         case date = "date"
         case userShareIcon = "userShareIcon"
     }
 
+    private enum DefaultsKeys: String {
+        case title = "title"
+        case description = "description"
+        case date = "date"
+        case userShareIcon = "userShareIcon"
+    }
+
     var dictionaryOfToDo: [String: Any] {
         var dictToDo: [String: Any] = [:]
-        dictToDo["title"] = title
-        dictToDo["description"] = description
-        dictToDo["date"] = date
+        dictToDo[DefaultsKeys.title.rawValue] = title
+        dictToDo[DefaultsKeys.description.rawValue] = description
+        dictToDo[DefaultsKeys.date.rawValue] = date
+        dictToDo[DefaultsKeys.userShareIcon.rawValue] = userShareIcon
         return dictToDo
     }
 
@@ -44,14 +52,14 @@ struct ToDo: Decodable {
 
     init?(dictToDo: [String: Any]) {
         guard
-            let title = dictToDo["title"] as? String,
-            let description = dictToDo["description"] as? String,
-            let date = dictToDo["date"] as? Date
+            let title = dictToDo[DefaultsKeys.title.rawValue] as? String,
+            let description = dictToDo[DefaultsKeys.description.rawValue] as? String,
+            let date = dictToDo[DefaultsKeys.date.rawValue] as? Date
         else {
             return nil
         }
 
-        let userShareIcon = (dictToDo["userShareIcon"] as? String) ?? nil
+        let userShareIcon = (dictToDo[DefaultsKeys.userShareIcon.rawValue] as? String) ?? nil
 
         self.title = title
         self.description = description

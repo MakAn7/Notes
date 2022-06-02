@@ -13,7 +13,6 @@ class ListController: UIViewController {
         didSet {
             if todosArray.count >= oldValue.count {
                 listView.toDoTableView.reloadData()
-                print("обновление таблицы")
             }
         }
     }
@@ -41,7 +40,7 @@ class ListController: UIViewController {
         addTargets()
         listView.toDoTableView.delegate = self
         listView.toDoTableView.dataSource = self
-        firstFetchTodos()
+        setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -66,10 +65,13 @@ class ListController: UIViewController {
         return component.string
     }
 
-    private func firstFetchTodos() {
-        todosArray.isEmpty ?
-        fetchTodos(url: getURL()) :
-        listView.activityIndicator.stopAnimating()
+    private func setupView() {
+        let todos = ToDoSettings.shared.fetchArray()
+        if todos.isEmpty {
+            fetchTodos(url: getURL())
+        } else {
+            todosArray = todos
+        }
     }
 
     private func fetchTodos(url: String?) {
@@ -78,10 +80,9 @@ class ListController: UIViewController {
             from: url,
             // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
             onSuccess: {
-                self.todosArray += $0
+                self.todosArray = $0
                 for todo in self.todosArray {
                     ToDoSettings.shared.pushArray(dictToDo: todo.dictionaryOfToDo)
-                    print("количесвто массив - \(self.todosArray.count) ")
                     self.listView.toDoTableView.reloadData()
                 }
             },
@@ -160,11 +161,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Don't get cell")
         }
         cell.delegate = self
-        cell.setContentToListCell(from: todosArray[indexPath.row])
-        todosArray.forEach({
-            print("\($0.userShareIcon)")
-        })
-
+            cell.setContentToListCell(from: todosArray[indexPath.row])
         return cell
     }
 

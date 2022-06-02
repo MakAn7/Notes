@@ -103,7 +103,7 @@ class ToDoController: UIViewController {
             title: titleText,
             description: descriptionText,
             date: nil,
-            userShareIcon: nil
+            userShareIcon: todo.userShareIcon
         )
 
         if toDo.isEmpty {
@@ -115,7 +115,7 @@ class ToDoController: UIViewController {
                 title: titleText,
                 description: descriptionText,
                 date: setLongCurrentDate(),
-                userShareIcon: nil
+                userShareIcon: todo.userShareIcon
             )
             return currentToDo
     }

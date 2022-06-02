@@ -28,11 +28,11 @@ class Worker {
         guard
             let stringUrl = url,
             let url = URL(string: stringUrl) else {
-            DispatchQueue.main.async {
-                onError(.invalidUrl)
+                DispatchQueue.main.async {
+                    onError(.invalidUrl)
+                }
+                return
             }
-            return
-        }
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
@@ -50,7 +50,7 @@ class Worker {
                 DispatchQueue.main.asyncAfter(
                     deadline: .now() + .seconds(10),
                     execute: {
-                    onSuccess(todo)
+                        onSuccess(todo)
                     }
                 )
             } catch {
@@ -66,7 +66,7 @@ class Worker {
         onSuccess: @escaping(Data, URLResponse) -> Void,
         onError: @escaping(CurrentError) -> Void
     ) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .utility).async {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data else {
                     DispatchQueue.main.async {
