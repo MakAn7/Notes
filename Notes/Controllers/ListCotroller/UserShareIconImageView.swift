@@ -40,13 +40,16 @@ class UserShareIconImageView: UIImageView {
         let request = URLRequest(url: url)
         let cachedObject = CachedURLResponse(response: response, data: data)
         URLCache.shared.storeCachedResponse(cachedObject, for: request)
+        print("сохранение в кэш прошло - \(cachedObject)")
     }
 
     private func getCachedImage(with url: URL) -> UIImage? {
         let request = URLRequest(url: url)
 
         if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
-            return UIImage(data: cachedResponse.data)
+            let photo = UIImage(data: cachedResponse.data)
+            print("фото из кэша -\(photo)")
+            return photo
         }
         return nil
     }

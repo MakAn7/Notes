@@ -10,14 +10,14 @@ import UIKit
 class ListCell: UITableViewCell {
     static let reuseId = "ListCell"
 
+    var delegate: UpdateActivityIndicatorDelegate?
+
     let subContentView = UIView()
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView()
     let iconImageView = UserShareIconImageView()
-
-    var delegate: UpdateActivityIndicatorDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -62,13 +62,12 @@ class ListCell: UITableViewCell {
 
         dateLabel.text = convertDateToString(date: date, short: true)
 
-        if todo.userShareIcon != nil {
-            activityIndicator.startAnimating()
-            iconImageView.fetchImage(with: todo.userShareIcon)
-        } else {
-            iconImageView.isHidden = true
+        guard let todo = todo.userShareIcon else {
+           return
         }
-    }
+            activityIndicator.startAnimating()
+            iconImageView.fetchImage(with: todo)
+        }
 
     private func setViews() {
         layer.backgroundColor = .none

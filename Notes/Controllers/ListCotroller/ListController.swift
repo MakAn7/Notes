@@ -13,6 +13,7 @@ class ListController: UIViewController {
         didSet {
             if todosArray.count >= oldValue.count {
                 listView.toDoTableView.reloadData()
+                print("обновление таблицы")
             }
         }
     }
@@ -160,6 +161,9 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.delegate = self
         cell.setContentToListCell(from: todosArray[indexPath.row])
+        todosArray.forEach({
+            print("\($0.userShareIcon)")
+        })
 
         return cell
     }
