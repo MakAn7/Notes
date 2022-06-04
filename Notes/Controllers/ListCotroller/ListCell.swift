@@ -10,8 +10,6 @@ import UIKit
 class ListCell: UITableViewCell {
     static let reuseId = "ListCell"
 
-    var delegate: UpdateActivityIndicatorDelegate?
-
     let subContentView = UIView()
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
@@ -48,7 +46,6 @@ class ListCell: UITableViewCell {
         }
         if iconImageView.image != nil {
             activityIndicator.stopAnimating()
-            delegate?.stopActivityIndicator()
         }
     }
 

@@ -28,7 +28,9 @@ final class ToDoSettings {
 
     func updateToDo(dictToDo: [String: Any], indexToDo: Int) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            array[indexToDo] = dictToDo
+            indexToDo < array.count ?
+            array[indexToDo] = dictToDo :
+            array.append(dictToDo)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
             let array: [[String: Any]] = [dictToDo]

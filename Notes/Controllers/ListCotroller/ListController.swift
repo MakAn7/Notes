@@ -36,16 +36,16 @@ class ListController: UIViewController {
         title = "Заметки"
         view = listView
         setupNavigationBar()
-        updateViews()
+        fetchToDosFromUserDefault()
         addTargets()
         listView.toDoTableView.delegate = self
         listView.toDoTableView.dataSource = self
-        setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listView.addButtonBottomConstraint.constant += view.bounds.height
+        fetchTodos(url: getURL())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -65,26 +65,16 @@ class ListController: UIViewController {
         return component.string
     }
 
-    private func setupView() {
-        let todos = ToDoSettings.shared.fetchArray()
-        if todos.isEmpty {
-            fetchTodos(url: getURL())
-        } else {
-            todosArray = todos
-        }
-    }
-
     private func fetchTodos(url: String?) {
+        listView.activityIndicator.isHidden = false
+        listView.activityIndicator.startAnimating()
         Worker.shared.fetchToDos(
             dataType: ToDo.self,
             from: url,
             // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
             onSuccess: {
-                self.todosArray = $0
-                for todo in self.todosArray {
-                    ToDoSettings.shared.pushArray(dictToDo: todo.dictionaryOfToDo)
-                    self.listView.toDoTableView.reloadData()
-                }
+                self.todosArray += $0
+                self.listView.activityIndicator.stopAnimating()
             },
             onError: { print($0.localizedDescription)
             }
@@ -128,19 +118,22 @@ class ListController: UIViewController {
             }
             selectRows.sort { $0.row > $1.row }
             for indexPath in selectRows {
-                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-                updateViews()
+                todosArray.remove(at: indexPath.row)
                 listView.toDoTableView.beginUpdates()
                 listView.toDoTableView.deleteRows(
                     at: [IndexPath(row: indexPath.row, section: 0)],
                     with: .top
                 )
                 listView.toDoTableView.endUpdates()
-                listView.toDoTableView.setEditing(false, animated: true)
-                navigationItem.rightBarButtonItem?.title = "Выбрать"
-                listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                selectRows.removeAll()
+                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
             }
+            todosArray.removeAll()
+            listView.toDoTableView.setEditing(false, animated: true)
+            navigationItem.rightBarButtonItem?.title = "Выбрать"
+            listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+            selectRows.removeAll()
+            fetchToDosFromUserDefault()
+            fetchTodos(url: getURL())
         } else {
             tapAddButtonWithAnimation()
         }
@@ -150,7 +143,7 @@ class ListController: UIViewController {
 // MARK: UITableViewDelegate, UITableViewDataSource
 extension ListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            todosArray.count
+        todosArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,7 +153,6 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         ) as? ListCell else {
             fatalError("Don't get cell")
         }
-        cell.delegate = self
             cell.setContentToListCell(from: todosArray[indexPath.row])
         return cell
     }
@@ -207,17 +199,17 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: Delegate
-extension ListController: UpdateListDelegate, UpdateActivityIndicatorDelegate {
-    func updateViews() {
+extension ListController: UpdateListDelegate {
+    func didRemoveAllTodosArray() {
+        todosArray.removeAll()
+    }
+
+    func fetchToDosFromUserDefault() {
         todosArray = ToDoSettings.shared.fetchArray()
     }
 
     func updateConstraints() {
         listView.addButtonBottomConstraint.constant  = -60
-    }
-
-    func stopActivityIndicator() {
-        listView.activityIndicator.stopAnimating()
     }
 }
 
@@ -298,7 +290,7 @@ extension ListController {
             delay: 0,
             usingSpringWithDamping: 0.1,
             initialSpringVelocity: 5,
-            options: [.allowUserInteraction, .curveEaseOut],
+            options: [.curveEaseOut],
             // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
             animations: {
                 self.listView.addButton.frame = CGRect(

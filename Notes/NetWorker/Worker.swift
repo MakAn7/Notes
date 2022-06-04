@@ -48,7 +48,7 @@ class Worker {
                 decoder.dateDecodingStrategy = .secondsSince1970
                 let todo = try decoder.decode([T].self, from: data)
                 DispatchQueue.main.asyncAfter(
-                    deadline: .now() + .seconds(10),
+                    deadline: .now() + .seconds(5),
                     execute: {
                         onSuccess(todo)
                     }

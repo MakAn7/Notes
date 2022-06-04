@@ -41,8 +41,8 @@ class ListView: UIView {
 
     private func setConstraints() {
         Helper.tamicOff(views: [toDoTableView, addButton, activityIndicator])
-        Helper.add(subviews: [toDoTableView, activityIndicator], superView: self)
-        Helper.add(subviews: [addButton], superView: toDoTableView)
+        Helper.add(subviews: [toDoTableView], superView: self)
+        Helper.add(subviews: [addButton, activityIndicator], superView: toDoTableView)
 
         NSLayoutConstraint.activate([
             toDoTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),

@@ -6,10 +6,7 @@
 //
 
 protocol UpdateListDelegate: AnyObject {
-    func updateViews()
+    func fetchToDosFromUserDefault()
     func updateConstraints()
-}
-
-protocol UpdateActivityIndicatorDelegate: AnyObject {
-    func stopActivityIndicator()
+    func didRemoveAllTodosArray()
 }
