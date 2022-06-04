@@ -57,7 +57,9 @@ final class ToDoSettings {
         guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
             fatalError("Don't fetch array of ToDo")
         }
-        array.remove(at: indexToDo)
+        if array.indices.contains(indexToDo) {
+            array.remove(at: indexToDo)
+        }
         defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
     }
 }
