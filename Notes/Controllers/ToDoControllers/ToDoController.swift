@@ -33,7 +33,6 @@ class ToDoController: UIViewController {
             self.todo = todo
             self.indexToDo = index
         }
-        print(" На втором экране заметка с заголовком - \(todo.title) и index \(indexToDo)")
     }
 
     deinit {
@@ -89,12 +88,12 @@ class ToDoController: UIViewController {
             case .new:
                 ToDoSettings.shared.pushArray(dictToDo: toDo.dictionaryOfToDo)
             case .edit:
-                // возможно нужна проверка есть ли заметка в дефолтсе( массив короче чем индекс сохраняемой заметки)
                 ToDoSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
-        delegate?.didRemoveAllTodosArray()
         delegate?.fetchToDosFromUserDefault()
+        delegate?.didSetAllTodosArray()
+        delegate?.didToDoTableViewReloadData()
         toDoView.endEditing(true)
     }
 

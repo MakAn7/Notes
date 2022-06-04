@@ -8,5 +8,6 @@
 protocol UpdateListDelegate: AnyObject {
     func fetchToDosFromUserDefault()
     func updateConstraints()
-    func didRemoveAllTodosArray()
+    func didSetAllTodosArray()
+    func didToDoTableViewReloadData()
 }
