@@ -7,44 +7,41 @@
 
 import UIKit
 
-class ListController: UIViewController, UpdateListDelegate {
+class ListController: UIViewController {
     let listView = ListView()
-    var todosArray: [ToDo] = [] {
-        didSet {
-            if todosArray.count >= oldValue.count {
-                listView.toDoTableView.reloadData()
-            }
-        }
+    var allTodos: [ToDo] = []
+    var todosFromAPI: [ToDo] = []
+    var todosFromUserDefault: [ToDo] = []
+
+    init() {
+        print("init - \(ListController.self)")
+        super.init(nibName: nil, bundle: nil)
     }
+
+    deinit {
+        print("deinit - \(ListController.self)")
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var selectRows = [IndexPath]()
-
-    fileprivate func getURL() -> URL? {
-        var component = URLComponents()
-        component.scheme = "https"
-        component.host = "firebasestorage.googleapis.com"
-        component.path = "/v0/b/ios-test-ce687.appspot.com/o/Empty.json"
-        component.queryItems = [
-            URLQueryItem(name: "alt", value: "media"),
-            URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
-        ]
-
-        return component.url
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Заметки"
         view = listView
         setupNavigationBar()
-        updateViews()
         addTargets()
         listView.toDoTableView.delegate = self
         listView.toDoTableView.dataSource = self
+        fetchToDosFromUserDefault()
+        fetchTodos(url: getURL())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         listView.addButtonBottomConstraint.constant += view.bounds.height
-        fetchTodos(url: getURL())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -52,19 +49,31 @@ class ListController: UIViewController, UpdateListDelegate {
         showAddButtonWithAnimation()
     }
 
-    func updateViews() {
-        todosArray = ToDoSettings.shared.fetchArray()
+    fileprivate func getURL() -> String? {
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "firebasestorage.googleapis.com"
+        component.path = "/v0/b/ios-test-ce687.appspot.com/o/lesson8.json"
+        component.queryItems = [
+            URLQueryItem(name: "alt", value: "media"),
+            URLQueryItem(name: "token", value: "215055df-172d-4b98-95a0-b353caca1424")
+        ]
+        return component.string
     }
 
-    func updateConstraints() {
-        listView.addButtonBottomConstraint.constant  = -60
-    }
-
-    private func fetchTodos(url: URL?) {
+    private func fetchTodos(url: String?) {
+        listView.activityIndicator.isHidden = false
+        listView.activityIndicator.startAnimating()
         Worker.shared.fetchToDos(
             dataType: ToDo.self,
             from: url,
-            onSuccess: { self.todosArray += $0 },
+            // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
+            onSuccess: {
+                self.todosFromAPI = $0
+                self.allTodos = self.todosFromUserDefault + $0
+                self.listView.toDoTableView.reloadData()
+                self.listView.activityIndicator.stopAnimating()
+            },
             onError: { print($0.localizedDescription)
             }
         )
@@ -76,7 +85,7 @@ class ListController: UIViewController, UpdateListDelegate {
             title: "Выбрать",
             style: .plain,
             target: self,
-            action: #selector(updateStateRightButton)
+            action: #selector(updateStateRightAndAddButtons)
         )
         navigationItem.rightBarButtonItem?.setTitleTextAttributes(
             [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
@@ -84,28 +93,8 @@ class ListController: UIViewController, UpdateListDelegate {
     }
 
     @objc
-    func updateStateRightButton () {
-        if todosArray.count >= 1 && listView.toDoTableView.isEditing == false {
-            listView.toDoTableView.setEditing(true, animated: true)
-            UIView.transition(
-                with: listView.addButton,
-                duration: 1,
-                options: .transitionCrossDissolve
-            ) {
-                self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
-                self.navigationItem.rightBarButtonItem?.title = "Готово"
-            }
-        } else {
-            UIView.transition(
-                with: listView.addButton,
-                duration: 0.4,
-                options: .transitionFlipFromBottom
-            ) {
-                self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                self.listView.toDoTableView.setEditing(false, animated: true)
-                self.navigationItem.rightBarButtonItem?.title = "Выбрать"
-            }
-        }
+    func updateStateRightAndAddButtons () {
+        changeTitleFromButtonsWithAnimation()
     }
 
     private func addTargets() {
@@ -127,19 +116,19 @@ class ListController: UIViewController, UpdateListDelegate {
             }
             selectRows.sort { $0.row > $1.row }
             for indexPath in selectRows {
-                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-                updateViews()
+                allTodos.remove(at: indexPath.row)
                 listView.toDoTableView.beginUpdates()
                 listView.toDoTableView.deleteRows(
                     at: [IndexPath(row: indexPath.row, section: 0)],
                     with: .top
                 )
                 listView.toDoTableView.endUpdates()
-                listView.toDoTableView.setEditing(false, animated: true)
-                navigationItem.rightBarButtonItem?.title = "Выбрать"
-                listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-                selectRows.removeAll()
+                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
             }
+            listView.toDoTableView.setEditing(false, animated: true)
+            navigationItem.rightBarButtonItem?.title = "Выбрать"
+            listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+            selectRows.removeAll()
         } else {
             tapAddButtonWithAnimation()
         }
@@ -149,7 +138,7 @@ class ListController: UIViewController, UpdateListDelegate {
 // MARK: UITableViewDelegate, UITableViewDataSource
 extension ListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            todosArray.count
+        allTodos.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -159,16 +148,7 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         ) as? ListCell else {
             fatalError("Don't get cell")
         }
-
-        let currentToDo = todosArray[indexPath.row]
-        cell.headerLabel.text = currentToDo.title
-        cell.descriptionLabel.text = currentToDo.description
-
-        guard let date = currentToDo.date else {
-            fatalError("\(#function) Don't get Date ")
-        }
-
-        cell.dateLabel.text = convertDateToString(date: date, short: true)
+            cell.setContentToListCell(from: allTodos[indexPath.row])
         return cell
     }
 
@@ -180,11 +160,13 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         if !tableView.isEditing {
             let toDoVC = ToDoController(
                 state: .edit(
-                    todo: todosArray[indexPath.row],
+                    todo: allTodos[indexPath.row],
                     index: indexPath.row
                 ),
                 delegate: self
             )
+            // deinit ListController не сработает при переходе,
+            // потому что контроллер не выгрузится из памяти, а ToDocontrоller откроется поверх ListController .
             navigationController?.show(toDoVC, sender: nil)
         } else {
             didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
@@ -199,24 +181,76 @@ extension ListController: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: nil) { (_, _, _) in
+        // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
+        let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, _) in
+            self.allTodos.remove(at: indexPath.row)
             ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-            self.todosArray.remove(at: indexPath.row)
-            self.listView.toDoTableView.reloadData()
+            self.fetchToDosFromUserDefault()
+            self.didSetAllTodosArray()
+            self.didToDoTableViewReloadData()
         }
         delete.backgroundColor = Colors.shared.viewBackround
         delete.image = UIImage(named: "trash")
         return UISwipeActionsConfiguration(actions: [delete])
     }
 }
+
+// MARK: Delegate
+extension ListController: UpdateListDelegate {
+    func fetchToDosFromUserDefault() {
+        todosFromUserDefault = ToDoSettings.shared.fetchArray()
+    }
+
+    func didSetAllTodosArray() {
+        allTodos = todosFromUserDefault + todosFromAPI
+    }
+
+    func didToDoTableViewReloadData() {
+        listView.toDoTableView.reloadData()
+    }
+
+    func updateConstraints() {
+        listView.addButtonBottomConstraint.constant  = -60
+    }
+}
+
 // MARK: Animations
 extension ListController {
+    func changeTitleFromButtonsWithAnimation() {
+        if todosFromUserDefault.count >= 1 && listView.toDoTableView.isEditing == false {
+            listView.toDoTableView.setEditing(true, animated: true)
+            UIView.transition(
+                with: listView.addButton,
+                duration: 1,
+                options: .transitionCrossDissolve,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.listView.addButton.setImage(UIImage(named: "Box"), for: .normal)
+                    self.navigationItem.rightBarButtonItem?.title = "Готово"
+                }
+            )
+        } else {
+            UIView.transition(
+                with: listView.addButton,
+                duration: 0.4,
+                options: .transitionFlipFromBottom,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+                    self.listView.toDoTableView.setEditing(false, animated: true)
+                    self.navigationItem.rightBarButtonItem?.title = "Выбрать"
+                }
+            )
+        }
+    }
+
     func showAddButtonWithAnimation() {
         listView.addButton.layer.cornerRadius = listView.addButton.frame.width / 2
         UIView.animate(
             withDuration: 0.5,
             delay: 0,
             options: .curveEaseOut,
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
             animations: {
                 self.listView.addButtonBottomConstraint.constant -= self.view.bounds.height
                 self.view.layoutIfNeeded()
@@ -227,6 +261,7 @@ extension ListController {
     }
 
     func tapAddButtonWithAnimation() {
+        // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
         UIView.animate(withDuration: 1.5) {
             self.listView.addButtonBottomConstraint.constant -= self.listView.addButton.frame.height
             self.view.layoutIfNeeded()
@@ -236,10 +271,12 @@ extension ListController {
             withDuration: 0.5,
             delay: 0.5,
             options: .curveEaseIn,
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
             animations: {
                 self.listView.addButtonBottomConstraint.constant += self.view.frame.height
                 self.view.layoutIfNeeded()
-            }, completion: { _ in
+                // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            }, completion: {_ in
                 let toDoVC = ToDoController(state: .new, delegate: self)
                 toDoVC.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(toDoVC, sender: nil)
@@ -254,7 +291,8 @@ extension ListController {
             delay: 0,
             usingSpringWithDamping: 0.1,
             initialSpringVelocity: 5,
-            options: [.allowUserInteraction, .curveEaseOut],
+            options: [.curveEaseOut],
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
             animations: {
                 self.listView.addButton.frame = CGRect(
                     x: frame.origin.x,
@@ -269,6 +307,7 @@ extension ListController {
             withDuration: 0.1,
             delay: 0,
             options: [.curveEaseOut],
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
             animations: {
                 self.listView.addButton.frame.origin.y += 15
             }

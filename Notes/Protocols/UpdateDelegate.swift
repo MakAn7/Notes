@@ -6,6 +6,8 @@
 //
 
 protocol UpdateListDelegate: AnyObject {
-    func updateViews()
+    func fetchToDosFromUserDefault()
     func updateConstraints()
+    func didSetAllTodosArray()
+    func didToDoTableViewReloadData()
 }

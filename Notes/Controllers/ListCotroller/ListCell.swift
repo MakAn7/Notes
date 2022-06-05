@@ -14,6 +14,8 @@ class ListCell: UITableViewCell {
     let headerLabel = UILabel()
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
+    let activityIndicator = UIActivityIndicatorView()
+    let iconImageView = UserShareIconImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,7 +44,29 @@ class ListCell: UITableViewCell {
                 }
             }
         }
+        if iconImageView.image != nil {
+            activityIndicator.stopAnimating()
+        }
     }
+
+    func setContentToListCell (from todo: ToDo) {
+        headerLabel.text = todo.title
+        descriptionLabel.text = todo.description
+
+        guard let date = todo.date else {
+            fatalError("\(#function) Don't get Date ")
+        }
+
+        dateLabel.text = convertDateToString(date: date, short: true)
+
+        guard let imageURL = todo.userShareIcon else {
+            iconImageView.isHidden = true
+           return
+        }
+        iconImageView.isHidden = false
+        activityIndicator.startAnimating()
+        iconImageView.fetchImage(with: imageURL)
+        }
 
     private func setViews() {
         layer.backgroundColor = .none
@@ -63,11 +87,31 @@ class ListCell: UITableViewCell {
         backgroundConfiguration?.backgroundColor = .white
         backgroundConfiguration?.cornerRadius = 14
         backgroundConfiguration?.backgroundInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+
+        iconImageView.backgroundColor = .clear
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.clipsToBounds = true
+        iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
+
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .medium
+        activityIndicator.color = .systemBlue
     }
 
     private func setConstraints() {
-        Helper.tamicOff(views: [headerLabel, descriptionLabel, dateLabel, subContentView])
-        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subContentView)
+        Helper.tamicOff(
+            views:
+                [headerLabel,
+                 descriptionLabel,
+                 dateLabel,
+                 subContentView,
+                 iconImageView,
+                 activityIndicator
+                ]
+        )
+
+        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel, iconImageView], superView: subContentView)
+        Helper.add(subviews: [activityIndicator], superView: iconImageView)
 
         NSLayoutConstraint.activate([
             subContentView.topAnchor.constraint(equalTo: topAnchor),
@@ -88,7 +132,15 @@ class ListCell: UITableViewCell {
             dateLabel.leftAnchor.constraint(equalTo: subContentView.leftAnchor, constant: 18),
             dateLabel.heightAnchor.constraint(equalToConstant: 11),
             dateLabel.widthAnchor.constraint(equalToConstant: 68),
-            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10)
+            dateLabel.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -10),
+
+            iconImageView.widthAnchor.constraint(equalToConstant: 30),
+            iconImageView.heightAnchor.constraint(equalToConstant: 30),
+            iconImageView.rightAnchor.constraint(equalTo: subContentView.rightAnchor, constant: -15),
+            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -9),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
         ])
     }
     required init?(coder: NSCoder) {

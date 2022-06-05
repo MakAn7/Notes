@@ -8,9 +8,6 @@
 import UIKit
 
  private enum DefaultsKeys: String {
-    case title = "Title"
-    case description = "Description"
-    case date = "Date"
     case array = "Array"
 }
 
@@ -31,7 +28,9 @@ final class ToDoSettings {
 
     func updateToDo(dictToDo: [String: Any], indexToDo: Int) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            array[indexToDo] = dictToDo
+            indexToDo < array.count ?
+            array[indexToDo] = dictToDo :
+            array.append(dictToDo)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
             let array: [[String: Any]] = [dictToDo]
@@ -58,7 +57,9 @@ final class ToDoSettings {
         guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
             fatalError("Don't fetch array of ToDo")
         }
-        array.remove(at: indexToDo)
+        if array.indices.contains(indexToDo) {
+            array.remove(at: indexToDo)
+        }
         defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
     }
 }

@@ -12,11 +12,11 @@ class ToDoController: UIViewController {
         case new
         case edit(todo: ToDo, index: Int)
     }
-
     var todo: ToDo!
     let state: State
-    lazy var indexToDo: Int = 0
-    weak var delegate: UpdateListDelegate?
+    var indexToDo: Int = 0
+    // обратной ссылки нет поэтому weak var delegate: UpdateListDelegate? не ставлю .
+    var delegate: UpdateListDelegate?
     let toDoView = ToDoView()
 
     init(state: State, delegate: UpdateListDelegate) {
@@ -24,13 +24,19 @@ class ToDoController: UIViewController {
         self.state = state
         super.init(nibName: nil, bundle: nil)
 
+        print("init - \(ToDoController.self)")
+
         switch state {
         case .new:
-            self.todo = ToDo(title: "", description: "", date: nil)
+            todo = ToDo(title: "", description: "", date: nil, userShareIcon: nil)
         case .edit(let todo, let index):
             self.todo = todo
             self.indexToDo = index
         }
+    }
+
+    deinit {
+        print("deinit - \(ToDoController.self)")
     }
 
     required init?(coder: NSCoder) {
@@ -85,8 +91,10 @@ class ToDoController: UIViewController {
                 ToDoSettings.shared.updateToDo(dictToDo: toDo.dictionaryOfToDo, indexToDo: indexToDo)
             }
         }
+        delegate?.fetchToDosFromUserDefault()
+        delegate?.didSetAllTodosArray()
+        delegate?.didToDoTableViewReloadData()
         toDoView.endEditing(true)
-        delegate?.updateViews()
     }
 
     private func createToDo() -> ToDo? {
@@ -96,7 +104,8 @@ class ToDoController: UIViewController {
         let toDo = ToDo(
             title: titleText,
             description: descriptionText,
-            date: nil
+            date: nil,
+            userShareIcon: todo.userShareIcon
         )
 
         if toDo.isEmpty {
@@ -107,14 +116,15 @@ class ToDoController: UIViewController {
             let currentToDo = ToDo(
                 title: titleText,
                 description: descriptionText,
-                date: setLongCurrentDate()
+                date: setLongCurrentDate(),
+                userShareIcon: todo.userShareIcon
             )
             return currentToDo
     }
 
     @objc
     private func updateToDo() {
-        self.todo = createToDo()
+        todo = createToDo()
         toDoView.endEditing(true)
     }
 }
