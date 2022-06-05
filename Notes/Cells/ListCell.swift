@@ -2,7 +2,7 @@
 //  ListCell.swift
 //  Notes
 //
-//  Created by Антон Макаров on 18.04.2022.
+//  Created by Антон Макаров on 04.06.2022.
 //
 
 import UIKit
@@ -15,7 +15,7 @@ class ListCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView()
-    let iconImageView = UserShareIconImageView()
+    let iconImageView = UIImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,29 +44,10 @@ class ListCell: UITableViewCell {
                 }
             }
         }
-        if iconImageView.image != nil {
-            activityIndicator.stopAnimating()
-        }
+//        if iconImageView.image != nil {
+//            activityIndicator.stopAnimating()
+//        }
     }
-
-    func setContentToListCell (from todo: ToDo) {
-        headerLabel.text = todo.title
-        descriptionLabel.text = todo.description
-
-        guard let date = todo.date else {
-            fatalError("\(#function) Don't get Date ")
-        }
-
-        dateLabel.text = convertDateToString(date: date, short: true)
-
-        guard let imageURL = todo.userShareIcon else {
-            iconImageView.isHidden = true
-           return
-        }
-        iconImageView.isHidden = false
-        activityIndicator.startAnimating()
-        iconImageView.fetchImage(with: imageURL)
-        }
 
     private func setViews() {
         layer.backgroundColor = .none
@@ -93,9 +74,9 @@ class ListCell: UITableViewCell {
         iconImageView.clipsToBounds = true
         iconImageView.layer.cornerRadius = iconImageView.frame.height / 2
 
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .medium
-        activityIndicator.color = .systemBlue
+//        activityIndicator.hidesWhenStopped = true
+//        activityIndicator.style = .medium
+//        activityIndicator.color = .systemBlue
     }
 
     private func setConstraints() {
@@ -105,13 +86,14 @@ class ListCell: UITableViewCell {
                  descriptionLabel,
                  dateLabel,
                  subContentView,
-                 iconImageView,
-                 activityIndicator
+                 iconImageView
+//                 activityIndicator
                 ]
         )
 
         Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel, iconImageView], superView: subContentView)
-        Helper.add(subviews: [activityIndicator], superView: iconImageView)
+//        Helper.add(subviews: [activityIndicator], superView: iconImageView)
+//        Helper.add(subviews: [headerLabel, descriptionLabel, dateLabel], superView: subContentView)
 
         NSLayoutConstraint.activate([
             subContentView.topAnchor.constraint(equalTo: topAnchor),
@@ -137,12 +119,19 @@ class ListCell: UITableViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 30),
             iconImageView.heightAnchor.constraint(equalToConstant: 30),
             iconImageView.rightAnchor.constraint(equalTo: subContentView.rightAnchor, constant: -15),
-            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -9),
-
-            activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
+            iconImageView.bottomAnchor.constraint(equalTo: subContentView.bottomAnchor, constant: -9)
+//
+//            activityIndicator.centerXAnchor.constraint(equalTo: iconImageView.centerXAnchor),
+//            activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
         ])
     }
+
+     func setContentToListCell(from viewModel: ListCellViewModel) {
+        headerLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
+         dateLabel.text = viewModel.date
+     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
