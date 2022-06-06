@@ -118,10 +118,8 @@ class ListViewController: UIViewController {
 
     @objc
     func updateStateRightAndAddButtons () {
-        if !toDoTableView.isEditing {
-            toDoTableView.setEditing(true, animated: true)
+        changeTitleFromButtonsWithAnimation()
         }
-    }
 
 //    private func addTargets() {
 //        addButton.addTarget(self, action: #selector(addOrRemoveToDo), for: .touchUpInside)
@@ -224,8 +222,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             self.allListModels.remove(at: indexPath.row)
             self.interactor?.didRemoveModelsFromDataBase(indexModel: indexPath.row)
             self.interactor?.fetchModelsFromDataBase()
-//            self.didSetAllTodosArray()
-//            self.didToDoTableViewReloadData()
         }
         delete.backgroundColor = Colors.shared.viewBackround
         delete.image = UIImage(named: "trash")
@@ -279,5 +275,33 @@ extension ListViewController {
                 self.addButton.frame.origin.y += 15
             }
         )
+    }
+
+    func changeTitleFromButtonsWithAnimation() {
+        if defaultListModels.count >= 1 && toDoTableView.isEditing == false {
+            toDoTableView.setEditing(true, animated: true)
+            UIView.transition(
+                with: addButton,
+                duration: 1,
+                options: .transitionCrossDissolve,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.addButton.setImage(UIImage(named: "Box"), for: .normal)
+                    self.navigationItem.rightBarButtonItem?.title = "Готово"
+                }
+            )
+        } else {
+            UIView.transition(
+                with: addButton,
+                duration: 0.4,
+                options: .transitionFlipFromBottom,
+                //  выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+                animations: {
+                    self.addButton.setImage(UIImage(named: "Plus"), for: .normal)
+                    self.toDoTableView.setEditing(false, animated: true)
+                    self.navigationItem.rightBarButtonItem?.title = "Выбрать"
+                }
+            )
+        }
     }
 }
