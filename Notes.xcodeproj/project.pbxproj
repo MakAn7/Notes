@@ -31,6 +31,7 @@
 		E29D9450284D5CA1002C17D7 /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D944F284D5CA1002C17D7 /* ListService.swift */; };
 		E29D9452284D5CA5002C17D7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9451284D5CA5002C17D7 /* API.swift */; };
 		E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9454284D5CF4002C17D7 /* ListCell.swift */; };
+		E29D9457284DEE10002C17D7 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
 		E2CC579D283405A4002C99A5 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CC579C283405A4002C99A5 /* Worker.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
@@ -70,6 +71,7 @@
 		E29D944F284D5CA1002C17D7 /* ListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
 		E29D9451284D5CA5002C17D7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E29D9454284D5CF4002C17D7 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		E2CC579C283405A4002C99A5 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 		E29D944C284D5C89002C17D7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */,
 				E29D944D284D5C9A002C17D7 /* NetworkService.swift */,
 				E29D944F284D5CA1002C17D7 /* ListService.swift */,
 				E29D9451284D5CA5002C17D7 /* API.swift */,
@@ -410,6 +413,7 @@
 				E29D944B284D5C7E002C17D7 /* ListAssembly.swift in Sources */,
 				E29D9445284D5C71002C17D7 /* ListPresenter.swift in Sources */,
 				E26F9045282C7654006761C2 /* InfoAlert.swift in Sources */,
+				E29D9457284DEE10002C17D7 /* UserDefaultsService.swift in Sources */,
 				E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */,
 				E29D943D284D5C42002C17D7 /* DetailsToDoRouter.swift in Sources */,
 				E29D9443284D5C6D002C17D7 /* ListInteractor.swift in Sources */,

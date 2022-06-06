@@ -9,14 +9,20 @@
 import UIKit
 
 protocol DetailsToDoBusinessLogic {
-//  func makeRequest(request: DetailsToDo.Model.Request.RequestType)
+    func didPushModelsArray(model: ListCellViewModel)
+    func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int)
 }
 
-class DetailsToDoInteractor: DetailsToDoBusinessLogic {
+class DetailsToDoInteractor {
   var presenter: DetailsToDoPresentationLogic?
-//  func makeRequest(request: DetailsToDo.Model.Request.RequestType) {
-//    if service == nil {
-//      service = DetailsToDoService()
-//    }
-//  }
+    private var userDefaultsService = UserDefaultsService()
+}
+extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
+    func didPushModelsArray(model: ListCellViewModel) {
+        userDefaultsService.didPushModel(dictModel: model.dictionaryOfToDo)
+    }
+
+    func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int) {
+        userDefaultsService.didUpdateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
+    }
 }

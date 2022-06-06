@@ -22,7 +22,7 @@ extension ListRouter: ListRoutingLogic {
         guard let detailVC = controller as? DetailsToDoViewController else { return }
         detailVC.model = cell
         detailVC.indexRow = index
-        detailVC.state = false
+        detailVC.stateNew = false
 
         viewController?.navigationController?.pushViewController(detailVC, animated: true)
    }

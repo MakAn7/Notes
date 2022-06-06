@@ -28,12 +28,12 @@ class DetailsToDoViewController: UIViewController {
     var model: ListCellViewModel!
 //    let state: State
     var indexRow: Int!
-    var state: Bool!
+    var stateNew: Bool!
 
 //    init(state: State) {
 //        self.state = state
 //        super.init(nibName: nil, bundle: nil)
-// setup()
+
 //        switch state {
 //        case .new:
 //            model = ListCellViewModel(title: "", description: "", date: "", iconUrl: nil)
@@ -55,13 +55,13 @@ class DetailsToDoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
-//        pushToDo()
+        pushToDo()
     }
 
 // MARK: - Set Views
     private func setViews() {
-        view.backgroundColor = .white
-//        toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
+        view.backgroundColor = Colors.shared.viewBackround
+        toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
         toDoTextView.becomeFirstResponder()
         toDoTextView.backgroundColor = Colors.shared.viewBackround
         toDoTextView.autocorrectionType = .no
@@ -69,16 +69,16 @@ class DetailsToDoViewController: UIViewController {
         toDoTextView.textContainer.lineFragmentPadding = 15
 
         dateTextField.textColor = Colors.shared.textColor
-//        dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
+        dateTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 14)
         dateTextField.textAlignment = .center
         dateTextField.isUserInteractionEnabled = false
 
         titleTextField.autocorrectionType = .no
         titleTextField.spellCheckingType = .no
-//        titleTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24)
+        titleTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24)
         titleTextField.attributedPlaceholder = NSAttributedString(
         string: "Введите название",
-        attributes: [NSAttributedString.Key.font: UIFont(name: "Avenir", size: 24) ?? ""]
+        attributes: [NSAttributedString.Key.font: UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24) ?? ""]
         )
     }
 
@@ -121,9 +121,9 @@ class DetailsToDoViewController: UIViewController {
                 target: self,
                 action: #selector(updateModel)
             )
-//            navigationItem.rightBarButtonItem?.setTitleTextAttributes(
-//                [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
-//            )
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes(
+                [.font: UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 17) ?? ""], for: .normal
+            )
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
         }
@@ -131,13 +131,62 @@ class DetailsToDoViewController: UIViewController {
 
     @objc
     private func updateModel() {
-//        model = createToDo()
+        model = createModel()
         view.endEditing(true)
+    }
+
+    private func pushToDo() {
+//        delegate?.updateConstraints()
+        if let model = createModel() {
+            if stateNew {
+                interactor?.didPushModelsArray(model: model)
+            } else {
+                interactor?.didUpdateModelsArray(model: model, indexModel: indexRow)
+            }
+        }
+        view.endEditing(true)
+//        delegate?.updateViews()
+    }
+
+    private func createModel() -> ListCellViewModel? {
+        let titleText = titleTextField.text ?? ""
+        let descriptionText = toDoTextView.text ?? ""
+
+        let model = ListCellViewModel(
+            title: titleText,
+            description: descriptionText,
+            date: model.date,
+            iconUrl: model.iconUrl
+        )
+
+        if model.isEmpty {
+            self.isMovingFromParent ? nil :
+            alertShowError(message: "Заполните заголовок и поле заметки .", title: nil)
+            return nil
+        }
+            let currentToDo = ListCellViewModel(
+                title: titleText,
+                description: descriptionText,
+                date: setLongCurrentDate(),
+                iconUrl: model.iconUrl
+            )
+            return currentToDo
     }
 }
 
 extension DetailsToDoViewController: DetailsToDoDisplayLogic {
     func displayData(viewModel: ListCellViewModel) {
+    }
+}
+
+// MARK: - Setup current date
+extension DetailsToDoViewController {
+    private func setLongCurrentDate() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy EEEE H:mm"
+        let stringDate = convertDateToString(date: date, short: false)
+        return stringDate
     }
 }
 
