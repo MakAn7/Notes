@@ -10,6 +10,7 @@ import UIKit
 protocol ListBusinessLogic {
     func fetchModelsFromInet()
     func fetchModelsFromDataBase()
+    func didRemoveModelsFromDataBase(indexModel: Int)
 }
 
 class ListInteractor {
@@ -20,6 +21,10 @@ class ListInteractor {
 
 // MARK: - Protocols
 extension ListInteractor: ListBusinessLogic {
+    func didRemoveModelsFromDataBase(indexModel: Int) {
+        userDefaultsService.didRemoveModel(indexModel: indexModel)
+    }
+
     func fetchModelsFromInet() {
         listService.fetchToDos(onSuccess: { [weak self] todos in
             self?.presenter?.didFetchData(todos: todos)

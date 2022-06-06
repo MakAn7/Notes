@@ -215,7 +215,24 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
     }
+
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, _) in
+            self.allListModels.remove(at: indexPath.row)
+            self.interactor?.didRemoveModelsFromDataBase(indexModel: indexPath.row)
+            self.interactor?.fetchModelsFromDataBase()
+//            self.didSetAllTodosArray()
+//            self.didToDoTableViewReloadData()
+        }
+        delete.backgroundColor = Colors.shared.viewBackround
+        delete.image = UIImage(named: "trash")
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
 }
+
 // MARK: - Animations
 extension ListViewController {
     func showAddButtonWithAnimation() {
