@@ -35,6 +35,7 @@ class ListViewController: UIViewController {
         setViews()
         setConstraints()
         setupNavigationBar()
+        addTargets()
         interactor?.fetchModelsFromInet()
     }
 
@@ -121,9 +122,10 @@ class ListViewController: UIViewController {
         changeTitleFromButtonsWithAnimation()
         }
 
-//    private func addTargets() {
-//        addButton.addTarget(self, action: #selector(addOrRemoveToDo), for: .touchUpInside)
-//    }
+    private func addTargets() {
+        addButton.addTarget(self, action: #selector(addOrRemoveToDo), for: .touchUpInside)
+    }
+
     private func didSelectAndDeselectMultipleRows(tableView: UITableView, indexPath: IndexPath) {
         selectRows.removeAll()
         if let indexRow = tableView.indexPathsForSelectedRows {
@@ -131,32 +133,31 @@ class ListViewController: UIViewController {
         }
     }
 
-//    @objc
-//    private func addOrRemoveToDo() {
-//        if listView.toDoTableView.isEditing {
-//            if selectRows.isEmpty {
-//                alertShowError(message: "Вы не выбрали ни одной заметки .", title: "Внимание .")
-//            }
-//            selectRows.sort { $0.row > $1.row }
-//            for indexPath in selectRows {
-//                allTodos.remove(at: indexPath.row)
-//                listView.toDoTableView.beginUpdates()
-//                listView.toDoTableView.deleteRows(
-//                    at: [IndexPath(row: indexPath.row, section: 0)],
-//                    with: .top
-//                )
-//                listView.toDoTableView.endUpdates()
-//                ToDoSettings.shared.removeToDo(indexToDo: indexPath.row)
-//            }
-//            listView.toDoTableView.setEditing(false, animated: true)
-//            navigationItem.rightBarButtonItem?.title = "Выбрать"
-//            listView.addButton.setImage(UIImage(named: "Plus"), for: .normal)
-//            selectRows.removeAll()
-//        } else {
-//            tapAddButtonWithAnimation()
-//        }
-//    }
-
+    @objc
+    private func addOrRemoveToDo() {
+        if toDoTableView.isEditing {
+            if selectRows.isEmpty {
+                alertShowError(message: "Вы не выбрали ни одной заметки .", title: "Внимание .")
+            }
+            selectRows.sort { $0.row > $1.row }
+            for indexPath in selectRows {
+                allListModels.remove(at: indexPath.row)
+                toDoTableView.beginUpdates()
+                toDoTableView.deleteRows(
+                    at: [IndexPath(row: indexPath.row, section: 0)],
+                    with: .top
+                )
+                toDoTableView.endUpdates()
+                interactor?.didRemoveModelsFromDataBase(indexModel: indexPath.row)
+            }
+            toDoTableView.setEditing(false, animated: true)
+            navigationItem.rightBarButtonItem?.title = "Выбрать"
+            addButton.setImage(UIImage(named: "Plus"), for: .normal)
+            selectRows.removeAll()
+        } else {
+            tapAddButtonWithAnimation()
+        }
+    }
 }
 
 // MARK: - DisplayData
@@ -180,6 +181,16 @@ extension ListViewController: ListDisplayLogic {
     }
 }
 
+extension ListViewController: DidUpdateViewAndConstaraintsDelegate {
+    func didSetConstraintsToAddButton() {
+        addButtonBottomConstraint.constant  = -60
+    }
+
+    func reloadData() {
+        interactor?.fetchModelsFromDataBase()
+    }
+}
+
 // MARK: UITableViewDelegate, UITableViewDataSource
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -195,6 +206,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let listViewModel = allListModels[indexPath.row]
         cell.setContentToListCell(from: listViewModel)
+        cell.iconImageView.downloadedFrom(link: listViewModel.iconUrl)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -204,7 +216,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             let cellViewModel = allListModels[indexPath.row]
-            router?.presentDetail(cell: cellViewModel, index: indexPath.row)
+            router?.presentDetailEditModel(
+                with: cellViewModel,
+                index: indexPath.row,
+                delegate: self
+            )
         } else {
             didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)
         }
@@ -303,5 +319,27 @@ extension ListViewController {
                 }
             )
         }
+    }
+
+    func tapAddButtonWithAnimation() {
+        // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+        UIView.animate(withDuration: 1.5) {
+            self.addButtonBottomConstraint.constant -= self.addButton.frame.height
+            self.view.layoutIfNeeded()
+        }
+
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.5,
+            options: .curveEaseIn,
+            // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            animations: {
+                self.addButtonBottomConstraint.constant += self.view.frame.height
+                self.view.layoutIfNeeded()
+                // выполнение анимации не приводит к блокированию self внутри замыкания, содержащего анимацию.
+            }, completion: {_ in
+                self.router?.presentDetailNewModel(delegate: self)
+            }
+        )
     }
 }

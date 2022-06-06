@@ -8,7 +8,12 @@
 import UIKit
 
 protocol ListRoutingLogic {
-    func presentDetail(cell: ListCellViewModel, index: Int)
+    func presentDetailEditModel(
+        with cell: ListCellViewModel,
+        index: Int,
+        delegate: DidUpdateViewAndConstaraintsDelegate
+    )
+    func presentDetailNewModel(delegate: DidUpdateViewAndConstaraintsDelegate)
 }
 
 class ListRouter {
@@ -17,13 +22,21 @@ class ListRouter {
 
 // MARK: Routing Logic
 extension ListRouter: ListRoutingLogic {
-    func presentDetail(cell: ListCellViewModel, index: Int) {
-        let controller = DetailsToDoAssembly.makeModule()
-        guard let detailVC = controller as? DetailsToDoViewController else { return }
-        detailVC.model = cell
-        detailVC.indexRow = index
-        detailVC.stateNew = false
+    func presentDetailNewModel(delegate: DidUpdateViewAndConstaraintsDelegate) {
+        let detailVC = DetailsToDoAssembly.makeModuleNewState(delegate: delegate)
+        viewController?.navigationController?.pushViewController(detailVC, animated: true)
+    }
 
+    func presentDetailEditModel(
+        with cell: ListCellViewModel,
+        index: Int,
+        delegate: DidUpdateViewAndConstaraintsDelegate
+    ) {
+        let detailVC = DetailsToDoAssembly.makeModuleEditState(
+            cell: cell,
+            index: index,
+            delegate: delegate
+        )
         viewController?.navigationController?.pushViewController(detailVC, animated: true)
    }
 }

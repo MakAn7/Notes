@@ -32,6 +32,8 @@
 		E29D9452284D5CA5002C17D7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9451284D5CA5002C17D7 /* API.swift */; };
 		E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9454284D5CF4002C17D7 /* ListCell.swift */; };
 		E29D9457284DEE10002C17D7 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */; };
+		E29D945A284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */; };
+		E29D945C284E3DA6002C17D7 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D945B284E3DA6002C17D7 /* UIImageView.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
 		E2CC579D283405A4002C99A5 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CC579C283405A4002C99A5 /* Worker.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
@@ -72,6 +74,8 @@
 		E29D9451284D5CA5002C17D7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E29D9454284D5CF4002C17D7 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
+		E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DidUpdateViewAndConstaraintsDelegate.swift; sourceTree = "<group>"; };
+		E29D945B284E3DA6002C17D7 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		E2CC579C283405A4002C99A5 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 				E26F9046282C766D006761C2 /* Extensions */,
 				E2A3071E27EF451C00BEEACB /* UserDefaults */,
 				E2F82F28280723C800621B67 /* Helpers */,
+				E29D9458284E245A002C17D7 /* Protocols */,
 				E2F82F232806ED0900621B67 /* Library */,
 				E26D4D1327EDC7D9008233F8 /* Resources */,
 				E26D4D1227EDC7C5008233F8 /* App */,
@@ -188,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				E26F9044282C7654006761C2 /* InfoAlert.swift */,
+				E29D945B284E3DA6002C17D7 /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -235,6 +241,14 @@
 				E29D9454284D5CF4002C17D7 /* ListCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		E29D9458284E245A002C17D7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		E2A3071E27EF451C00BEEACB /* UserDefaults */ = {
@@ -401,11 +415,13 @@
 				E29D9441284D5C66002C17D7 /* ListViewController.swift in Sources */,
 				E29D943F284D5C47002C17D7 /* DetailsToDoAssembly.swift in Sources */,
 				E29D944E284D5C9A002C17D7 /* NetworkService.swift in Sources */,
+				E29D945C284E3DA6002C17D7 /* UIImageView.swift in Sources */,
 				E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */,
 				E2CC579D283405A4002C99A5 /* Worker.swift in Sources */,
 				E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */,
 				E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */,
 				E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */,
+				E29D945A284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift in Sources */,
 				E29D943B284D5C3D002C17D7 /* DetailsToDoModels.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E29D9450284D5CA1002C17D7 /* ListService.swift in Sources */,

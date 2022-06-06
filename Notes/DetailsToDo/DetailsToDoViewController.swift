@@ -13,35 +13,42 @@ protocol DetailsToDoDisplayLogic: AnyObject {
 }
 
 class DetailsToDoViewController: UIViewController {
-//    enum State {
-//        case new
-//        case edit(model: ListCellViewModel, indexRow: Int)
-//    }
+    enum State {
+        case new
+        case edit(model: ListCellViewModel, indexRow: Int)
+    }
     let titleTextField = UITextField()
     let toDoTextView = UITextView()
     let dateTextField = UITextField()
 
     var interactor: DetailsToDoBusinessLogic?
     var router: DetailsToDoRoutingLogic?
-    // приватное свойство для похода в юзер дефолтс
+    var delegate: DidUpdateViewAndConstaraintsDelegate?
 
     var model: ListCellViewModel!
-//    let state: State
+    var state: State!
     var indexRow: Int!
-    var stateNew: Bool!
 
-//    init(state: State) {
-//        self.state = state
-//        super.init(nibName: nil, bundle: nil)
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
 
-//        switch state {
-//        case .new:
-//            model = ListCellViewModel(title: "", description: "", date: "", iconUrl: nil)
-//        case .edit(let model, let indexRow):
-//            self.model = model
-//            self.indexRow = indexRow
-//        }
-//    }
+    init(state: State, delegate: DidUpdateViewAndConstaraintsDelegate) {
+        self.state = state
+        super.init(nibName: nil, bundle: nil)
+
+        switch state {
+        case .new:
+            model = ListCellViewModel(title: "", description: "", date: "", iconUrl: nil)
+        case .edit(let model, let indexRow):
+            self.model = model
+            self.indexRow = indexRow
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -55,7 +62,7 @@ class DetailsToDoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
-        didUpdateUserDefaults()
+        didUpdateDataBase()
     }
 
 // MARK: - Set Views
@@ -135,17 +142,20 @@ class DetailsToDoViewController: UIViewController {
         view.endEditing(true)
     }
 
-    private func didUpdateUserDefaults() {
-//        delegate?.updateConstraints()
+    private func didUpdateDataBase() {
+        delegate?.didSetConstraintsToAddButton()
         if let model = createModel() {
-            if stateNew {
+            switch state {
+            case .new:
                 interactor?.didPushModelsArray(model: model)
-            } else {
+            case .edit(let model, let indexRow):
                 interactor?.didUpdateModelsArray(model: model, indexModel: indexRow)
+            case .none:
+                print(".none  case  switch")
             }
         }
+        delegate?.reloadData()
         view.endEditing(true)
-//        delegate?.updateViews()
     }
 
     private func createModel() -> ListCellViewModel? {
