@@ -1,9 +1,8 @@
 //
 //  DetailsToDoInteractor.swift
-//  CleanSwiftNotes
+//  Notes
 //
 //  Created by Антон Макаров on 05.06.2022.
-//  Copyright (c) 2022 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
@@ -11,6 +10,7 @@ import UIKit
 protocol DetailsToDoBusinessLogic {
     func didPushModelsArray(model: ListCellViewModel)
     func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int)
+//    func didFetchModelsArray()
 }
 
 class DetailsToDoInteractor {
@@ -25,4 +25,9 @@ extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
     func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int) {
         userDefaultsService.didUpdateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
     }
+
+//    func didFetchModelsArray() {
+//        let models = userDefaultsService.didFetchModels()
+//        presenter?.didPresentModels(models: models)
+//    }
 }

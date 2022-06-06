@@ -8,8 +8,9 @@
 import UIKit
 
 protocol ListDisplayLogic: AnyObject {
-    func displayData(viewModels: [ListCellViewModel])
-    func dispalayError(error: String)
+    func displayDataFromInet(viewModels: [ListCellViewModel])
+    func dispalayErrorFromInet(error: String)
+    func dispalyDataFromDataBase(viewModels: [ListCellViewModel])
 }
 
 class ListViewController: UIViewController {
@@ -34,12 +35,13 @@ class ListViewController: UIViewController {
         setViews()
         setConstraints()
         setupNavigationBar()
-        interactor?.fetchToDo()
+        interactor?.fetchModelsFromInet()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addButtonBottomConstraint.constant += view.bounds.height
+        interactor?.fetchModelsFromDataBase()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -161,14 +163,21 @@ class ListViewController: UIViewController {
 
 // MARK: - DisplayData
 extension ListViewController: ListDisplayLogic {
-    func displayData(viewModels: [ListCellViewModel]) {
+    func dispalyDataFromDataBase(viewModels: [ListCellViewModel]) {
+        allListModels.removeAll()
+        defaultListModels = viewModels
+        allListModels = defaultListModels + inetListModels
+        toDoTableView.reloadData()
+    }
+
+    func displayDataFromInet(viewModels: [ListCellViewModel]) {
         inetListModels = viewModels
         allListModels = defaultListModels + inetListModels
         toDoTableView.reloadData()
         activityIndicator.stopAnimating()
     }
 
-    func dispalayError(error: String) {
+    func dispalayErrorFromInet(error: String) {
         alertShowError(message: error, title: "Произошла ошибка !")
     }
 }
@@ -196,7 +205,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
-            let cellViewModel = inetListModels[indexPath.row]
+            let cellViewModel = allListModels[indexPath.row]
             router?.presentDetail(cell: cellViewModel, index: indexPath.row)
         } else {
             didSelectAndDeselectMultipleRows(tableView: tableView, indexPath: indexPath)

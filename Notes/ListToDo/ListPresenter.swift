@@ -10,6 +10,7 @@ import UIKit
 protocol ListPresentationLogic {
     func didFetchData(todos: [ToDo])
     func didRaiseError(error: Error)
+    func didPresentModelsFromDataBase(models: [ListCellViewModel])
 }
 
 class ListPresenter {
@@ -17,6 +18,10 @@ class ListPresenter {
 }
 
 extension ListPresenter: ListPresentationLogic {
+    func didPresentModelsFromDataBase(models: [ListCellViewModel]) {
+        viewController?.dispalyDataFromDataBase(viewModels: models)
+    }
+
     func didFetchData(todos: [ToDo]) {
         let viewModels = todos.map {
             ListCellViewModel(
@@ -26,10 +31,10 @@ extension ListPresenter: ListPresentationLogic {
                 iconUrl: $0.userShareIcon.flatMap { url in URL(string: url) }
             )
         }
-        viewController?.displayData(viewModels: viewModels)
+        viewController?.displayDataFromInet(viewModels: viewModels)
     }
 
     func didRaiseError(error: Error) {
-        viewController?.dispalayError(error: error.localizedDescription)
+        viewController?.dispalayErrorFromInet(error: error.localizedDescription)
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DetailsToDoDisplayLogic: AnyObject {
-  func displayData(viewModel: ListCellViewModel )
+  func displayData()
 }
 
 class DetailsToDoViewController: UIViewController {
@@ -55,7 +55,7 @@ class DetailsToDoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
-        pushToDo()
+        didUpdateUserDefaults()
     }
 
 // MARK: - Set Views
@@ -135,7 +135,7 @@ class DetailsToDoViewController: UIViewController {
         view.endEditing(true)
     }
 
-    private func pushToDo() {
+    private func didUpdateUserDefaults() {
 //        delegate?.updateConstraints()
         if let model = createModel() {
             if stateNew {
@@ -175,7 +175,7 @@ class DetailsToDoViewController: UIViewController {
 }
 
 extension DetailsToDoViewController: DetailsToDoDisplayLogic {
-    func displayData(viewModel: ListCellViewModel) {
+    func displayData() {
     }
 }
 
