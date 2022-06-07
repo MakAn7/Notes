@@ -14,6 +14,7 @@ func convertDateToString(date: Date, short format: Bool) -> String {
         let shortDate = dateFormatter.string(from: date)
         return shortDate
     }
+
     dateFormatter.dateFormat = "dd.MM.yyyy EEEE H:mm"
     let longDate = dateFormatter.string(from: date)
     return longDate

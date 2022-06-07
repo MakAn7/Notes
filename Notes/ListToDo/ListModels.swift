@@ -26,7 +26,7 @@ struct ListCellViewModel {
         case iconUrl = "iconUrl"
     }
 
-    var dictionaryOfToDo: [String: Any] {
+    var dictionaryOfModel: [String: Any] {
         var dictToDo: [String: Any] = [:]
         dictToDo[DefaultsKeys.title.rawValue] = title
         dictToDo[DefaultsKeys.description.rawValue] = description
@@ -42,16 +42,16 @@ struct ListCellViewModel {
         self.iconUrl = iconUrl
     }
 
-    init?(dictToDo: [String: Any]) {
+    init?(dictModel: [String: Any]) {
         guard
-            let title = dictToDo[DefaultsKeys.title.rawValue] as? String,
-            let description = dictToDo[DefaultsKeys.description.rawValue] as? String,
-            let date = dictToDo[DefaultsKeys.date.rawValue] as? Date
+            let title = dictModel[DefaultsKeys.title.rawValue] as? String,
+            let description = dictModel[DefaultsKeys.description.rawValue] as? String,
+            let date = dictModel[DefaultsKeys.date.rawValue] as? Date
         else {
             return nil
         }
 
-        let iconUrl = (dictToDo[DefaultsKeys.iconUrl.rawValue] as? String) ?? nil
+        let iconUrl = (dictModel[DefaultsKeys.iconUrl.rawValue] as? String) ?? nil
 
         self.title = title
         self.description = description

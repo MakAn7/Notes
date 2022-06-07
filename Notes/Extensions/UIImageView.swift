@@ -5,7 +5,6 @@
 //  Created by Антон Макаров on 06.06.2022.
 //
 
-import Foundation
 import UIKit
 
 class UserShareIconImageView: UIImageView {
@@ -44,16 +43,6 @@ class UserShareIconImageView: UIImageView {
                 print($0.localizedDescription)
             }
         )
-//        Worker.shared.fetchImage(
-//            with: imageURl,
-//            // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
-//            onSuccess: {
-//                self.image = UIImage(data: $0)
-//                self.pushDataToCache(with: $0, and: $1)
-//            },
-//            onError: { print($0.localizedDescription)
-//            }
-//        )
     }
 
     private func pushDataToCache(with data: Data, and response: URLResponse) {

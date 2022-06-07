@@ -23,8 +23,8 @@ class ListRouter {
 // MARK: Routing Logic
 extension ListRouter: ListRoutingLogic {
     func presentDetailNewModel(delegate: setupConstaraintsDelegate) {
-        let detailVC = DetailsToDoAssembly.makeModuleNewState(delegate: delegate)
-        viewController?.navigationController?.pushViewController(detailVC, animated: true)
+        let detailController = DetailsToDoAssembly.makeModuleNewState(delegate: delegate)
+        viewController?.navigationController?.pushViewController(detailController, animated: true)
     }
 
     func presentDetailEditModel(
@@ -32,11 +32,11 @@ extension ListRouter: ListRoutingLogic {
         index: Int,
         delegate: setupConstaraintsDelegate
     ) {
-        let detailVC = DetailsToDoAssembly.makeModuleEditState(
+        let detailController = DetailsToDoAssembly.makeModuleEditState(
             cell: cell,
             index: index,
             delegate: delegate
         )
-        viewController?.navigationController?.pushViewController(detailVC, animated: true)
+        viewController?.navigationController?.pushViewController(detailController, animated: true)
    }
 }

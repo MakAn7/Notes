@@ -10,7 +10,7 @@ import UIKit
 protocol ListBusinessLogic {
     func fetchModelsFromInet()
     func fetchModelsFromDataBase()
-    func didRemoveModelsFromDataBase(indexModel: Int)
+    func removeModelFromDataBase(indexModel: Int)
 }
 
 class ListInteractor {
@@ -21,7 +21,7 @@ class ListInteractor {
 
 // MARK: - Protocols
 extension ListInteractor: ListBusinessLogic {
-    func didRemoveModelsFromDataBase(indexModel: Int) {
+    func removeModelFromDataBase(indexModel: Int) {
         userDefaultsService.didRemoveModel(indexModel: indexModel)
     }
 
@@ -35,6 +35,6 @@ extension ListInteractor: ListBusinessLogic {
 
     func fetchModelsFromDataBase() {
         let models = userDefaultsService.didFetchModels()
-        presenter?.didPresentModelsFromDataBase(models: models)
+        presenter?.didpresentModelsFromDataBase(models: models)
     }
 }

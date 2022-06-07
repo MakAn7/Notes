@@ -18,10 +18,10 @@ class DetailsToDoInteractor {
 }
 extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
     func pushModelAtArray(model: ListCellViewModel) {
-        userDefaultsService.pushModel(dictModel: model.dictionaryOfToDo)
+        userDefaultsService.pushModel(dictModel: model.dictionaryOfModel)
     }
 
     func updateModelAtArray(model: ListCellViewModel, indexModel: Int) {
-        userDefaultsService.updateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
+        userDefaultsService.updateModel(dictModel: model.dictionaryOfModel, indexModel: indexModel)
     }
 }

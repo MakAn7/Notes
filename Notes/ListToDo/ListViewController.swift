@@ -148,7 +148,7 @@ class ListViewController: UIViewController {
                     with: .top
                 )
                 toDoTableView.endUpdates()
-                interactor?.didRemoveModelsFromDataBase(indexModel: indexPath.row)
+                interactor?.removeModelFromDataBase(indexModel: indexPath.row)
             }
             toDoTableView.setEditing(false, animated: true)
             navigationItem.rightBarButtonItem?.title = "Выбрать"
@@ -232,7 +232,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     ) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, _) in
             self.allListModels.remove(at: indexPath.row)
-            self.interactor?.didRemoveModelsFromDataBase(indexModel: indexPath.row)
+            self.interactor?.removeModelFromDataBase(indexModel: indexPath.row)
             self.interactor?.fetchModelsFromDataBase()
         }
         delete.backgroundColor = Colors.shared.viewBackround

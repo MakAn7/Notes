@@ -7,7 +7,6 @@
 import UIKit
 
 protocol DetailsToDoPresentationLogic {
-    func didPresentModels(models: [ListCellViewModel])
 }
 
 class DetailsToDoPresenter {
@@ -15,6 +14,4 @@ class DetailsToDoPresenter {
 }
 
 extension DetailsToDoPresenter: DetailsToDoPresentationLogic {
-    func didPresentModels(models: [ListCellViewModel]) {
-    }
 }

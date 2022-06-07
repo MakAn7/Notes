@@ -10,7 +10,7 @@ import UIKit
 protocol ListPresentationLogic {
     func didFetchData(todos: [ToDo])
     func didRaiseError(error: Error)
-    func didPresentModelsFromDataBase(models: [ListCellViewModel])
+    func didpresentModelsFromDataBase(models: [ListCellViewModel])
 }
 
 class ListPresenter {
@@ -18,7 +18,7 @@ class ListPresenter {
 }
 
 extension ListPresenter: ListPresentationLogic {
-    func didPresentModelsFromDataBase(models: [ListCellViewModel]) {
+    func didpresentModelsFromDataBase(models: [ListCellViewModel]) {
         viewController?.dispalyDataFromDataBase(viewModels: models)
     }
 

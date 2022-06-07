@@ -53,7 +53,7 @@ final class NetworkService: Networking {
                 decoder.dateDecodingStrategy = .secondsSince1970
                 let models = try decoder.decode([T].self, from: data)
                 DispatchQueue.main.asyncAfter(
-                    deadline: .now() + .seconds(1),
+                    deadline: .now() + .seconds(10),
                     execute: {
                         onSuccess(models)
                     }

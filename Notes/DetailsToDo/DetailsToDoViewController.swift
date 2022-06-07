@@ -39,7 +39,7 @@ class DetailsToDoViewController: UIViewController {
 
         switch state {
         case .new:
-            model = ListCellViewModel(title: "", description: "", date: .now, iconUrl: "")
+            model = ListCellViewModel(title: "", description: "", date: .now, iconUrl: nil)
         case .edit(model: let model, indexRow: let indexRow):
             self.model = model
             self.indexRow = indexRow
@@ -114,6 +114,7 @@ class DetailsToDoViewController: UIViewController {
             toDoTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+
     // MARK: - Set Content To Views
     private func didSetContentToViews() {
         titleTextField.text = model.title
@@ -122,6 +123,7 @@ class DetailsToDoViewController: UIViewController {
             dateTextField.text = convertDateToString(date: date, short: false)
         }
     }
+
     // MARK: - Set Navigation Right Item
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {

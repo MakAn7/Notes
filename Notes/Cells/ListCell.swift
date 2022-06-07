@@ -134,22 +134,14 @@ class ListCell: UITableViewCell {
         }
 
         dateLabel.text = convertDateToString(date: date, short: true)
-
-//        if viewModel.iconUrl != nil {
-//            activityIndicator.startAnimating()
-//            iconImageView.fetchImage(with: viewModel.iconUrl)
-//        } else {
-//            iconImageView.isHidden = true
-//        }
         guard let imageURL = viewModel.iconUrl else {
             iconImageView.isHidden = true
-           return
+            return
         }
         iconImageView.isHidden = false
         activityIndicator.startAnimating()
         iconImageView.fetchImage(with: imageURL)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -40,7 +40,7 @@ final class UserDefaultsService {
         var models = [ListCellViewModel]()
         if let array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             for dictModel in array {
-                guard let model = ListCellViewModel(dictToDo: dictModel) else {
+                guard let model = ListCellViewModel(dictModel: dictModel) else {
                     continue
                 }
                 models.append(model)
