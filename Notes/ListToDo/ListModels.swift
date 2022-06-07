@@ -51,7 +51,7 @@ struct ListCellViewModel {
             return nil
         }
 
-        let iconUrl = dictToDo[DefaultsKeys.iconUrl.rawValue] as? String
+        let iconUrl = (dictToDo[DefaultsKeys.iconUrl.rawValue] as? String) ?? nil
 
         self.title = title
         self.description = description

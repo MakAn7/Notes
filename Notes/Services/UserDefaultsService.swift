@@ -14,7 +14,7 @@ private enum DefaultsKeys: String {
 final class UserDefaultsService {
     let defaults = UserDefaults.standard
 
-    func didPushModel(dictModel: [String: Any]) {
+    func pushModel(dictModel: [String: Any]) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             array.append(dictModel)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
@@ -24,16 +24,17 @@ final class UserDefaultsService {
         }
     }
 
-    func didUpdateModel(dictModel: [String: Any], indexModel: Int) {
+    func updateModel(dictModel: [String: Any], indexModel: Int) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             indexModel < array.count ?
             array[indexModel] = dictModel :
             array.append(dictModel)
-            print()
+            print("массивы после обновления модели в юзер дефолтс\(array)")
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
             let array: [[String: Any]] = [dictModel]
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
+            print("массивы после обновления модели в ПУСТОМ юзер дефолтс\(array)")
         }
     }
 
@@ -46,8 +47,10 @@ final class UserDefaultsService {
                 }
                 models.append(model)
             }
+            print("Models in fetch USER Defaults \(models)")
             return models
         } else {
+            print("Models NO in user default \(models)")
             return []
         }
     }

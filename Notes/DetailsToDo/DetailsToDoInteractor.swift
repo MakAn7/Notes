@@ -8,8 +8,8 @@
 import UIKit
 
 protocol DetailsToDoBusinessLogic {
-    func didPushModelsArray(model: ListCellViewModel)
-    func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int)
+    func pushModelAtArray(model: ListCellViewModel)
+    func updateModelAtArray(model: ListCellViewModel, indexModel: Int)
 //    func didFetchModelsArray()
 }
 
@@ -18,12 +18,12 @@ class DetailsToDoInteractor {
     private var userDefaultsService = UserDefaultsService()
 }
 extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
-    func didPushModelsArray(model: ListCellViewModel) {
-        userDefaultsService.didPushModel(dictModel: model.dictionaryOfToDo)
+    func pushModelAtArray(model: ListCellViewModel) {
+        userDefaultsService.pushModel(dictModel: model.dictionaryOfToDo)
     }
 
-    func didUpdateModelsArray(model: ListCellViewModel, indexModel: Int) {
-        userDefaultsService.didUpdateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
+    func updateModelAtArray(model: ListCellViewModel, indexModel: Int) {
+        userDefaultsService.updateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
     }
 
 //    func didFetchModelsArray() {

@@ -26,7 +26,7 @@ class DetailsToDoViewController: UIViewController {
     weak var delegate: DidUpdateViewAndConstaraintsDelegate?
 
     var model: ListCellViewModel!
-    var state: State?
+    var state: State!
     var indexRow: Int!
 
     init() {
@@ -63,7 +63,7 @@ class DetailsToDoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardNotifications()
-        didUpdateDataBase()
+        updateModelAtDataBase()
     }
 
 // MARK: - Set Views
@@ -143,14 +143,14 @@ class DetailsToDoViewController: UIViewController {
         view.endEditing(true)
     }
 
-    private func didUpdateDataBase() {
+    private func updateModelAtDataBase() {
         delegate?.didSetConstraintsToAddButton()
-        if let model = createModel() {
+        if let newModel = createModel() {
             switch state {
             case .new:
-                interactor?.didPushModelsArray(model: model)
-            case .edit(let model, let indexRow):
-                interactor?.didUpdateModelsArray(model: model, indexModel: indexRow)
+                interactor?.pushModelAtArray(model: newModel)
+            case .edit:
+                interactor?.updateModelAtArray(model: newModel, indexModel: indexRow)
             case .none:
                 print(".none  case  switch")
             }
@@ -181,6 +181,7 @@ class DetailsToDoViewController: UIViewController {
                 date: setLongCurrentDate(),
                 iconUrl: model.iconUrl
             )
+        print("модель после считывания полей \(currentToDo)")
             return currentToDo
     }
 }
