@@ -1,6 +1,6 @@
 //
 //  DetailsToDoAssembly.swift
-//  CleanSwiftNotes
+//  Notes
 //
 //  Created by Антон Макаров on 05.06.2022.
 //
@@ -8,7 +8,7 @@
 import UIKit
 
 struct DetailsToDoAssembly {
-    static func makeModuleNewState(delegate: DidUpdateViewAndConstaraintsDelegate) -> UIViewController {
+    static func makeModuleNewState(delegate: setupConstaraintsDelegate) -> UIViewController {
         let controller = DetailsToDoViewController(state: .new, delegate: delegate)
         let interactor = DetailsToDoInteractor()
         let presenter = DetailsToDoPresenter()
@@ -25,7 +25,7 @@ struct DetailsToDoAssembly {
     static func makeModuleEditState(
         cell: ListCellViewModel,
         index: Int,
-        delegate: DidUpdateViewAndConstaraintsDelegate
+        delegate: setupConstaraintsDelegate
     ) -> UIViewController {
         let controller = DetailsToDoViewController(state: .edit(model: cell, indexRow: index), delegate: delegate)
         let interactor = DetailsToDoInteractor()

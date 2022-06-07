@@ -181,16 +181,10 @@ extension ListViewController: ListDisplayLogic {
     }
 }
 
-extension ListViewController: DidUpdateViewAndConstaraintsDelegate {
-    func didSetConstraintsToAddButton() {
-        print("Constraits ADDBUTTON")
+// MARK: - Setup Constaraints Delegate
+extension ListViewController: setupConstaraintsDelegate {
+    func setupConstraintToAddButton() {
         addButtonBottomConstraint.constant = -60
-        view.layoutIfNeeded()
-    }
-
-    func reloadData() {
-        print("RELOAD DATA DELEGATE")
-        interactor?.fetchModelsFromDataBase()
     }
 }
 

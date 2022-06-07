@@ -11,7 +11,7 @@ protocol DetailsToDoPresentationLogic {
 }
 
 class DetailsToDoPresenter {
-  weak var viewController: DetailsToDoDisplayLogic?
+    weak var viewController: DetailsToDoDisplayLogic?
 }
 
 extension DetailsToDoPresenter: DetailsToDoPresentationLogic {

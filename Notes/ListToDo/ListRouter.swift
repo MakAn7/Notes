@@ -11,9 +11,9 @@ protocol ListRoutingLogic {
     func presentDetailEditModel(
         with cell: ListCellViewModel,
         index: Int,
-        delegate: DidUpdateViewAndConstaraintsDelegate
+        delegate: setupConstaraintsDelegate
     )
-    func presentDetailNewModel(delegate: DidUpdateViewAndConstaraintsDelegate)
+    func presentDetailNewModel(delegate: setupConstaraintsDelegate)
 }
 
 class ListRouter {
@@ -22,7 +22,7 @@ class ListRouter {
 
 // MARK: Routing Logic
 extension ListRouter: ListRoutingLogic {
-    func presentDetailNewModel(delegate: DidUpdateViewAndConstaraintsDelegate) {
+    func presentDetailNewModel(delegate: setupConstaraintsDelegate) {
         let detailVC = DetailsToDoAssembly.makeModuleNewState(delegate: delegate)
         viewController?.navigationController?.pushViewController(detailVC, animated: true)
     }
@@ -30,7 +30,7 @@ extension ListRouter: ListRoutingLogic {
     func presentDetailEditModel(
         with cell: ListCellViewModel,
         index: Int,
-        delegate: DidUpdateViewAndConstaraintsDelegate
+        delegate: setupConstaraintsDelegate
     ) {
         let detailVC = DetailsToDoAssembly.makeModuleEditState(
             cell: cell,

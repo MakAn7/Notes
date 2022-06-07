@@ -1,15 +1,14 @@
 //
 //  DetailsToDoViewController.swift
-//  CleanSwiftNotes
+//  Notes
 //
 //  Created by Антон Макаров on 05.06.2022.
-//  Copyright (c) 2022 ___ORGANIZATIONNAME___. All rights reserved.
 //
 //
 import UIKit
 
 protocol DetailsToDoDisplayLogic: AnyObject {
-  func displayData()
+    func displayData()
 }
 
 class DetailsToDoViewController: UIViewController {
@@ -23,7 +22,7 @@ class DetailsToDoViewController: UIViewController {
 
     var interactor: DetailsToDoBusinessLogic?
     var router: DetailsToDoRoutingLogic?
-    weak var delegate: DidUpdateViewAndConstaraintsDelegate?
+    weak var delegate: setupConstaraintsDelegate?
 
     var model: ListCellViewModel!
     var state: State!
@@ -33,7 +32,7 @@ class DetailsToDoViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    init(state: State, delegate: DidUpdateViewAndConstaraintsDelegate) {
+    init(state: State, delegate: setupConstaraintsDelegate) {
         self.state = state
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -66,7 +65,7 @@ class DetailsToDoViewController: UIViewController {
         updateModelAtDataBase()
     }
 
-// MARK: - Set Views
+    // MARK: - Set Views
     private func setViews() {
         view.backgroundColor = Colors.shared.viewBackround
         toDoTextView.font = UIFont(name: FontsLibrary.SFProTextRegular.rawValue, size: 16)
@@ -85,12 +84,15 @@ class DetailsToDoViewController: UIViewController {
         titleTextField.spellCheckingType = .no
         titleTextField.font = UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24)
         titleTextField.attributedPlaceholder = NSAttributedString(
-        string: "Введите название",
-        attributes: [NSAttributedString.Key.font: UIFont(name: FontsLibrary.SFProTextMedium.rawValue, size: 24) ?? ""]
+            string: "Введите название",
+            attributes: [NSAttributedString.Key.font: UIFont(
+                name: FontsLibrary.SFProTextMedium.rawValue,
+                size: 24
+            ) ?? ""]
         )
     }
 
-// MARK: - Set Constraints
+    // MARK: - Set Constraints
     private func setConstraints() {
         Helper.tamicOff(views: [dateTextField, titleTextField, toDoTextView])
         Helper.add(subviews: [dateTextField, titleTextField, toDoTextView], superView: view)
@@ -112,7 +114,7 @@ class DetailsToDoViewController: UIViewController {
             toDoTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-// MARK: - Set Content To Views
+    // MARK: - Set Content To Views
     private func didSetContentToViews() {
         titleTextField.text = model.title
         toDoTextView.text = model.description
@@ -120,7 +122,7 @@ class DetailsToDoViewController: UIViewController {
             dateTextField.text = convertDateToString(date: date, short: false)
         }
     }
-// MARK: - Set Navigation Right Item
+    // MARK: - Set Navigation Right Item
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -144,7 +146,7 @@ class DetailsToDoViewController: UIViewController {
     }
 
     private func updateModelAtDataBase() {
-        delegate?.didSetConstraintsToAddButton()
+        delegate?.setupConstraintToAddButton()
         if let newModel = createModel() {
             switch state {
             case .new:
@@ -152,10 +154,9 @@ class DetailsToDoViewController: UIViewController {
             case .edit:
                 interactor?.updateModelAtArray(model: newModel, indexModel: indexRow)
             case .none:
-                print(".none  case  switch")
+                fatalError("state .none case")
             }
         }
-        delegate?.reloadData()
         view.endEditing(true)
     }
 
@@ -175,14 +176,13 @@ class DetailsToDoViewController: UIViewController {
             alertShowError(message: "Заполните заголовок и поле заметки .", title: nil)
             return nil
         }
-            let currentToDo = ListCellViewModel(
-                title: titleText,
-                description: descriptionText,
-                date: setLongCurrentDate(),
-                iconUrl: model.iconUrl
-            )
-        print("модель после считывания полей \(currentToDo)")
-            return currentToDo
+        let currentToDo = ListCellViewModel(
+            title: titleText,
+            description: descriptionText,
+            date: setLongCurrentDate(),
+            iconUrl: model.iconUrl
+        )
+        return currentToDo
     }
 }
 

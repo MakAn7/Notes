@@ -8,7 +8,7 @@
 import UIKit
 
 private enum DefaultsKeys: String {
-   case array = "Array"
+    case array = "Array"
 }
 
 final class UserDefaultsService {
@@ -29,12 +29,10 @@ final class UserDefaultsService {
             indexModel < array.count ?
             array[indexModel] = dictModel :
             array.append(dictModel)
-            print("массивы после обновления модели в юзер дефолтс\(array)")
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
             let array: [[String: Any]] = [dictModel]
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
-            print("массивы после обновления модели в ПУСТОМ юзер дефолтс\(array)")
         }
     }
 
@@ -47,10 +45,8 @@ final class UserDefaultsService {
                 }
                 models.append(model)
             }
-            print("Models in fetch USER Defaults \(models)")
             return models
         } else {
-            print("Models NO in user default \(models)")
             return []
         }
     }

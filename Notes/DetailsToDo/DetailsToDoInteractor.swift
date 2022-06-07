@@ -10,11 +10,10 @@ import UIKit
 protocol DetailsToDoBusinessLogic {
     func pushModelAtArray(model: ListCellViewModel)
     func updateModelAtArray(model: ListCellViewModel, indexModel: Int)
-//    func didFetchModelsArray()
 }
 
 class DetailsToDoInteractor {
-  var presenter: DetailsToDoPresentationLogic?
+    var presenter: DetailsToDoPresentationLogic?
     private var userDefaultsService = UserDefaultsService()
 }
 extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
@@ -25,9 +24,4 @@ extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
     func updateModelAtArray(model: ListCellViewModel, indexModel: Int) {
         userDefaultsService.updateModel(dictModel: model.dictionaryOfToDo, indexModel: indexModel)
     }
-
-//    func didFetchModelsArray() {
-//        let models = userDefaultsService.didFetchModels()
-//        presenter?.didPresentModels(models: models)
-//    }
 }

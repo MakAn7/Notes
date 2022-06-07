@@ -13,7 +13,6 @@
 		E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFC27EDC44E008233F8 /* SceneDelegate.swift */; };
 		E26D4D0427EDC44F008233F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E26D4D0327EDC44F008233F8 /* Assets.xcassets */; };
 		E26D4D0727EDC44F008233F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26D4D0527EDC44F008233F8 /* LaunchScreen.storyboard */; };
-		E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */; };
 		E26F9045282C7654006761C2 /* InfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F9044282C7654006761C2 /* InfoAlert.swift */; };
 		E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9434284D5C23002C17D7 /* DetailsToDoViewController.swift */; };
 		E29D9437284D5C2A002C17D7 /* DetailsToDoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */; };
@@ -31,10 +30,9 @@
 		E29D9452284D5CA5002C17D7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9451284D5CA5002C17D7 /* API.swift */; };
 		E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9454284D5CF4002C17D7 /* ListCell.swift */; };
 		E29D9457284DEE10002C17D7 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */; };
-		E29D945A284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */; };
+		E29D945A284E24CC002C17D7 /* setupConstaraintsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */; };
 		E29D945C284E3DA6002C17D7 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D945B284E3DA6002C17D7 /* UIImageView.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
-		E2CC579D283405A4002C99A5 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CC579C283405A4002C99A5 /* Worker.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
 		E2F82F1D2805CBA700621B67 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1C2805CBA700621B67 /* SFProText-Regular.ttf */; };
 		E2F82F1F2805CBAB00621B67 /* SFProText-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1E2805CBAB00621B67 /* SFProText-Semibold.ttf */; };
@@ -54,7 +52,6 @@
 		E26D4D0327EDC44F008233F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E26D4D0627EDC44F008233F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E26D4D0827EDC44F008233F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSettings.swift; sourceTree = "<group>"; };
 		E26F9044282C7654006761C2 /* InfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlert.swift; sourceTree = "<group>"; };
 		E29D9434284D5C23002C17D7 /* DetailsToDoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoViewController.swift; sourceTree = "<group>"; };
 		E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoInteractor.swift; sourceTree = "<group>"; };
@@ -72,10 +69,9 @@
 		E29D9451284D5CA5002C17D7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E29D9454284D5CF4002C17D7 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
-		E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DidUpdateViewAndConstaraintsDelegate.swift; sourceTree = "<group>"; };
+		E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setupConstaraintsDelegate.swift; sourceTree = "<group>"; };
 		E29D945B284E3DA6002C17D7 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
-		E2CC579C283405A4002C99A5 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
 		E2F82F1C2805CBA700621B67 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		E2F82F1E2805CBAB00621B67 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
@@ -113,14 +109,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E20FC219283502D300CE052C /* NetWorker */ = {
-			isa = PBXGroup;
-			children = (
-				E2CC579C283405A4002C99A5 /* Worker.swift */,
-			);
-			path = NetWorker;
-			sourceTree = "<group>";
-		};
 		E26D4CEE27EDC44E008233F8 = {
 			isa = PBXGroup;
 			children = (
@@ -147,10 +135,8 @@
 				E29D944C284D5C89002C17D7 /* Services */,
 				E29D9433284D5BFE002C17D7 /* DetailsToDo */,
 				E29D9432284D5BE9002C17D7 /* ListToDo */,
-				E2A3076C27F7523C00BEEACB /* Models */,
-				E20FC219283502D300CE052C /* NetWorker */,
+				E2A3076C27F7523C00BEEACB /* Model */,
 				E26F9046282C766D006761C2 /* Extensions */,
-				E2A3071E27EF451C00BEEACB /* UserDefaults */,
 				E2F82F28280723C800621B67 /* Helpers */,
 				E29D9458284E245A002C17D7 /* Protocols */,
 				E2F82F232806ED0900621B67 /* Library */,
@@ -243,25 +229,17 @@
 		E29D9458284E245A002C17D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E29D9459284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift */,
+				E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		E2A3071E27EF451C00BEEACB /* UserDefaults */ = {
-			isa = PBXGroup;
-			children = (
-				E26D4D1827EE1C20008233F8 /* ToDoSettings.swift */,
-			);
-			path = UserDefaults;
-			sourceTree = "<group>";
-		};
-		E2A3076C27F7523C00BEEACB /* Models */ = {
+		E2A3076C27F7523C00BEEACB /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				E2A3076A27F7523600BEEACB /* ToDo.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		E2F82F202805CD1900621B67 /* Fonts */ = {
@@ -414,11 +392,9 @@
 				E29D944E284D5C9A002C17D7 /* NetworkService.swift in Sources */,
 				E29D945C284E3DA6002C17D7 /* UIImageView.swift in Sources */,
 				E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */,
-				E2CC579D283405A4002C99A5 /* Worker.swift in Sources */,
 				E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */,
-				E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */,
 				E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */,
-				E29D945A284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift in Sources */,
+				E29D945A284E24CC002C17D7 /* setupConstaraintsDelegate.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E29D9450284D5CA1002C17D7 /* ListService.swift in Sources */,
 				E29D9437284D5C2A002C17D7 /* DetailsToDoInteractor.swift in Sources */,

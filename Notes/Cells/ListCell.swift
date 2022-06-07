@@ -125,23 +125,23 @@ class ListCell: UITableViewCell {
         ])
     }
 
-     func setContentToListCell(from viewModel: ListCellViewModel) {
+    func setContentToListCell(from viewModel: ListCellViewModel) {
         headerLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
 
-         guard let date = viewModel.date else {
-             fatalError("\(#function) Don't get Date ")
-         }
+        guard let date = viewModel.date else {
+            fatalError("\(#function) Don't get Date ")
+        }
 
-         dateLabel.text = convertDateToString(date: date, short: true)
+        dateLabel.text = convertDateToString(date: date, short: true)
 
-         if viewModel.iconUrl != nil {
-             activityIndicator.startAnimating()
-//             iconImageView.fetchImage(with: viewModel.iconUrl)
-         } else {
-             iconImageView.isHidden = true
-         }
-     }
+        if viewModel.iconUrl != nil {
+            activityIndicator.startAnimating()
+//                         iconImageView.fetchImage(with: viewModel.iconUrl)
+        } else {
+            iconImageView.isHidden = true
+        }
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

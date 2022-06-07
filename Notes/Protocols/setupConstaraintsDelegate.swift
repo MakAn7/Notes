@@ -7,7 +7,6 @@
 
 import Foundation
 
-protocol DidUpdateViewAndConstaraintsDelegate: AnyObject {
-    func didSetConstraintsToAddButton()
-    func reloadData()
+protocol setupConstaraintsDelegate: AnyObject {
+    func setupConstraintToAddButton()
 }
