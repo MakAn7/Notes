@@ -15,7 +15,7 @@ class ListCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let dateLabel = UILabel()
     let activityIndicator = UIActivityIndicatorView()
-    let iconImageView = UIImageView()
+    let iconImageView = UserShareIconImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -135,12 +135,19 @@ class ListCell: UITableViewCell {
 
         dateLabel.text = convertDateToString(date: date, short: true)
 
-        if viewModel.iconUrl != nil {
-            activityIndicator.startAnimating()
-//                         iconImageView.fetchImage(with: viewModel.iconUrl)
-        } else {
+//        if viewModel.iconUrl != nil {
+//            activityIndicator.startAnimating()
+//            iconImageView.fetchImage(with: viewModel.iconUrl)
+//        } else {
+//            iconImageView.isHidden = true
+//        }
+        guard let imageURL = viewModel.iconUrl else {
             iconImageView.isHidden = true
+           return
         }
+        iconImageView.isHidden = false
+        activityIndicator.startAnimating()
+        iconImageView.fetchImage(with: imageURL)
     }
 
     required init?(coder: NSCoder) {
