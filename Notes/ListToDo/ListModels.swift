@@ -10,8 +10,8 @@ import Foundation
 struct ListCellViewModel {
     var title: String
     var description: String
-    var date: String
-    var iconUrl: URL?
+    var date: Date?
+    var iconUrl: String?
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {
             return true
@@ -35,7 +35,7 @@ struct ListCellViewModel {
         return dictToDo
     }
 
-    init(title: String, description: String, date: String, iconUrl: URL?) {
+    init(title: String, description: String, date: Date?, iconUrl: String?) {
         self.title = title
         self.description = description
         self.date = date
@@ -46,12 +46,12 @@ struct ListCellViewModel {
         guard
             let title = dictToDo[DefaultsKeys.title.rawValue] as? String,
             let description = dictToDo[DefaultsKeys.description.rawValue] as? String,
-            let date = dictToDo[DefaultsKeys.date.rawValue] as? String
+            let date = dictToDo[DefaultsKeys.date.rawValue] as? Date
         else {
             return nil
         }
 
-        let iconUrl = (dictToDo[DefaultsKeys.iconUrl.rawValue] as? URL) ?? nil
+        let iconUrl = dictToDo[DefaultsKeys.iconUrl.rawValue] as? String
 
         self.title = title
         self.description = description

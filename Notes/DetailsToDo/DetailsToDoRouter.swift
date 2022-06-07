@@ -13,7 +13,4 @@ protocol DetailsToDoRoutingLogic {
 
 class DetailsToDoRouter: DetailsToDoRoutingLogic {
   weak var viewController: DetailsToDoViewController?
-
-  // MARK: Routing
-
 }

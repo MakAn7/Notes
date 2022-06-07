@@ -183,10 +183,13 @@ extension ListViewController: ListDisplayLogic {
 
 extension ListViewController: DidUpdateViewAndConstaraintsDelegate {
     func didSetConstraintsToAddButton() {
-        addButtonBottomConstraint.constant  = -60
+        print("Constraits ADDBUTTON")
+        addButtonBottomConstraint.constant = -60
+        view.layoutIfNeeded()
     }
 
     func reloadData() {
+        print("RELOAD DATA DELEGATE")
         interactor?.fetchModelsFromDataBase()
     }
 }
@@ -206,7 +209,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let listViewModel = allListModels[indexPath.row]
         cell.setContentToListCell(from: listViewModel)
-        cell.iconImageView.downloadedFrom(link: listViewModel.iconUrl)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

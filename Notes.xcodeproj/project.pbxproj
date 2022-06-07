@@ -18,7 +18,6 @@
 		E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9434284D5C23002C17D7 /* DetailsToDoViewController.swift */; };
 		E29D9437284D5C2A002C17D7 /* DetailsToDoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */; };
 		E29D9439284D5C36002C17D7 /* DetailsToDoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9438284D5C36002C17D7 /* DetailsToDoPresenter.swift */; };
-		E29D943B284D5C3D002C17D7 /* DetailsToDoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D943A284D5C3D002C17D7 /* DetailsToDoModels.swift */; };
 		E29D943D284D5C42002C17D7 /* DetailsToDoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D943C284D5C42002C17D7 /* DetailsToDoRouter.swift */; };
 		E29D943F284D5C47002C17D7 /* DetailsToDoAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */; };
 		E29D9441284D5C66002C17D7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9440284D5C66002C17D7 /* ListViewController.swift */; };
@@ -60,7 +59,6 @@
 		E29D9434284D5C23002C17D7 /* DetailsToDoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoViewController.swift; sourceTree = "<group>"; };
 		E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoInteractor.swift; sourceTree = "<group>"; };
 		E29D9438284D5C36002C17D7 /* DetailsToDoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoPresenter.swift; sourceTree = "<group>"; };
-		E29D943A284D5C3D002C17D7 /* DetailsToDoModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoModels.swift; sourceTree = "<group>"; };
 		E29D943C284D5C42002C17D7 /* DetailsToDoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoRouter.swift; sourceTree = "<group>"; };
 		E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsToDoAssembly.swift; sourceTree = "<group>"; };
 		E29D9440284D5C66002C17D7 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 				E29D9434284D5C23002C17D7 /* DetailsToDoViewController.swift */,
 				E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */,
 				E29D9438284D5C36002C17D7 /* DetailsToDoPresenter.swift */,
-				E29D943A284D5C3D002C17D7 /* DetailsToDoModels.swift */,
 				E29D943C284D5C42002C17D7 /* DetailsToDoRouter.swift */,
 				E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */,
 			);
@@ -422,7 +419,6 @@
 				E26D4D1927EE1C20008233F8 /* ToDoSettings.swift in Sources */,
 				E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */,
 				E29D945A284E24CC002C17D7 /* DidUpdateViewAndConstaraintsDelegate.swift in Sources */,
-				E29D943B284D5C3D002C17D7 /* DetailsToDoModels.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E29D9450284D5CA1002C17D7 /* ListService.swift in Sources */,
 				E29D9437284D5C2A002C17D7 /* DetailsToDoInteractor.swift in Sources */,

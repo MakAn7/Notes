@@ -23,10 +23,10 @@ class DetailsToDoViewController: UIViewController {
 
     var interactor: DetailsToDoBusinessLogic?
     var router: DetailsToDoRoutingLogic?
-    var delegate: DidUpdateViewAndConstaraintsDelegate?
+    weak var delegate: DidUpdateViewAndConstaraintsDelegate?
 
     var model: ListCellViewModel!
-    var state: State!
+    var state: State?
     var indexRow: Int!
 
     init() {
@@ -35,12 +35,13 @@ class DetailsToDoViewController: UIViewController {
 
     init(state: State, delegate: DidUpdateViewAndConstaraintsDelegate) {
         self.state = state
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
 
         switch state {
         case .new:
-            model = ListCellViewModel(title: "", description: "", date: "", iconUrl: nil)
-        case .edit(let model, let indexRow):
+            model = ListCellViewModel(title: "", description: "", date: .now, iconUrl: "")
+        case .edit(model: let model, indexRow: let indexRow):
             self.model = model
             self.indexRow = indexRow
         }
@@ -115,8 +116,8 @@ class DetailsToDoViewController: UIViewController {
     private func didSetContentToViews() {
         titleTextField.text = model.title
         toDoTextView.text = model.description
-        if model.date != "" {
-            dateTextField.text = model.date
+        if let date = model.date {
+            dateTextField.text = convertDateToString(date: date, short: false)
         }
     }
 // MARK: - Set Navigation Right Item
@@ -191,12 +192,11 @@ extension DetailsToDoViewController: DetailsToDoDisplayLogic {
 
 // MARK: - Setup current date
 extension DetailsToDoViewController {
-    private func setLongCurrentDate() -> String {
+    private func setLongCurrentDate() -> Date? {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy EEEE H:mm"
-        let stringDate = convertDateToString(date: date, short: false)
-        return stringDate
+        return date
     }
 }
 

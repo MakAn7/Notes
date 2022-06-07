@@ -27,8 +27,8 @@ extension ListPresenter: ListPresentationLogic {
             ListCellViewModel(
                 title: $0.title,
                 description: $0.description,
-                date: convertDateToString(date: $0.date, short: true),
-                iconUrl: $0.userShareIcon.flatMap { url in URL(string: url) }
+                date: $0.date,
+                iconUrl: $0.userShareIcon
             )
         }
         viewController?.displayDataFromInet(viewModels: viewModels)
