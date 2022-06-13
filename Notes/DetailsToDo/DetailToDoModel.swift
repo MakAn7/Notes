@@ -1,18 +1,17 @@
 //
-//  ListModels.swift
+//  DetailToDoModel.swift
 //  Notes
 //
-//  Created by Антон Макаров on 03.06.2022.
+//  Created by Антон Макаров on 12.06.2022.
 //
 
 import Foundation
 
-struct ListCellViewModel {
+struct DetailToDoModel {
     var title: String
     var description: String
     var date: Date?
     var iconUrl: String?
-//    var stateIsNew: Bool
 
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {

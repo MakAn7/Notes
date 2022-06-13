@@ -8,12 +8,13 @@
 import UIKit
 
 struct DetailsToDoAssembly {
-    static func makeModuleNewState(delegate: setupConstaraintsDelegate) -> UIViewController {
-        let controller = DetailsToDoViewController(state: .new, delegate: delegate)
-        let interactor = DetailsToDoInteractor()
+    static func makeModuleNewState(delegate: SetupConstaraintsDelegate) -> UIViewController {
+        let controller = DetailsToDoViewController()
+        let interactor = DetailsToDoInteractor(state: .new)
         let presenter = DetailsToDoPresenter()
         let router = DetailsToDoRouter()
 
+        controller.delegate = delegate
         controller.interactor = interactor
         controller.router = router
         interactor.presenter = presenter
@@ -23,15 +24,16 @@ struct DetailsToDoAssembly {
     }
 
     static func makeModuleEditState(
-        cell: ListCellViewModel,
+        model: DetailToDoModel,
         index: Int,
-        delegate: setupConstaraintsDelegate
+        delegate: SetupConstaraintsDelegate
     ) -> UIViewController {
-        let controller = DetailsToDoViewController(state: .edit(model: cell, indexRow: index), delegate: delegate)
-        let interactor = DetailsToDoInteractor()
+        let controller = DetailsToDoViewController()
+        let interactor = DetailsToDoInteractor(state: .edit(model: model, indexRow: index))
         let presenter = DetailsToDoPresenter()
         let router = DetailsToDoRouter()
 
+        controller.delegate = delegate
         controller.interactor = interactor
         controller.router = router
         interactor.presenter = presenter

@@ -9,31 +9,31 @@ import UIKit
 
 protocol ListRoutingLogic {
     func presentDetailEditModel(
-        with cell: ListCellViewModel,
+        with model: DetailToDoModel,
         index: Int,
-        delegate: setupConstaraintsDelegate
+        delegate: SetupConstaraintsDelegate
     )
-    func presentDetailNewModel(delegate: setupConstaraintsDelegate)
+    func presentDetailNewModel(delegate: SetupConstaraintsDelegate)
 }
 
 class ListRouter {
-  weak var viewController: ListViewController?
+    weak var viewController: ListViewController?
 }
 
 // MARK: Routing Logic
 extension ListRouter: ListRoutingLogic {
-    func presentDetailNewModel(delegate: setupConstaraintsDelegate) {
+    func presentDetailNewModel(delegate: SetupConstaraintsDelegate) {
         let detailController = DetailsToDoAssembly.makeModuleNewState(delegate: delegate)
         viewController?.navigationController?.pushViewController(detailController, animated: true)
     }
 
     func presentDetailEditModel(
-        with cell: ListCellViewModel,
+        with model: DetailToDoModel,
         index: Int,
-        delegate: setupConstaraintsDelegate
+        delegate: SetupConstaraintsDelegate
     ) {
         let detailController = DetailsToDoAssembly.makeModuleEditState(
-            cell: cell,
+            model: model,
             index: index,
             delegate: delegate
         )

@@ -7,7 +7,11 @@
 
 import UIKit
 
-func convertDateToString(date: Date, short format: Bool) -> String {
+func convertDateToString(date: Date?, short format: Bool) -> String {
+    guard let date = date else {
+        return ""
+    }
+
     let dateFormatter = DateFormatter()
     if format {
         dateFormatter.dateFormat = "dd.MM.yyyy"

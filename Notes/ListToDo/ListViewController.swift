@@ -8,8 +8,8 @@
 import UIKit
 
 protocol ListDisplayLogic: AnyObject {
-    func displayDataFromInet(viewModels: [ListCellViewModel])
-    func dispalayErrorFromInet(error: String)
+    func displayDataFromNetWork(viewModels: [ListCellViewModel])
+    func dispalayErrorFromNetwork(error: String)
     func dispalyDataFromDataBase(viewModels: [ListCellViewModel])
 }
 
@@ -18,9 +18,10 @@ class ListViewController: UIViewController {
     var router: ListRoutingLogic?
     private let networkServices: Networking = NetworkService()
 
-    private var inetListModels: [ListCellViewModel] = []
+    private var netWorkListModels: [ListCellViewModel] = []
     private var defaultListModels: [ListCellViewModel] = []
     private var allListModels: [ListCellViewModel] = []
+
     var selectRows = [IndexPath]()
 
     let toDoTableView = UITableView()
@@ -36,7 +37,7 @@ class ListViewController: UIViewController {
         setConstraints()
         setupNavigationBar()
         addTargets()
-        interactor?.fetchModelsFromInet()
+        interactor?.fetchModelsFromNetwork()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -165,24 +166,24 @@ extension ListViewController: ListDisplayLogic {
     func dispalyDataFromDataBase(viewModels: [ListCellViewModel]) {
         allListModels.removeAll()
         defaultListModels = viewModels
-        allListModels = defaultListModels + inetListModels
+        allListModels = defaultListModels + netWorkListModels
         toDoTableView.reloadData()
     }
 
-    func displayDataFromInet(viewModels: [ListCellViewModel]) {
-        inetListModels = viewModels
-        allListModels = defaultListModels + inetListModels
+    func displayDataFromNetWork(viewModels: [ListCellViewModel]) {
+        netWorkListModels = viewModels
+        allListModels = defaultListModels + netWorkListModels
         toDoTableView.reloadData()
         activityIndicator.stopAnimating()
     }
 
-    func dispalayErrorFromInet(error: String) {
+    func dispalayErrorFromNetwork(error: String) {
         alertShowError(message: error, title: "Произошла ошибка !")
     }
 }
 
 // MARK: - Setup Constaraints Delegate
-extension ListViewController: setupConstaraintsDelegate {
+extension ListViewController: SetupConstaraintsDelegate {
     func setupConstraintToAddButton() {
         addButtonBottomConstraint.constant = -60
     }
@@ -212,8 +213,14 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             let cellViewModel = allListModels[indexPath.row]
+            let detailModel = DetailToDoModel(
+                title: cellViewModel.title,
+                description: cellViewModel.description,
+                date: cellViewModel.date,
+                iconUrl: cellViewModel.iconUrl
+            )
             router?.presentDetailEditModel(
-                with: cellViewModel,
+                with: detailModel,
                 index: indexPath.row,
                 delegate: self
             )

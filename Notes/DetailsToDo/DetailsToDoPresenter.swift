@@ -7,6 +7,7 @@
 import UIKit
 
 protocol DetailsToDoPresentationLogic {
+    func presentModel(model: DetailToDoModel)
 }
 
 class DetailsToDoPresenter {
@@ -14,4 +15,7 @@ class DetailsToDoPresenter {
 }
 
 extension DetailsToDoPresenter: DetailsToDoPresentationLogic {
+    func presentModel(model: DetailToDoModel) {
+        viewController?.setValuesFromModel(model: model)
+    }
 }

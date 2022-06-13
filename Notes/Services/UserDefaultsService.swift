@@ -36,11 +36,11 @@ final class UserDefaultsService {
         }
     }
 
-    func didFetchModels() -> [ListCellViewModel] {
-        var models = [ListCellViewModel]()
+    func fetchModels() -> [DetailToDoModel] {
+        var models = [DetailToDoModel]()
         if let array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
             for dictModel in array {
-                guard let model = ListCellViewModel(dictModel: dictModel) else {
+                guard let model = DetailToDoModel(dictModel: dictModel) else {
                     continue
                 }
                 models.append(model)

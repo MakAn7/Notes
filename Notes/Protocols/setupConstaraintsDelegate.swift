@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol setupConstaraintsDelegate: AnyObject {
+protocol SetupConstaraintsDelegate: AnyObject {
     func setupConstraintToAddButton()
 }

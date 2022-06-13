@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A45A09C8A76B8BD5F2124686 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */; };
+		E20AAB0D2853A29A00833620 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB0C2853A29A00833620 /* Test.swift */; };
+		E20AAB0F2855F1AE00833620 /* DetailToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */; };
 		E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */; };
 		E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */; };
 		E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFC27EDC44E008233F8 /* SceneDelegate.swift */; };
@@ -30,7 +32,7 @@
 		E29D9452284D5CA5002C17D7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9451284D5CA5002C17D7 /* API.swift */; };
 		E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9454284D5CF4002C17D7 /* ListCell.swift */; };
 		E29D9457284DEE10002C17D7 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */; };
-		E29D945A284E24CC002C17D7 /* setupConstaraintsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */; };
+		E29D945A284E24CC002C17D7 /* SetupConstaraintsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D9459284E24CC002C17D7 /* SetupConstaraintsDelegate.swift */; };
 		E29D945C284E3DA6002C17D7 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29D945B284E3DA6002C17D7 /* UIImageView.swift */; };
 		E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3076A27F7523600BEEACB /* ToDo.swift */; };
 		E2F82F1B2805CBA000621B67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */; };
@@ -45,6 +47,8 @@
 		427084A548E636038F5EA23A /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
 		AEB0DC7369CE0BA8DAD83086 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 		AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E20AAB0C2853A29A00833620 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailToDoModel.swift; sourceTree = "<group>"; };
 		E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConvertDateToString.swift; path = Notes/Library/ConvertDateToString.swift; sourceTree = SOURCE_ROOT; };
 		E26D4CF727EDC44E008233F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +73,7 @@
 		E29D9451284D5CA5002C17D7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E29D9454284D5CF4002C17D7 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E29D9456284DEE10002C17D7 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
-		E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setupConstaraintsDelegate.swift; sourceTree = "<group>"; };
+		E29D9459284E24CC002C17D7 /* SetupConstaraintsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupConstaraintsDelegate.swift; sourceTree = "<group>"; };
 		E29D945B284E3DA6002C17D7 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		E2A3076A27F7523600BEEACB /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		E2F82F1A2805CBA000621B67 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
@@ -188,9 +192,10 @@
 				E29D9440284D5C66002C17D7 /* ListViewController.swift */,
 				E29D9442284D5C6D002C17D7 /* ListInteractor.swift */,
 				E29D9444284D5C71002C17D7 /* ListPresenter.swift */,
-				E29D9446284D5C75002C17D7 /* ListModels.swift */,
 				E29D9448284D5C7A002C17D7 /* ListRouter.swift */,
 				E29D944A284D5C7E002C17D7 /* ListAssembly.swift */,
+				E29D9446284D5C75002C17D7 /* ListModels.swift */,
+				E20AAB0C2853A29A00833620 /* Test.swift */,
 			);
 			path = ListToDo;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 				E29D9438284D5C36002C17D7 /* DetailsToDoPresenter.swift */,
 				E29D943C284D5C42002C17D7 /* DetailsToDoRouter.swift */,
 				E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */,
+				E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */,
 			);
 			path = DetailsToDo;
 			sourceTree = "<group>";
@@ -229,7 +235,7 @@
 		E29D9458284E245A002C17D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E29D9459284E24CC002C17D7 /* setupConstaraintsDelegate.swift */,
+				E29D9459284E24CC002C17D7 /* SetupConstaraintsDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -394,7 +400,7 @@
 				E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */,
 				E29D9455284D5CF4002C17D7 /* ListCell.swift in Sources */,
 				E29D9435284D5C23002C17D7 /* DetailsToDoViewController.swift in Sources */,
-				E29D945A284E24CC002C17D7 /* setupConstaraintsDelegate.swift in Sources */,
+				E29D945A284E24CC002C17D7 /* SetupConstaraintsDelegate.swift in Sources */,
 				E2F82F27280723C100621B67 /* Helper.swift in Sources */,
 				E29D9450284D5CA1002C17D7 /* ListService.swift in Sources */,
 				E29D9437284D5C2A002C17D7 /* DetailsToDoInteractor.swift in Sources */,
@@ -405,8 +411,10 @@
 				E2A3076B27F7523600BEEACB /* ToDo.swift in Sources */,
 				E29D943D284D5C42002C17D7 /* DetailsToDoRouter.swift in Sources */,
 				E29D9443284D5C6D002C17D7 /* ListInteractor.swift in Sources */,
+				E20AAB0F2855F1AE00833620 /* DetailToDoModel.swift in Sources */,
 				E2F82F222806EB8400621B67 /* Fonts.swift in Sources */,
 				E29D9449284D5C7A002C17D7 /* ListRouter.swift in Sources */,
+				E20AAB0D2853A29A00833620 /* Test.swift in Sources */,
 				E29D9452284D5CA5002C17D7 /* API.swift in Sources */,
 				E29D9447284D5C75002C17D7 /* ListModels.swift in Sources */,
 				E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */,

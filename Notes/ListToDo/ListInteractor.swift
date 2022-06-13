@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListBusinessLogic {
-    func fetchModelsFromInet()
+    func fetchModelsFromNetwork()
     func fetchModelsFromDataBase()
     func removeModelFromDataBase(indexModel: Int)
 }
@@ -25,7 +25,7 @@ extension ListInteractor: ListBusinessLogic {
         userDefaultsService.didRemoveModel(indexModel: indexModel)
     }
 
-    func fetchModelsFromInet() {
+    func fetchModelsFromNetwork() {
         listService.fetchToDos(onSuccess: { [weak self] todos in
             self?.presenter?.didFetchData(todos: todos)
         }, onError: { [weak self] error in
@@ -34,7 +34,7 @@ extension ListInteractor: ListBusinessLogic {
     }
 
     func fetchModelsFromDataBase() {
-        let models = userDefaultsService.didFetchModels()
-        presenter?.didpresentModelsFromDataBase(models: models)
+        let models = userDefaultsService.fetchModels()
+        presenter?.didPresentModelsFromDataBase(models: models)
     }
 }

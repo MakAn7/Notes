@@ -9,41 +9,22 @@ import UIKit
 
 protocol DetailsToDoDisplayLogic: AnyObject {
     func displayData()
+    func setValuesFromModel(model: DetailToDoModel)
 }
 
 class DetailsToDoViewController: UIViewController {
-    enum State {
-        case new
-        case edit(model: ListCellViewModel, indexRow: Int)
-    }
     let titleTextField = UITextField()
     let toDoTextView = UITextView()
     let dateTextField = UITextField()
 
     var interactor: DetailsToDoBusinessLogic?
     var router: DetailsToDoRoutingLogic?
-    weak var delegate: setupConstaraintsDelegate?
+    weak var delegate: SetupConstaraintsDelegate?
 
-    var model: ListCellViewModel!
-    var state: State!
-    var indexRow: Int!
+    var model: DetailToDoModel!
 
     init() {
         super.init(nibName: nil, bundle: nil)
-    }
-
-    init(state: State, delegate: setupConstaraintsDelegate) {
-        self.state = state
-        self.delegate = delegate
-        super.init(nibName: nil, bundle: nil)
-
-        switch state {
-        case .new:
-            model = ListCellViewModel(title: "", description: "", date: .now, iconUrl: nil)
-        case .edit(model: let model, indexRow: let indexRow):
-            self.model = model
-            self.indexRow = indexRow
-        }
     }
 
     required init?(coder: NSCoder) {
@@ -55,8 +36,8 @@ class DetailsToDoViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         setConstraints()
-        didSetContentToViews()
         registerKeybordNotification()
+        interactor?.initToDoFromCell()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,15 +96,6 @@ class DetailsToDoViewController: UIViewController {
         ])
     }
 
-    // MARK: - Set Content To Views
-    private func didSetContentToViews() {
-        titleTextField.text = model.title
-        toDoTextView.text = model.description
-        if let date = model.date {
-            dateTextField.text = convertDateToString(date: date, short: false)
-        }
-    }
-
     // MARK: - Set Navigation Right Item
     private func setNavigationRightItem(isOn: Bool) {
         if isOn {
@@ -149,24 +121,17 @@ class DetailsToDoViewController: UIViewController {
 
     private func updateModelAtDataBase() {
         delegate?.setupConstraintToAddButton()
-        if let newModel = createModel() {
-            switch state {
-            case .new:
-                interactor?.pushModelAtArray(model: newModel)
-            case .edit:
-                interactor?.updateModelAtArray(model: newModel, indexModel: indexRow)
-            case .none:
-                fatalError("state .none case")
-            }
+        if let detailModel = createModel() {
+            interactor?.updateModelAtArray(model: detailModel)
         }
-        view.endEditing(true)
+//        view.endEditing(true)
     }
 
-    private func createModel() -> ListCellViewModel? {
+    private func createModel() -> DetailToDoModel? {
         let titleText = titleTextField.text ?? ""
         let descriptionText = toDoTextView.text ?? ""
 
-        let model = ListCellViewModel(
+        let model = DetailToDoModel(
             title: titleText,
             description: descriptionText,
             date: model.date,
@@ -176,9 +141,9 @@ class DetailsToDoViewController: UIViewController {
         if model.isEmpty {
             self.isMovingFromParent ? nil :
             alertShowError(message: "Заполните заголовок и поле заметки .", title: nil)
-            return nil
+            return model
         }
-        let currentToDo = ListCellViewModel(
+        let currentToDo = DetailToDoModel(
             title: titleText,
             description: descriptionText,
             date: setLongCurrentDate(),
@@ -189,6 +154,13 @@ class DetailsToDoViewController: UIViewController {
 }
 
 extension DetailsToDoViewController: DetailsToDoDisplayLogic {
+    func setValuesFromModel(model: DetailToDoModel) {
+        self.model = model
+        titleTextField.text = model.title
+        toDoTextView.text = model.description
+        dateTextField.text = convertDateToString(date: model.date, short: true)
+    }
+
     func displayData() {
     }
 }
