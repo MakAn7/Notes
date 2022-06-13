@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A45A09C8A76B8BD5F2124686 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */; };
-		E20AAB0D2853A29A00833620 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB0C2853A29A00833620 /* Test.swift */; };
 		E20AAB0F2855F1AE00833620 /* DetailToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */; };
 		E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */; };
 		E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */; };
@@ -47,7 +46,6 @@
 		427084A548E636038F5EA23A /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
 		AEB0DC7369CE0BA8DAD83086 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 		AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E20AAB0C2853A29A00833620 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailToDoModel.swift; sourceTree = "<group>"; };
 		E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConvertDateToString.swift; path = Notes/Library/ConvertDateToString.swift; sourceTree = SOURCE_ROOT; };
 		E26D4CF727EDC44E008233F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +136,6 @@
 				E29D9432284D5BE9002C17D7 /* ListToDo */,
 				E29D9433284D5BFE002C17D7 /* DetailsToDo */,
 				E29D944C284D5C89002C17D7 /* Services */,
-				E29D9453284D5CE9002C17D7 /* Cells */,
 				E2A3076C27F7523C00BEEACB /* Model */,
 				E26F9046282C766D006761C2 /* Extensions */,
 				E2F82F28280723C800621B67 /* Helpers */,
@@ -195,7 +192,7 @@
 				E29D9448284D5C7A002C17D7 /* ListRouter.swift */,
 				E29D944A284D5C7E002C17D7 /* ListAssembly.swift */,
 				E29D9446284D5C75002C17D7 /* ListModels.swift */,
-				E20AAB0C2853A29A00833620 /* Test.swift */,
+				E29D9454284D5CF4002C17D7 /* ListCell.swift */,
 			);
 			path = ListToDo;
 			sourceTree = "<group>";
@@ -222,14 +219,6 @@
 				E29D9451284D5CA5002C17D7 /* API.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		E29D9453284D5CE9002C17D7 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				E29D9454284D5CF4002C17D7 /* ListCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		E29D9458284E245A002C17D7 /* Protocols */ = {
@@ -414,7 +403,6 @@
 				E20AAB0F2855F1AE00833620 /* DetailToDoModel.swift in Sources */,
 				E2F82F222806EB8400621B67 /* Fonts.swift in Sources */,
 				E29D9449284D5C7A002C17D7 /* ListRouter.swift in Sources */,
-				E20AAB0D2853A29A00833620 /* Test.swift in Sources */,
 				E29D9452284D5CA5002C17D7 /* API.swift in Sources */,
 				E29D9447284D5C75002C17D7 /* ListModels.swift in Sources */,
 				E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */,

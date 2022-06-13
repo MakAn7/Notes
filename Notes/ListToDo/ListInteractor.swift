@@ -8,9 +8,9 @@
 import UIKit
 
 protocol ListBusinessLogic {
-    func fetchModelsFromNetwork()
-    func fetchModelsFromDataBase()
-    func removeModelFromDataBase(indexModel: Int)
+    func fetchModelsFromNetwork(request: ListModels.InitForm.Request)
+    func fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request)
+    func removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request)
 }
 
 class ListInteractor {
@@ -21,20 +21,22 @@ class ListInteractor {
 
 // MARK: - Protocols
 extension ListInteractor: ListBusinessLogic {
-    func removeModelFromDataBase(indexModel: Int) {
-        userDefaultsService.didRemoveModel(indexModel: indexModel)
+    func removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request) {
+        userDefaultsService.didRemoveModel(indexModel: indexModel.index)
     }
 
-    func fetchModelsFromNetwork() {
+    func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
         listService.fetchToDos(onSuccess: { [weak self] todos in
-            self?.presenter?.didFetchData(todos: todos)
+            self?.presenter?.didFetchData(response: ListModels.InitForm.Response(todos: todos))
         }, onError: { [weak self] error in
-            self?.presenter?.didRaiseError(error: error)
+            self?.presenter?.didRaiseError(error: ListModels.InitError.Response(responseError: error))
         })
     }
 
-    func fetchModelsFromDataBase() {
+    func fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request) {
         let models = userDefaultsService.fetchModels()
-        presenter?.didPresentModelsFromDataBase(models: models)
+        presenter?.didPresentModelsFromDataBase(
+            models: ListModels.FetchDataFromDataBase.Response(modelsFromDataBase: models)
+        )
     }
 }

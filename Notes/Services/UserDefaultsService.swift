@@ -55,6 +55,7 @@ final class UserDefaultsService {
         guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
             fatalError("Don't fetch array of ToDo")
         }
+
         if array.indices.contains(indexModel) {
             array.remove(at: indexModel)
         }

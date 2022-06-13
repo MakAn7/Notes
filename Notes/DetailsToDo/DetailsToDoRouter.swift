@@ -8,8 +8,16 @@
 import UIKit
 
 protocol DetailsToDoRoutingLogic {
+    func viewControllerDismiss()
 }
 
-class DetailsToDoRouter: DetailsToDoRoutingLogic {
+class DetailsToDoRouter {
+    // слыбая ссылка что бы не было утечки
     weak var viewController: DetailsToDoViewController?
+}
+
+extension DetailsToDoRouter: DetailsToDoRoutingLogic {
+    func viewControllerDismiss() {
+        viewController?.dismiss(animated: true)
+    }
 }

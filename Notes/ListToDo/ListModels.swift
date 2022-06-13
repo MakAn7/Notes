@@ -7,12 +7,51 @@
 
 import Foundation
 
+enum ListModels {
+    enum InitForm {
+        struct Request {}
+        struct Response {
+            let todos: [ToDo]
+        }
+        struct ViewModel {
+            let listCellModels: [ListCellViewModel]
+        }
+    }
+
+    enum InitError {
+        struct Request {}
+        struct Response {
+            let responseError: CurrentError
+        }
+        struct ViewModel {
+            let networkError: CurrentError
+        }
+    }
+
+    enum FetchDataFromDataBase {
+        struct Request {}
+        struct Response {
+            let modelsFromDataBase: [DetailToDoModel]
+        }
+        struct ViewModel {
+            let modelsToDisplayFromDataBase: [ListCellViewModel]
+        }
+    }
+
+    enum RemoveModel {
+        struct Request {
+            let index: Int
+        }
+        struct Response {}
+        struct ViewModel {}
+    }
+}
+
 struct ListCellViewModel {
     var title: String
     var description: String
     var date: Date?
     var iconUrl: String?
-//    var stateIsNew: Bool
 
     var isEmpty: Bool {
         if title.isEmpty && description.isEmpty {
@@ -26,7 +65,6 @@ struct ListCellViewModel {
         case description = "description"
         case date = "date"
         case iconUrl = "iconUrl"
-//        case stateIsNew = "stateIsNew"
     }
 
     var dictionaryOfModel: [String: Any] {
@@ -35,7 +73,6 @@ struct ListCellViewModel {
         dictToDo[DefaultsKeys.description.rawValue] = description
         dictToDo[DefaultsKeys.date.rawValue] = date
         dictToDo[DefaultsKeys.iconUrl.rawValue] = iconUrl
-//        dictToDo[DefaultsKeys.stateIsNew.rawValue] = stateIsNew
         return dictToDo
     }
 
@@ -44,7 +81,6 @@ struct ListCellViewModel {
         self.description = description
         self.date = date
         self.iconUrl = iconUrl
-//        self.stateIsNew = stateIsNew
     }
 
     init?(dictModel: [String: Any]) {
@@ -52,7 +88,6 @@ struct ListCellViewModel {
             let title = dictModel[DefaultsKeys.title.rawValue] as? String,
             let description = dictModel[DefaultsKeys.description.rawValue] as? String,
             let date = dictModel[DefaultsKeys.date.rawValue] as? Date
-//            let stateIsNew = dictModel[DefaultsKeys.stateIsNew.rawValue] as? Bool
         else {
             return nil
         }
@@ -63,6 +98,5 @@ struct ListCellViewModel {
         self.description = description
         self.date = date
         self.iconUrl = iconUrl
-//        self.stateIsNew = stateIsNew
     }
 }

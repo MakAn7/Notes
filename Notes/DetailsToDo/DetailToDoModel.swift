@@ -25,7 +25,6 @@ struct DetailToDoModel {
         case description = "description"
         case date = "date"
         case iconUrl = "iconUrl"
-//        case stateIsNew = "stateIsNew"
     }
 
     var dictionaryOfModel: [String: Any] {
@@ -34,7 +33,6 @@ struct DetailToDoModel {
         dictToDo[DefaultsKeys.description.rawValue] = description
         dictToDo[DefaultsKeys.date.rawValue] = date
         dictToDo[DefaultsKeys.iconUrl.rawValue] = iconUrl
-//        dictToDo[DefaultsKeys.stateIsNew.rawValue] = stateIsNew
         return dictToDo
     }
 
@@ -43,7 +41,6 @@ struct DetailToDoModel {
         self.description = description
         self.date = date
         self.iconUrl = iconUrl
-//        self.stateIsNew = stateIsNew
     }
 
     init?(dictModel: [String: Any]) {
@@ -51,7 +48,6 @@ struct DetailToDoModel {
             let title = dictModel[DefaultsKeys.title.rawValue] as? String,
             let description = dictModel[DefaultsKeys.description.rawValue] as? String,
             let date = dictModel[DefaultsKeys.date.rawValue] as? Date
-//            let stateIsNew = dictModel[DefaultsKeys.stateIsNew.rawValue] as? Bool
         else {
             return nil
         }
@@ -62,6 +58,5 @@ struct DetailToDoModel {
         self.description = description
         self.date = date
         self.iconUrl = iconUrl
-//        self.stateIsNew = stateIsNew
     }
 }

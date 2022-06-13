@@ -138,10 +138,12 @@ class ListCell: UITableViewCell {
             iconImageView.isHidden = true
             return
         }
+
         iconImageView.isHidden = false
         activityIndicator.startAnimating()
         iconImageView.fetchImage(with: imageURL)
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

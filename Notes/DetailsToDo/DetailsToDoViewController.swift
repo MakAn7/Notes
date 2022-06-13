@@ -8,8 +8,7 @@
 import UIKit
 
 protocol DetailsToDoDisplayLogic: AnyObject {
-    func displayData()
-    func setValuesFromModel(model: DetailToDoModel)
+    func displayData(model: DetailToDoModel)
 }
 
 class DetailsToDoViewController: UIViewController {
@@ -124,7 +123,7 @@ class DetailsToDoViewController: UIViewController {
         if let detailModel = createModel() {
             interactor?.updateModelAtArray(model: detailModel)
         }
-//        view.endEditing(true)
+        router?.viewControllerDismiss()
     }
 
     private func createModel() -> DetailToDoModel? {
@@ -154,14 +153,11 @@ class DetailsToDoViewController: UIViewController {
 }
 
 extension DetailsToDoViewController: DetailsToDoDisplayLogic {
-    func setValuesFromModel(model: DetailToDoModel) {
+    func displayData(model: DetailToDoModel) {
         self.model = model
         titleTextField.text = model.title
         toDoTextView.text = model.description
         dateTextField.text = convertDateToString(date: model.date, short: true)
-    }
-
-    func displayData() {
     }
 }
 

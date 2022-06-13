@@ -86,6 +86,7 @@ final class NetworkService: Networking {
                     }
                     return
                 }
+
                 guard url == response.url else {
                     return
                 }

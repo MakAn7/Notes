@@ -17,6 +17,7 @@ protocol ListRoutingLogic {
 }
 
 class ListRouter {
+    // слабая ссылка что бы не было утечки 
     weak var viewController: ListViewController?
 }
 

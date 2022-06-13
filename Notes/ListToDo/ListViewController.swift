@@ -8,9 +8,9 @@
 import UIKit
 
 protocol ListDisplayLogic: AnyObject {
-    func displayDataFromNetWork(viewModels: [ListCellViewModel])
-    func dispalayErrorFromNetwork(error: String)
-    func dispalyDataFromDataBase(viewModels: [ListCellViewModel])
+    func displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel)
+    func dispalyDataFromDataBase(viewModels: ListModels.FetchDataFromDataBase.ViewModel)
+    func dispalayErrorFromNetwork(error: ListModels.InitError.ViewModel)
 }
 
 class ListViewController: UIViewController {
@@ -37,13 +37,13 @@ class ListViewController: UIViewController {
         setConstraints()
         setupNavigationBar()
         addTargets()
-        interactor?.fetchModelsFromNetwork()
+        interactor?.fetchModelsFromNetwork(request: ListModels.InitForm.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addButtonBottomConstraint.constant += view.bounds.height
-        interactor?.fetchModelsFromDataBase()
+        interactor?.fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -149,7 +149,7 @@ class ListViewController: UIViewController {
                     with: .top
                 )
                 toDoTableView.endUpdates()
-                interactor?.removeModelFromDataBase(indexModel: indexPath.row)
+                interactor?.removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request(index: indexPath.row))
             }
             toDoTableView.setEditing(false, animated: true)
             navigationItem.rightBarButtonItem?.title = "Выбрать"
@@ -163,22 +163,22 @@ class ListViewController: UIViewController {
 
 // MARK: - DisplayData
 extension ListViewController: ListDisplayLogic {
-    func dispalyDataFromDataBase(viewModels: [ListCellViewModel]) {
+    func dispalyDataFromDataBase(viewModels: ListModels.FetchDataFromDataBase.ViewModel) {
         allListModels.removeAll()
-        defaultListModels = viewModels
+        defaultListModels = viewModels.modelsToDisplayFromDataBase
         allListModels = defaultListModels + netWorkListModels
         toDoTableView.reloadData()
     }
 
-    func displayDataFromNetWork(viewModels: [ListCellViewModel]) {
-        netWorkListModels = viewModels
+    func displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel) {
+        netWorkListModels = viewModels.listCellModels
         allListModels = defaultListModels + netWorkListModels
         toDoTableView.reloadData()
         activityIndicator.stopAnimating()
     }
 
-    func dispalayErrorFromNetwork(error: String) {
-        alertShowError(message: error, title: "Произошла ошибка !")
+    func dispalayErrorFromNetwork(error: ListModels.InitError.ViewModel) {
+        alertShowError(message: error.networkError.localizedDescription, title: "Произошла ошибка !")
     }
 }
 
@@ -239,8 +239,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     ) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, _) in
             self.allListModels.remove(at: indexPath.row)
-            self.interactor?.removeModelFromDataBase(indexModel: indexPath.row)
-            self.interactor?.fetchModelsFromDataBase()
+            self.interactor?.removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request(index: indexPath.row))
+            self.interactor?.fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request())
         }
         delete.backgroundColor = Colors.shared.viewBackround
         delete.image = UIImage(named: "trash")

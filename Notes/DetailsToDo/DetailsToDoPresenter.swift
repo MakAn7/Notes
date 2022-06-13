@@ -11,11 +11,12 @@ protocol DetailsToDoPresentationLogic {
 }
 
 class DetailsToDoPresenter {
+    // слабая ссылка для VIP цикла
     weak var viewController: DetailsToDoDisplayLogic?
 }
 
 extension DetailsToDoPresenter: DetailsToDoPresentationLogic {
     func presentModel(model: DetailToDoModel) {
-        viewController?.setValuesFromModel(model: model)
+        viewController?.displayData(model: model)
     }
 }
