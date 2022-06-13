@@ -7,7 +7,7 @@
 import UIKit
 
 protocol DetailsToDoPresentationLogic {
-    func presentModel(model: DetailToDoModel)
+    func presentModel(model: DetailModel.InitForm.Response)
 }
 
 class DetailsToDoPresenter {
@@ -16,7 +16,7 @@ class DetailsToDoPresenter {
 }
 
 extension DetailsToDoPresenter: DetailsToDoPresentationLogic {
-    func presentModel(model: DetailToDoModel) {
-        viewController?.displayData(model: model)
+    func presentModel(model: DetailModel.InitForm.Response) {
+        viewController?.displayData(model: DetailModel.InitForm.ViewModel(model: model.model))
     }
 }

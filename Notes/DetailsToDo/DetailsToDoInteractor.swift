@@ -6,9 +6,8 @@
 //
 
 protocol DetailsToDoBusinessLogic {
-    func pushModelAtArray(model: DetailToDoModel)
-    func updateModelAtArray(model: DetailToDoModel)
-    func initToDoFromCell()
+    func updateModelAtArray(model: DetailModel.UpdateModelFromDataBase.Request)
+    func initToDoFromCell(request: DetailModel.InitForm.Request)
 }
 
 class DetailsToDoInteractor {
@@ -43,22 +42,18 @@ class DetailsToDoInteractor {
 }
 
 extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
-    func pushModelAtArray(model: DetailToDoModel) {
-        userDefaultsService.pushModel(dictModel: model.dictionaryOfModel)
-    }
-
-    func updateModelAtArray(model: DetailToDoModel) {
+    func updateModelAtArray(model: DetailModel.UpdateModelFromDataBase.Request) {
         switch state {
         case .new:
-            userDefaultsService.pushModel(dictModel: model.dictionaryOfModel)
+            userDefaultsService.pushModel(dictModel: model.model.dictionaryOfModel)
         case .edit:
-            userDefaultsService.updateModel(dictModel: model.dictionaryOfModel, indexModel: indexRow)
+            userDefaultsService.updateModel(dictModel: model.model.dictionaryOfModel, indexModel: indexRow)
         case .none:
             print( #function + "case .none")
         }
     }
 
-    func initToDoFromCell() {
-        presenter?.presentModel(model: model)
+    func initToDoFromCell(request: DetailModel.InitForm.Request) {
+        presenter?.presentModel(model: DetailModel.InitForm.Response(model: model))
     }
 }

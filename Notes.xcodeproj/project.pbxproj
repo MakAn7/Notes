@@ -190,9 +190,9 @@
 				E29D9442284D5C6D002C17D7 /* ListInteractor.swift */,
 				E29D9444284D5C71002C17D7 /* ListPresenter.swift */,
 				E29D9448284D5C7A002C17D7 /* ListRouter.swift */,
-				E29D944A284D5C7E002C17D7 /* ListAssembly.swift */,
 				E29D9446284D5C75002C17D7 /* ListModels.swift */,
 				E29D9454284D5CF4002C17D7 /* ListCell.swift */,
+				E29D944A284D5C7E002C17D7 /* ListAssembly.swift */,
 			);
 			path = ListToDo;
 			sourceTree = "<group>";
@@ -204,8 +204,8 @@
 				E29D9436284D5C2A002C17D7 /* DetailsToDoInteractor.swift */,
 				E29D9438284D5C36002C17D7 /* DetailsToDoPresenter.swift */,
 				E29D943C284D5C42002C17D7 /* DetailsToDoRouter.swift */,
-				E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */,
 				E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */,
+				E29D943E284D5C47002C17D7 /* DetailsToDoAssembly.swift */,
 			);
 			path = DetailsToDo;
 			sourceTree = "<group>";

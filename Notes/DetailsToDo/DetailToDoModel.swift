@@ -7,6 +7,32 @@
 
 import Foundation
 
+enum DetailModel {
+    enum InitForm {
+        struct Request { }
+        struct Response {
+            let model: DetailToDoModel
+        }
+        struct ViewModel {
+            let model: DetailToDoModel
+        }
+    }
+
+    enum UpdateModelFromDataBase {
+        struct Request {
+            let model: DetailToDoModel
+        }
+        struct Response { }
+        struct ViewModel { }
+    }
+
+    enum DismisDetailController {
+        struct Request { }
+        struct Response { }
+        struct ViewModel { }
+    }
+}
+
 struct DetailToDoModel {
     var title: String
     var description: String

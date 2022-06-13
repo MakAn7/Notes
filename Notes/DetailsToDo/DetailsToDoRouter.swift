@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailsToDoRoutingLogic {
-    func viewControllerDismiss()
+    func viewControllerDismiss(request: DetailModel.DismisDetailController.Request)
 }
 
 class DetailsToDoRouter {
@@ -17,7 +17,7 @@ class DetailsToDoRouter {
 }
 
 extension DetailsToDoRouter: DetailsToDoRoutingLogic {
-    func viewControllerDismiss() {
+    func viewControllerDismiss(request: DetailModel.DismisDetailController.Request) {
         viewController?.dismiss(animated: true)
     }
 }

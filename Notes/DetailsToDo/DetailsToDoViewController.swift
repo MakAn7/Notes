@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailsToDoDisplayLogic: AnyObject {
-    func displayData(model: DetailToDoModel)
+    func displayData(model: DetailModel.InitForm.ViewModel)
 }
 
 class DetailsToDoViewController: UIViewController {
@@ -36,7 +36,7 @@ class DetailsToDoViewController: UIViewController {
         setViews()
         setConstraints()
         registerKeybordNotification()
-        interactor?.initToDoFromCell()
+        interactor?.initToDoFromCell(request: DetailModel.InitForm.Request())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,9 +121,9 @@ class DetailsToDoViewController: UIViewController {
     private func updateModelAtDataBase() {
         delegate?.setupConstraintToAddButton()
         if let detailModel = createModel() {
-            interactor?.updateModelAtArray(model: detailModel)
+            interactor?.updateModelAtArray(model: DetailModel.UpdateModelFromDataBase.Request(model: detailModel))
         }
-        router?.viewControllerDismiss()
+        router?.viewControllerDismiss(request: DetailModel.DismisDetailController.Request())
     }
 
     private func createModel() -> DetailToDoModel? {
@@ -153,11 +153,11 @@ class DetailsToDoViewController: UIViewController {
 }
 
 extension DetailsToDoViewController: DetailsToDoDisplayLogic {
-    func displayData(model: DetailToDoModel) {
-        self.model = model
-        titleTextField.text = model.title
-        toDoTextView.text = model.description
-        dateTextField.text = convertDateToString(date: model.date, short: true)
+    func displayData(model: DetailModel.InitForm.ViewModel) {
+        self.model = model.model
+        titleTextField.text = model.model.title
+        toDoTextView.text = model.model.description
+        dateTextField.text = convertDateToString(date: model.model.date, short: true)
     }
 }
 

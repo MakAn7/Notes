@@ -26,10 +26,11 @@ extension ListInteractor: ListBusinessLogic {
     }
 
     func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
-        listService.fetchToDos(onSuccess: { [weak self] todos in
-            self?.presenter?.didFetchData(response: ListModels.InitForm.Response(todos: todos))
-        }, onError: { [weak self] error in
-            self?.presenter?.didRaiseError(error: ListModels.InitError.Response(responseError: error))
+        // слабая или безхозная ссылка не нужна, цикла не образуется
+        listService.fetchToDos(onSuccess: { todos in
+            self.presenter?.didFetchData(response: ListModels.InitForm.Response(todos: todos))
+        }, onError: { error in
+            self.presenter?.didRaiseError(error: ListModels.InitError.Response(responseError: error))
         })
     }
 
