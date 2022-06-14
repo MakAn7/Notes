@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A45A09C8A76B8BD5F2124686 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */; };
 		E20AAB0F2855F1AE00833620 /* DetailToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */; };
+		E20AAB1628586BED00833620 /* ListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB1528586BED00833620 /* ListTest.swift */; };
 		E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */; };
 		E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */; };
 		E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFC27EDC44E008233F8 /* SceneDelegate.swift */; };
@@ -47,6 +48,7 @@
 		AEB0DC7369CE0BA8DAD83086 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 		AED81F3C3B84A3B74F3CBB56 /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E20AAB0E2855F1AE00833620 /* DetailToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailToDoModel.swift; sourceTree = "<group>"; };
+		E20AAB1528586BED00833620 /* ListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTest.swift; sourceTree = "<group>"; };
 		E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConvertDateToString.swift; path = Notes/Library/ConvertDateToString.swift; sourceTree = SOURCE_ROOT; };
 		E26D4CF727EDC44E008233F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,9 +113,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E20AAB14285868E100833620 /* NotesTest */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NotesTest;
+			sourceTree = "<group>";
+		};
 		E26D4CEE27EDC44E008233F8 = {
 			isa = PBXGroup;
 			children = (
+				E20AAB1528586BED00833620 /* ListTest.swift */,
 				E26D4CF927EDC44E008233F8 /* Notes */,
 				E26D4D1427EDC834008233F8 /* Storyboards */,
 				E26D4CF827EDC44E008233F8 /* Products */,
@@ -143,6 +153,7 @@
 				E2F82F232806ED0900621B67 /* Library */,
 				E26D4D1327EDC7D9008233F8 /* Resources */,
 				E26D4D1227EDC7C5008233F8 /* App */,
+				E20AAB14285868E100833620 /* NotesTest */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -407,6 +418,7 @@
 				E29D9447284D5C75002C17D7 /* ListModels.swift in Sources */,
 				E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */,
 				E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */,
+				E20AAB1628586BED00833620 /* ListTest.swift in Sources */,
 				E29D9439284D5C36002C17D7 /* DetailsToDoPresenter.swift in Sources */,
 				E2F82F252806EEED00621B67 /* Colors.swift in Sources */,
 			);
