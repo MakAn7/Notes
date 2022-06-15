@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct ListService {
-    private let networkService = NetworkService()
+protocol ListFetchDataLogic {
+    func fetchToDos(
+        onSuccess: @escaping([ToDo]) -> Void,
+        onError: @escaping(CurrentError) -> Void
+    )
+}
 
+class ListService {
+    private let networkService = NetworkService()
+}
+
+extension ListService: ListFetchDataLogic {
     func fetchToDos(
         onSuccess: @escaping([ToDo]) -> Void,
         onError: @escaping(CurrentError) -> Void

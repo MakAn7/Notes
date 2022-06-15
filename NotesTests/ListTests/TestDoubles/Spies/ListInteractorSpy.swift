@@ -8,7 +8,7 @@
 import Foundation
 @testable import Notes
 
-final class ListInteractorMock: ListBusinessLogic {
+final class ListInteractorSpy: ListBusinessLogic {
     private (set) var didFetchModelsFromNetworcCalled = false
     private (set) var didFetchModelsFromDataBaseCalled = false
     private (set) var didRemoveModelFromDataBaseCalled = false

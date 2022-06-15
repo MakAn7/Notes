@@ -16,7 +16,6 @@ protocol ListDisplayLogic: AnyObject {
 class ListViewController: UIViewController {
     var interactor: ListBusinessLogic?
     var router: ListRoutingLogic?
-    private let networkServices: Networking = NetworkService()
 
     private var netWorkListModels: [ListCellViewModel] = []
     private var defaultListModels: [ListCellViewModel] = []

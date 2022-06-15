@@ -14,6 +14,12 @@ protocol Networking {
         onSuccess: @escaping([T]) -> Void,
         onError: @escaping(CurrentError) -> Void
     )
+
+    func fetchImage(
+        with url: URL,
+        onSuccess: @escaping(Data, URLResponse) -> Void,
+        onError: @escaping(CurrentError) -> Void
+    )
 }
 
 enum CurrentError: Error {

@@ -14,9 +14,9 @@ protocol ListBusinessLogic {
 }
 
 class ListInteractor {
-  var presenter: ListPresentationLogic?
-  private var listService = ListService()
-  private var userDefaultsService = UserDefaultsService()
+    var presenter: ListPresentationLogic?
+    var listService: ListFetchDataLogic?
+    private var userDefaultsService = UserDefaultsService()
 }
 
 // MARK: - Protocols
@@ -27,7 +27,7 @@ extension ListInteractor: ListBusinessLogic {
 
     func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
         // слабая или безхозная ссылка не нужна, цикла не образуется
-        listService.fetchToDos(onSuccess: { todos in
+        listService?.fetchToDos(onSuccess: { todos in
             self.presenter?.didFetchData(response: ListModels.InitForm.Response(todos: todos))
         }, onError: { error in
             self.presenter?.didRaiseError(error: ListModels.InitError.Response(responseError: error))

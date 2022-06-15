@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TableViewMock: UITableView {
+final class TableViewSpy: UITableView {
   private(set) var isCalledReloadData = false
 
   override func reloadData() {

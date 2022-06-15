@@ -9,12 +9,14 @@ import XCTest
 @testable import Notes
 
 class ListControllerTests: XCTestCase {
+    // MARK: - Private Properties
+
     var sut: ListViewController!
-    var interactor: ListInteractorMock!
+    var interactor: ListInteractorSpy!
 
     override func setUp() {
         let viewController = ListViewController()
-        let interactor = ListInteractorMock()
+        let interactor = ListInteractorSpy()
         viewController.interactor = interactor
         sut = viewController
     }
@@ -25,17 +27,38 @@ class ListControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testsTableView() {
-        let tableViewMock = TableViewMock()
+    // MARK: - Public Methods
+    func testsReloadTableViewThenDidSetDataFromNetWork() {
+        let tableViewSpy = TableViewSpy()
         let listCellModels = [
             ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz"),
             ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz"),
             ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz")]
 
-          sut.toDoTableView = tableViewMock
-          sut.toDoTableView.dataSource = sut
-          sut.displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel(listCellModels: listCellModels))
-        XCTAssertTrue(tableViewMock.isCalledReloadData, "Обновление таблицы не началось")
-        XCTAssertEqual(tableViewMock.numberOfRows(inSection: 0), listCellModels.count)
+        sut.toDoTableView = tableViewSpy
+        sut.toDoTableView.dataSource = sut
+        sut.displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel(listCellModels: listCellModels))
+
+        XCTAssertTrue(tableViewSpy.isCalledReloadData, "Обновление таблицы не началось")
+        XCTAssertEqual(tableViewSpy.numberOfRows(inSection: 0), listCellModels.count)
+    }
+
+    func testsReloadTableViewThenDidSetDataFromDataBase() {
+        let tableViewSpy = TableViewSpy()
+        let listCellModels = [
+            ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz"),
+            ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz"),
+            ListCellViewModel(title: "Foo", description: "Bar", date: .now, iconUrl: "Baz")]
+
+        sut.toDoTableView = tableViewSpy
+        sut.toDoTableView.dataSource = sut
+        sut.dispalyDataFromDataBase(
+            viewModels: ListModels.FetchDataFromDataBase.ViewModel(
+            modelsToDisplayFromDataBase: listCellModels
+            )
+        )
+
+        XCTAssertTrue(tableViewSpy.isCalledReloadData, "Обновление таблицы не началось")
+        XCTAssertEqual(tableViewSpy.numberOfRows(inSection: 0), listCellModels.count)
     }
 }
