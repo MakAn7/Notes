@@ -24,7 +24,7 @@ class ListViewController: UIViewController {
 
     var selectRows = [IndexPath]()
 
-    let toDoTableView = UITableView()
+    var toDoTableView = UITableView()
     let addButton = UIButton()
     let activityIndicator = UIActivityIndicatorView()
 
