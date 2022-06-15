@@ -1,9 +1,6 @@
-//
 //  ListViewControllerSpy.swift
 //  NotesTests
-//
 //  Created by Антон Макаров on 15.06.2022.
-//
 
 import Foundation
 @testable import Notes

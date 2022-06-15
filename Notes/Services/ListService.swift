@@ -1,9 +1,6 @@
-//
 //  ListService.swift
 //  Notes
-//
 //  Created by Антон Макаров on 05.06.2022.
-//
 
 import Foundation
 
@@ -15,7 +12,7 @@ protocol ListFetchDataLogic {
 }
 
 class ListService {
-    private let networkService = NetworkService()
+    var networkService: Networking?
 }
 
 extension ListService: ListFetchDataLogic {
@@ -23,6 +20,6 @@ extension ListService: ListFetchDataLogic {
         onSuccess: @escaping([ToDo]) -> Void,
         onError: @escaping(CurrentError) -> Void
     ) {
-        networkService.fetchModels(dataType: ToDo.self, from: API.getURL(), onSuccess: onSuccess, onError: onError)
+        networkService?.fetchModels(dataType: ToDo.self, from: API.getURL(), onSuccess: onSuccess, onError: onError)
     }
 }

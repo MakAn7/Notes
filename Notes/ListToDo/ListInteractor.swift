@@ -1,9 +1,6 @@
-//
 //  ListInteractor.swift
 //  Notes
-//
 //  Created by Антон Макаров on 03.06.2022.
-//
 
 import UIKit
 
@@ -16,7 +13,7 @@ protocol ListBusinessLogic {
 class ListInteractor {
     var presenter: ListPresentationLogic?
     var listService: ListFetchDataLogic?
-    var userDefaultsService: ListDataStoreLogic?
+    var userDefaultsService: DataStoreLogic?
 }
 
 // MARK: - Protocols

@@ -1,9 +1,6 @@
-//
 //  ListInteractorTest.swift
 //  NotesTests
-//
 //  Created by Антон Макаров on 14.06.2022.
-//
 
 import XCTest
 @testable import Notes
@@ -13,7 +10,7 @@ final class NotesTests: XCTestCase {
     var sut: ListBusinessLogic!
     var presenter: ListPresenterSpy!
     var listService: ListServiceSpy!
-    var userDefaultsService: UserDefaultsSpy!
+    var userDefaultsService: ListUserDefaultsSpy!
 
     override func setUp() {
         super.setUp()
@@ -21,7 +18,7 @@ final class NotesTests: XCTestCase {
         let interactor = ListInteractor()
         presenter = ListPresenterSpy()
         listService = ListServiceSpy()
-        userDefaultsService = UserDefaultsSpy()
+        userDefaultsService = ListUserDefaultsSpy()
         interactor.presenter = presenter
         interactor.listService = listService
         interactor.userDefaultsService = userDefaultsService

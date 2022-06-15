@@ -1,9 +1,6 @@
-//
 //  DetailToDoModel.swift
 //  Notes
-//
 //  Created by Антон Макаров on 12.06.2022.
-//
 
 import Foundation
 

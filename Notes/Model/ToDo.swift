@@ -1,9 +1,6 @@
-//
 //  Note.swift
 //  Notes
-//
 //  Created by Антон Макаров on 01.04.2022.
-//
 
 import Foundation
 

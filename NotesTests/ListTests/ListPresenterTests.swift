@@ -1,9 +1,6 @@
-//
 //  ListPresenterTests.swift
 //  NotesTests
-//
 //  Created by Антон Макаров on 15.06.2022.
-//
 
 import XCTest
 @testable import Notes

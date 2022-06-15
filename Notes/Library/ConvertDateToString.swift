@@ -1,9 +1,6 @@
-//
-//  ConvertDateToString.swift
+// ConvertDateToString.swift
 //  Notes
-//
 //  Created by Антон Макаров on 21.04.2022.
-//
 
 import UIKit
 

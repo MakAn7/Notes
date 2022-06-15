@@ -1,9 +1,6 @@
-//
 //  DetailsToDoInteractor.swift
 //  Notes
-//
 //  Created by Антон Макаров on 05.06.2022.
-//
 
 protocol DetailsToDoBusinessLogic {
     func updateModelAtArray(model: DetailModel.UpdateModelFromDataBase.Request)
@@ -12,7 +9,7 @@ protocol DetailsToDoBusinessLogic {
 
 class DetailsToDoInteractor {
     var presenter: DetailsToDoPresentationLogic?
-    private var userDefaultsService = UserDefaultsService()
+    var userDefaultsService: DataStoreLogic?
 
     enum State {
         case new
@@ -45,9 +42,9 @@ extension DetailsToDoInteractor: DetailsToDoBusinessLogic {
     func updateModelAtArray(model: DetailModel.UpdateModelFromDataBase.Request) {
         switch state {
         case .new:
-            userDefaultsService.pushModel(dictModel: model.model.dictionaryOfModel)
+            userDefaultsService?.pushModel(dictModel: model.model.dictionaryOfModel)
         case .edit:
-            userDefaultsService.updateModel(dictModel: model.model.dictionaryOfModel, indexModel: indexRow)
+            userDefaultsService?.updateModel(dictModel: model.model.dictionaryOfModel, indexModel: indexRow)
         case .none:
             print( #function + "case .none")
         }

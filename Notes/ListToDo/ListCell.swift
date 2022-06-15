@@ -1,9 +1,6 @@
-//
 //  ListCell.swift
 //  Notes
-//
 //  Created by Антон Макаров on 04.06.2022.
-//
 
 import UIKit
 

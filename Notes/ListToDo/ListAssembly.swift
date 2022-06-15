@@ -1,9 +1,6 @@
-//
 //  ListAssembly.swift
 //  Notes
-//
 //  Created by Антон Макаров on 05.06.2022.
-//
 
 import UIKit
 
@@ -15,6 +12,7 @@ struct ListAssembly {
         let router = ListRouter()
         let listService = ListService()
         let userDefaultService = UserDefaultsService()
+        let networkService = NetworkService()
 
         controller.interactor = interactor
         controller.router = router
@@ -23,6 +21,7 @@ struct ListAssembly {
         interactor.userDefaultsService = userDefaultService
         presenter.viewController = controller
         router.viewController = controller
+        listService.networkService = networkService
 
         return controller
     }

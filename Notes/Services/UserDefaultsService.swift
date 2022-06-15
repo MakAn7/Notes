@@ -1,9 +1,6 @@
-//
 //  UserDefaultsService.swift
 //  Notes
-//
 //  Created by Антон Макаров on 06.06.2022.
-//
 
 import UIKit
 
@@ -11,14 +8,14 @@ private enum DefaultsKeys: String {
     case array = "Array"
 }
 
-protocol ListDataStoreLogic {
+protocol DataStoreLogic {
     func pushModel(dictModel: [String: Any])
     func updateModel(dictModel: [String: Any], indexModel: Int)
     func fetchModels() -> [DetailToDoModel]
     func removeModel(indexModel: Int)
 }
 
-final class UserDefaultsService: ListDataStoreLogic {
+final class UserDefaultsService: DataStoreLogic {
     let defaults = UserDefaults.standard
 
     func pushModel(dictModel: [String: Any]) {

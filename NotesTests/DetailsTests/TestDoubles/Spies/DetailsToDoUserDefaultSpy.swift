@@ -1,19 +1,16 @@
-//
-//  UserDefaultsSpy.swift
+//  DetailsToDoUserDefaultsSpy.swift
 //  NotesTests
-//
 //  Created by Антон Макаров on 15.06.2022.
-//
 
 import Foundation
 @testable import Notes
 
-final class UserDefaultsSpy: ListDataStoreLogic {
+final class DetailsToDoUserDefaultsSpy: DataStoreLogic {
     // MARK: - Private Properties
-    private (set) var didPushModel = false
-    private (set) var didUpdateModel = false
-    private (set) var didFetchModels = false
-    private (set) var didRemoveModel = false
+    private (set) var didPushModelCalled = false
+    private (set) var didUpdateModelCalled = false
+    private (set) var didFetchModelsCalled = false
+    private (set) var didRemoveModelCalled = false
 
     var models = [
         DetailToDoModel(
@@ -26,19 +23,19 @@ final class UserDefaultsSpy: ListDataStoreLogic {
 
     // MARK: - Public Methods
     func pushModel(dictModel: [String: Any]) {
-        didPushModel = true
+        didPushModelCalled = true
     }
 
     func updateModel(dictModel: [String: Any], indexModel: Int) {
-        didUpdateModel = true
+        didUpdateModelCalled = true
     }
 
     func fetchModels() -> [DetailToDoModel] {
-        didFetchModels = true
+        didFetchModelsCalled = true
         return models
     }
 
     func removeModel(indexModel: Int) {
-        didRemoveModel = true
+        didRemoveModelCalled = true
     }
 }
