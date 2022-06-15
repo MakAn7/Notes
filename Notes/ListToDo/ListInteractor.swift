@@ -16,13 +16,13 @@ protocol ListBusinessLogic {
 class ListInteractor {
     var presenter: ListPresentationLogic?
     var listService: ListFetchDataLogic?
-    private var userDefaultsService = UserDefaultsService()
+    var userDefaultsService: ListDataStoreLogic?
 }
 
 // MARK: - Protocols
 extension ListInteractor: ListBusinessLogic {
     func removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request) {
-        userDefaultsService.didRemoveModel(indexModel: indexModel.index)
+        userDefaultsService?.removeModel(indexModel: indexModel.index)
     }
 
     func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
@@ -35,9 +35,9 @@ extension ListInteractor: ListBusinessLogic {
     }
 
     func fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request) {
-        let models = userDefaultsService.fetchModels()
+        let models = userDefaultsService?.fetchModels()
         presenter?.didPresentModelsFromDataBase(
-            models: ListModels.FetchDataFromDataBase.Response(modelsFromDataBase: models)
+            models: ListModels.FetchDataFromDataBase.Response(modelsFromDataBase: models ?? [])
         )
     }
 }

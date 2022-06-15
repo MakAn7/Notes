@@ -14,11 +14,13 @@ struct ListAssembly {
         let presenter = ListPresenter()
         let router = ListRouter()
         let listService = ListService()
+        let userDefaultService = UserDefaultsService()
 
         controller.interactor = interactor
         controller.router = router
         interactor.presenter = presenter
         interactor.listService = listService
+        interactor.userDefaultsService = userDefaultService
         presenter.viewController = controller
         router.viewController = controller
 

@@ -11,7 +11,14 @@ private enum DefaultsKeys: String {
     case array = "Array"
 }
 
-final class UserDefaultsService {
+protocol ListDataStoreLogic {
+    func pushModel(dictModel: [String: Any])
+    func updateModel(dictModel: [String: Any], indexModel: Int)
+    func fetchModels() -> [DetailToDoModel]
+    func removeModel(indexModel: Int)
+}
+
+final class UserDefaultsService: ListDataStoreLogic {
     let defaults = UserDefaults.standard
 
     func pushModel(dictModel: [String: Any]) {
@@ -51,7 +58,7 @@ final class UserDefaultsService {
         }
     }
 
-    func didRemoveModel (indexModel: Int) {
+    func removeModel(indexModel: Int) {
         guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
             fatalError("Don't fetch array of ToDo")
         }

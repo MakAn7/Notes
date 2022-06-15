@@ -15,6 +15,7 @@
 		E20AAB54285A3F1A00833620 /* ListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB53285A3F1A00833620 /* ListInteractorTests.swift */; };
 		E20AAB56285A3F4600833620 /* ListServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB55285A3F4600833620 /* ListServiceSpy.swift */; };
 		E20AAB58285A3F4E00833620 /* ListPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB57285A3F4E00833620 /* ListPresenterSpy.swift */; };
+		E20AAB5A285A5EE900833620 /* UserDefaultsSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB59285A5EE900833620 /* UserDefaultsSpy.swift */; };
 		E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */; };
 		E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */; };
 		E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFC27EDC44E008233F8 /* SceneDelegate.swift */; };
@@ -70,6 +71,7 @@
 		E20AAB53285A3F1A00833620 /* ListInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListInteractorTests.swift; sourceTree = "<group>"; };
 		E20AAB55285A3F4600833620 /* ListServiceSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListServiceSpy.swift; sourceTree = "<group>"; };
 		E20AAB57285A3F4E00833620 /* ListPresenterSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPresenterSpy.swift; sourceTree = "<group>"; };
+		E20AAB59285A5EE900833620 /* UserDefaultsSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSpy.swift; sourceTree = "<group>"; };
 		E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConvertDateToString.swift; path = Notes/Library/ConvertDateToString.swift; sourceTree = SOURCE_ROOT; };
 		E26D4CF727EDC44E008233F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,8 +164,6 @@
 		E20AAB4D285A35F900833620 /* TestDoubles */ = {
 			isa = PBXGroup;
 			children = (
-				E20AAB57285A3F4E00833620 /* ListPresenterSpy.swift */,
-				E20AAB55285A3F4600833620 /* ListServiceSpy.swift */,
 				E20AAB4E285A361000833620 /* Spies */,
 			);
 			path = TestDoubles;
@@ -174,6 +174,9 @@
 			children = (
 				E20AAB4F285A362700833620 /* ListInteractorSpy.swift */,
 				E20AAB51285A364200833620 /* TableViewSpy.swift */,
+				E20AAB57285A3F4E00833620 /* ListPresenterSpy.swift */,
+				E20AAB55285A3F4600833620 /* ListServiceSpy.swift */,
+				E20AAB59285A5EE900833620 /* UserDefaultsSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				E20AAB54285A3F1A00833620 /* ListInteractorTests.swift in Sources */,
 				E20AAB56285A3F4600833620 /* ListServiceSpy.swift in Sources */,
 				E20AAB4C285A35AE00833620 /* ListControllerTests.swift in Sources */,
+				E20AAB5A285A5EE900833620 /* UserDefaultsSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
