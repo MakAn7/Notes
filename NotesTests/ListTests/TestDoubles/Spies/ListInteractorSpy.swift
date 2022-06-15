@@ -9,10 +9,12 @@ import Foundation
 @testable import Notes
 
 final class ListInteractorSpy: ListBusinessLogic {
+    // MARK: - Private Properties
     private (set) var didFetchModelsFromNetworcCalled = false
     private (set) var didFetchModelsFromDataBaseCalled = false
     private (set) var didRemoveModelFromDataBaseCalled = false
 
+    // MARK: - Public Methods
     func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
         didFetchModelsFromNetworcCalled = true
     }

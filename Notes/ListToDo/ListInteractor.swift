@@ -28,15 +28,15 @@ extension ListInteractor: ListBusinessLogic {
     func fetchModelsFromNetwork(request: ListModels.InitForm.Request) {
         // слабая или безхозная ссылка не нужна, цикла не образуется
         listService?.fetchToDos(onSuccess: { todos in
-            self.presenter?.didFetchData(response: ListModels.InitForm.Response(todos: todos))
+            self.presenter?.fetchData(response: ListModels.InitForm.Response(todos: todos))
         }, onError: { error in
-            self.presenter?.didRaiseError(error: ListModels.InitError.Response(responseError: error))
+            self.presenter?.raiseError(error: ListModels.InitError.Response(responseError: error))
         })
     }
 
     func fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request) {
         let models = userDefaultsService?.fetchModels()
-        presenter?.didPresentModelsFromDataBase(
+        presenter?.presentModelsFromDataBase(
             models: ListModels.FetchDataFromDataBase.Response(modelsFromDataBase: models ?? [])
         )
     }

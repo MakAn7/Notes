@@ -9,6 +9,7 @@ import Foundation
 @testable import Notes
 
 final class UserDefaultsSpy: ListDataStoreLogic {
+    // MARK: - Private Properties
     private (set) var didPushModel = false
     private (set) var didUpdateModel = false
     private (set) var didFetchModels = false
@@ -23,6 +24,7 @@ final class UserDefaultsSpy: ListDataStoreLogic {
         )
     ]
 
+    // MARK: - Public Methods
     func pushModel(dictModel: [String: Any]) {
         didPushModel = true
     }

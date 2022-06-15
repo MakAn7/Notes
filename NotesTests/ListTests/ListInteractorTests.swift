@@ -8,7 +8,7 @@
 import XCTest
 @testable import Notes
 final class NotesTests: XCTestCase {
-    // MARK: - Private Properties
+    // MARK: - Public Properties
 
     var sut: ListBusinessLogic!
     var presenter: ListPresenterSpy!
@@ -32,6 +32,8 @@ final class NotesTests: XCTestCase {
     override func tearDown() {
         sut = nil
         presenter = nil
+        listService = nil
+        userDefaultsService = nil
         super.tearDown()
     }
 

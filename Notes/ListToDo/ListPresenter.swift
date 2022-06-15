@@ -8,9 +8,9 @@
 import UIKit
 
 protocol ListPresentationLogic {
-    func didFetchData(response: ListModels.InitForm.Response)
-    func didRaiseError(error: ListModels.InitError.Response)
-    func didPresentModelsFromDataBase(models: ListModels.FetchDataFromDataBase.Response)
+    func fetchData(response: ListModels.InitForm.Response)
+    func raiseError(error: ListModels.InitError.Response)
+    func presentModelsFromDataBase(models: ListModels.FetchDataFromDataBase.Response)
 }
 
 class ListPresenter {
@@ -19,7 +19,7 @@ class ListPresenter {
 }
 
 extension ListPresenter: ListPresentationLogic {
-    func didPresentModelsFromDataBase(models: ListModels.FetchDataFromDataBase.Response) {
+    func presentModelsFromDataBase(models: ListModels.FetchDataFromDataBase.Response) {
         let viewModels = models.modelsFromDataBase.map {
             ListCellViewModel(
                 title: $0.title,
@@ -33,7 +33,7 @@ extension ListPresenter: ListPresentationLogic {
         )
     }
 
-    func didFetchData(response: ListModels.InitForm.Response) {
+    func fetchData(response: ListModels.InitForm.Response) {
         let viewModels = response.todos.map {
             ListCellViewModel(
                 title: $0.title,
@@ -42,10 +42,10 @@ extension ListPresenter: ListPresentationLogic {
                 iconUrl: $0.userShareIcon
             )
         }
-        viewController?.displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel(listCellModels: viewModels))
+        viewController?.displayDataFromNetwork(viewModels: ListModels.InitForm.ViewModel(listCellModels: viewModels))
     }
 
-    func didRaiseError(error: ListModels.InitError.Response) {
+    func raiseError(error: ListModels.InitError.Response) {
         viewController?.dispalayErrorFromNetwork(
             error: ListModels.InitError.ViewModel(networkError: error.responseError)
         )

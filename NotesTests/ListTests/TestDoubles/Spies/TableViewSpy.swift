@@ -8,10 +8,11 @@
 import UIKit
 
 final class TableViewSpy: UITableView {
-  private(set) var isCalledReloadData = false
+    // MARK: - Private Properties
+    private(set) var isCalledReloadData = false
 
-  override func reloadData() {
-    super.reloadData()
-    isCalledReloadData = true
-  }
+    override func reloadData() {
+        super.reloadData()
+        isCalledReloadData = true
+    }
 }

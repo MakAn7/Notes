@@ -8,8 +8,8 @@
 import XCTest
 @testable import Notes
 
-class ListControllerTests: XCTestCase {
-    // MARK: - Private Properties
+final class ListControllerTests: XCTestCase {
+    // MARK: - Public Properties
 
     var sut: ListViewController!
     var interactor: ListInteractorSpy!
@@ -37,7 +37,7 @@ class ListControllerTests: XCTestCase {
 
         sut.toDoTableView = tableViewSpy
         sut.toDoTableView.dataSource = sut
-        sut.displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel(listCellModels: listCellModels))
+        sut.displayDataFromNetwork(viewModels: ListModels.InitForm.ViewModel(listCellModels: listCellModels))
 
         XCTAssertTrue(tableViewSpy.isCalledReloadData, "Обновление таблицы не началось")
         XCTAssertEqual(tableViewSpy.numberOfRows(inSection: 0), listCellModels.count)

@@ -9,6 +9,7 @@ import Foundation
 @testable import Notes
 
 final class ListServiceSpy: ListFetchDataLogic {
+    // MARK: - Private Properties
     private (set) var didFetchTodosCalled = false
 
     let todos = [
@@ -26,6 +27,7 @@ final class ListServiceSpy: ListFetchDataLogic {
         )
     ]
 
+    // MARK: - Public Methods
     func fetchToDos(
         onSuccess: @escaping([ToDo]) -> Void,
         onError: @escaping(CurrentError) -> Void

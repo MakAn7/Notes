@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListDisplayLogic: AnyObject {
-    func displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel)
+    func displayDataFromNetwork(viewModels: ListModels.InitForm.ViewModel)
     func dispalyDataFromDataBase(viewModels: ListModels.FetchDataFromDataBase.ViewModel)
     func dispalayErrorFromNetwork(error: ListModels.InitError.ViewModel)
 }
@@ -169,7 +169,7 @@ extension ListViewController: ListDisplayLogic {
         toDoTableView.reloadData()
     }
 
-    func displayDataFromNetWork(viewModels: ListModels.InitForm.ViewModel) {
+    func displayDataFromNetwork(viewModels: ListModels.InitForm.ViewModel) {
         netWorkListModels = viewModels.listCellModels
         allListModels = defaultListModels + netWorkListModels
         toDoTableView.reloadData()
