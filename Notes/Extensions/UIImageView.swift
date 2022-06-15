@@ -1,13 +1,27 @@
 //
-//  UserShareIcon.swift
+//  UIImageView.swift
 //  Notes
 //
-//  Created by Антон Макаров on 27.05.2022.
+//  Created by Антон Макаров on 06.06.2022.
 //
 
 import UIKit
 
 class UserShareIconImageView: UIImageView {
+    var networkService = NetworkService()
+
+    init() {
+        print("init -  \(UserShareIconImageView.self) " )
+        super.init(frame: CGRect())
+    }
+    deinit {
+        print("deinit -  \(UserShareIconImageView.self) " )
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func fetchImage(with url: String?) {
         guard
             let stringUrl = url,
@@ -20,9 +34,8 @@ class UserShareIconImageView: UIImageView {
             return
         }
 
-        Worker.shared.fetchImage(
+        networkService.fetchImage(
             with: imageURl,
-            // блок замыкания локальный. слабую или безхозную ссылку ставить не надо.
             onSuccess: {
                 self.image = UIImage(data: $0)
                 self.pushDataToCache(with: $0, and: $1)
@@ -47,8 +60,7 @@ class UserShareIconImageView: UIImageView {
         let request = URLRequest(url: url)
 
         if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
-            let photo = UIImage(data: cachedResponse.data)
-            return photo
+            return UIImage(data: cachedResponse.data)
         }
         return nil
     }

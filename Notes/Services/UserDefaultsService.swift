@@ -1,64 +1,63 @@
 //
-//  ToDoSettings.swift
+//  UserDefaultsService.swift
 //  Notes
 //
-//  Created by Антон Макаров on 25.03.2022.
+//  Created by Антон Макаров on 06.06.2022.
 //
 
 import UIKit
 
- private enum DefaultsKeys: String {
+private enum DefaultsKeys: String {
     case array = "Array"
 }
 
-final class ToDoSettings {
-    static let shared = ToDoSettings()
-    private init() { }
+final class UserDefaultsService {
     let defaults = UserDefaults.standard
 
-    func pushArray(dictToDo: [String: Any]) {
+    func pushModel(dictModel: [String: Any]) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            array.append(dictToDo)
+            array.append(dictModel)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
-            let array: [[String: Any]] = [dictToDo]
+            let array: [[String: Any]] = [dictModel]
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         }
     }
 
-    func updateToDo(dictToDo: [String: Any], indexToDo: Int) {
+    func updateModel(dictModel: [String: Any], indexModel: Int) {
         if var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            indexToDo < array.count ?
-            array[indexToDo] = dictToDo :
-            array.append(dictToDo)
+            indexModel < array.count ?
+            array[indexModel] = dictModel :
+            array.append(dictModel)
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         } else {
-            let array: [[String: Any]] = [dictToDo]
+            let array: [[String: Any]] = [dictModel]
             defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
         }
     }
 
-    func fetchArray() -> [ToDo] {
-        var todos = [ToDo]()
+    func fetchModels() -> [DetailToDoModel] {
+        var models = [DetailToDoModel]()
         if let array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] {
-            for dictToDo in array {
-                guard let todo = ToDo(dictToDo: dictToDo) else {
+            for dictModel in array {
+                guard let model = DetailToDoModel(dictModel: dictModel) else {
                     continue
                 }
-                todos.append(todo)
+                models.append(model)
             }
-            return todos
+            return models
         } else {
             return []
         }
     }
 
-    func removeToDo (indexToDo: Int) {
+    func didRemoveModel (indexModel: Int) {
         guard var array = defaults.array(forKey: DefaultsKeys.array.rawValue) as? [[String: Any]] else {
             fatalError("Don't fetch array of ToDo")
         }
-        if array.indices.contains(indexToDo) {
-            array.remove(at: indexToDo)
+
+        if array.indices.contains(indexModel) {
+            array.remove(at: indexModel)
         }
         defaults.setValue(array, forKey: DefaultsKeys.array.rawValue)
     }

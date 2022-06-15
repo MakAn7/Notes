@@ -2,7 +2,7 @@
 //  ListCell.swift
 //  Notes
 //
-//  Created by Антон Макаров on 18.04.2022.
+//  Created by Антон Макаров on 04.06.2022.
 //
 
 import UIKit
@@ -48,25 +48,6 @@ class ListCell: UITableViewCell {
             activityIndicator.stopAnimating()
         }
     }
-
-    func setContentToListCell (from todo: ToDo) {
-        headerLabel.text = todo.title
-        descriptionLabel.text = todo.description
-
-        guard let date = todo.date else {
-            fatalError("\(#function) Don't get Date ")
-        }
-
-        dateLabel.text = convertDateToString(date: date, short: true)
-
-        guard let imageURL = todo.userShareIcon else {
-            iconImageView.isHidden = true
-           return
-        }
-        iconImageView.isHidden = false
-        activityIndicator.startAnimating()
-        iconImageView.fetchImage(with: imageURL)
-        }
 
     private func setViews() {
         layer.backgroundColor = .none
@@ -143,6 +124,26 @@ class ListCell: UITableViewCell {
             activityIndicator.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
         ])
     }
+
+    func setContentToListCell(from viewModel: ListCellViewModel) {
+        headerLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
+
+        guard let date = viewModel.date else {
+            fatalError("\(#function) Don't get Date ")
+        }
+
+        dateLabel.text = convertDateToString(date: date, short: true)
+        guard let imageURL = viewModel.iconUrl else {
+            iconImageView.isHidden = true
+            return
+        }
+
+        iconImageView.isHidden = false
+        activityIndicator.startAnimating()
+        iconImageView.fetchImage(with: imageURL)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

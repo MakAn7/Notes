@@ -1,11 +1,20 @@
 //
-//  Worker.swift
+//  NetworkService.swift
 //  Notes
 //
-//  Created by Антон Макаров on 17.05.2022.
+//  Created by Антон Макаров on 04.06.2022.
 //
 
 import Foundation
+
+protocol Networking {
+    func fetchModels<T: Decodable>(
+        dataType: T.Type,
+        from url: String?,
+        onSuccess: @escaping([T]) -> Void,
+        onError: @escaping(CurrentError) -> Void
+    )
+}
 
 enum CurrentError: Error {
     case invalidUrl
@@ -13,13 +22,9 @@ enum CurrentError: Error {
     case noResponse
     case decodingError
 }
-// В данном классе в closure  нет необходимости ставить слабые ссылки или безхозные,
-// поскольку нет в области захвата свойств класса.
-class Worker {
-    static let shared = Worker()
-    private init() {}
 
-    func fetchToDos<T: Decodable>(
+final class NetworkService: Networking {
+    func fetchModels<T: Decodable>(
         dataType: T.Type,
         from url: String?,
         onSuccess: @escaping([T]) -> Void,
@@ -46,11 +51,11 @@ class Worker {
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
-                let todo = try decoder.decode([T].self, from: data)
+                let models = try decoder.decode([T].self, from: data)
                 DispatchQueue.main.asyncAfter(
-                    deadline: .now() + .seconds(5),
+                    deadline: .now() + .seconds(10),
                     execute: {
-                        onSuccess(todo)
+                        onSuccess(models)
                     }
                 )
             } catch {
@@ -66,7 +71,7 @@ class Worker {
         onSuccess: @escaping(Data, URLResponse) -> Void,
         onError: @escaping(CurrentError) -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data else {
                     DispatchQueue.main.async {
@@ -81,12 +86,13 @@ class Worker {
                     }
                     return
                 }
+
                 guard url == response.url else {
                     return
                 }
 
                 DispatchQueue.main.async {
-                   onSuccess(data, response)
+                    onSuccess(data, response)
                 }
             }.resume()
         }

@@ -16,9 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let navigationVC = UINavigationController(rootViewController: ListController())
         window?.makeKeyAndVisible()
-        window?.rootViewController = navigationVC
+        let listController = ListAssembly.makeModule()
+        let rootController = UINavigationController(rootViewController: listController)
+        window?.rootViewController = rootController
     }
     func sceneDidDisconnect(_ scene: UIScene) {
     }
