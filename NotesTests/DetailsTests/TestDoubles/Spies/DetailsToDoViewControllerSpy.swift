@@ -1,9 +1,6 @@
-//
 //  DetailsToDoViewControllerSpy.swift
 //  NotesTests
-//
 //  Created by Антон Макаров on 16.06.2022.
-//
 
 import Foundation
 @testable import Notes
