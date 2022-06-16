@@ -23,6 +23,8 @@
 		E20AAB67285A78F500833620 /* DetailsToDoUserDefaultSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB66285A78F500833620 /* DetailsToDoUserDefaultSpy.swift */; };
 		E20AAB69285AEB1200833620 /* DetailsToDoPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB68285AEB1200833620 /* DetailsToDoPresenterTests.swift */; };
 		E20AAB6B285AEBD000833620 /* DetailsToDoViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB6A285AEBD000833620 /* DetailsToDoViewControllerSpy.swift */; };
+		E20AAB6F285B10CD00833620 /* NetworkServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB6E285B10CC00833620 /* NetworkServiceSpy.swift */; };
+		E20AAB71285B1F8300833620 /* ListServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AAB70285B1F8300833620 /* ListServiceTests.swift */; };
 		E23F49AC2810B30C004D7B5E /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */; };
 		E26D4CFB27EDC44E008233F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */; };
 		E26D4CFD27EDC44E008233F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26D4CFC27EDC44E008233F8 /* SceneDelegate.swift */; };
@@ -86,6 +88,8 @@
 		E20AAB66285A78F500833620 /* DetailsToDoUserDefaultSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsToDoUserDefaultSpy.swift; sourceTree = "<group>"; };
 		E20AAB68285AEB1200833620 /* DetailsToDoPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsToDoPresenterTests.swift; sourceTree = "<group>"; };
 		E20AAB6A285AEBD000833620 /* DetailsToDoViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsToDoViewControllerSpy.swift; sourceTree = "<group>"; };
+		E20AAB6E285B10CC00833620 /* NetworkServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceSpy.swift; sourceTree = "<group>"; };
+		E20AAB70285B1F8300833620 /* ListServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListServiceTests.swift; sourceTree = "<group>"; };
 		E23F49AB2810B30C004D7B5E /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConvertDateToString.swift; path = Notes/Library/ConvertDateToString.swift; sourceTree = SOURCE_ROOT; };
 		E26D4CF727EDC44E008233F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26D4CFA27EDC44E008233F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				E20AAB4B285A35AE00833620 /* ListControllerTests.swift */,
 				E20AAB53285A3F1A00833620 /* ListInteractorTests.swift */,
 				E20AAB5B285A67F500833620 /* ListPresenterTests.swift */,
+				E20AAB70285B1F8300833620 /* ListServiceTests.swift */,
 				E20AAB4D285A35F900833620 /* TestDoubles */,
 			);
 			path = ListTests;
@@ -194,6 +199,7 @@
 				E20AAB55285A3F4600833620 /* ListServiceSpy.swift */,
 				E20AAB59285A5EE900833620 /* ListUserDefaultsSpy.swift */,
 				E20AAB51285A364200833620 /* TableViewSpy.swift */,
+				E20AAB6E285B10CC00833620 /* NetworkServiceSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E20AAB63285A747000833620 /* DetailsToDoInteractorTests.swift in Sources */,
+				E20AAB71285B1F8300833620 /* ListServiceTests.swift in Sources */,
 				E20AAB52285A364200833620 /* TableViewSpy.swift in Sources */,
 				E20AAB6B285AEBD000833620 /* DetailsToDoViewControllerSpy.swift in Sources */,
 				E20AAB5E285A697100833620 /* ListViewControllerSpy.swift in Sources */,
@@ -539,6 +546,7 @@
 				E20AAB58285A3F4E00833620 /* ListPresenterSpy.swift in Sources */,
 				E20AAB67285A78F500833620 /* DetailsToDoUserDefaultSpy.swift in Sources */,
 				E20AAB54285A3F1A00833620 /* ListInteractorTests.swift in Sources */,
+				E20AAB6F285B10CD00833620 /* NetworkServiceSpy.swift in Sources */,
 				E20AAB69285AEB1200833620 /* DetailsToDoPresenterTests.swift in Sources */,
 				E20AAB56285A3F4600833620 /* ListServiceSpy.swift in Sources */,
 				E20AAB4C285A35AE00833620 /* ListControllerTests.swift in Sources */,
