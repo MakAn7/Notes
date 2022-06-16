@@ -4,7 +4,7 @@
 
 import XCTest
 @testable import Notes
-final class NotesTests: XCTestCase {
+final class ListInteractorTest: XCTestCase {
     // MARK: - Public Properties
 
     var sut: ListBusinessLogic!
@@ -38,29 +38,38 @@ final class NotesTests: XCTestCase {
     func testsPresenterWasCalled() {
         sut.fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request())
 
-        XCTAssertTrue(presenter.didPresentModelsFromDataBaseCalled, "Интерактор должен вызвать метод Презентера")
+        XCTAssertTrue(
+            presenter.didPresentModelsFromDataBaseCalled,
+            "Интерактор должен вызвать метод ListPresenter presentModelsFromDataBase()"
+        )
     }
 
     func testsListServiceWasCalled() {
         sut.fetchModelsFromNetwork(request: ListModels.InitForm.Request())
 
-        XCTAssertTrue(listService.didFetchTodosCalled, "Интерактор должен вызвать метод listService?.fetchToDos")
-        XCTAssertTrue(presenter.didFetchDataCalled, "Презентер должен вызвать метод presenter?.didFetchData")
-        XCTAssertFalse(presenter.didRaiseErrorCalled, "Презентер не должен вызвать метод presenter?.didRaiseError" )
+        XCTAssertTrue(listService.didFetchTodosCalled, "Интерактор должен вызвать метод ListService fetchToDos()")
+        XCTAssertTrue(presenter.didFetchDataCalled, "Интерактор должен вызвать метод ListPresenter fetchData()")
+        XCTAssertFalse(presenter.didRaiseErrorCalled, "Интерактор не должен вызвать метод ListPresenter raiseError()" )
     }
 
     func testsUserDefaultsServiceAndListPresenterWasCalled() {
         sut.fetchModelsFromDataBase(request: ListModels.FetchDataFromDataBase.Request())
 
-        XCTAssertTrue(userDefaultsService.didFetchModels, "userDefaultsService должен вызвать метод fetchModels()")
+        XCTAssertTrue(
+            userDefaultsService.didFetchModels,
+            "Интерактор должен вызвать метод UserDefaultsService fetchModels()"
+        )
         XCTAssertTrue(
             presenter.didPresentModelsFromDataBaseCalled,
-            "Презентер должен вызвать метод didPresentModelsFromDataBase()"
+            "Интерактор должен вызвать метод ListPresenter didPresentModelsFromDataBase()"
         )
     }
     func testsUserDefaultsServiceWasCalled() {
         sut.removeModelFromDataBase(indexModel: ListModels.RemoveModel.Request(index: 0))
 
-        XCTAssertTrue(userDefaultsService.didRemoveModel, "userDefaultsService должен вызвать метод removeModel()")
+        XCTAssertTrue(
+            userDefaultsService.didRemoveModel,
+            "Интерактор должен вызвать метод UserDefaultsService removeModel()"
+        )
     }
 }

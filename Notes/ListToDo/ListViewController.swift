@@ -100,7 +100,8 @@ class ListViewController: UIViewController {
         )
         view.addConstraint(addButtonBottomConstraint)
     }
-// MARK: - Setup Navigation Bar
+
+    // MARK: - Setup Navigation Bar
     private func setupNavigationBar () {
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -117,7 +118,7 @@ class ListViewController: UIViewController {
     @objc
     func updateStateRightAndAddButtons () {
         changeTitleFromButtonsWithAnimation()
-        }
+    }
 
     private func addTargets() {
         addButton.addTarget(self, action: #selector(addOrRemoveToDo), for: .touchUpInside)
