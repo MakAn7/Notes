@@ -1,9 +1,6 @@
-//
 //  Helper.swift
 //  Notes
-//
 //  Created by Антон Макаров on 13.04.2022.
-//
 
 import UIKit
 

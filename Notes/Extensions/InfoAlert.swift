@@ -1,10 +1,6 @@
-//
 //  InfoAlert.swift
 //  Notes
-//
 //  Created by Антон Макаров on 12.05.2022.
-//
-
 import UIKit
 
 extension UIViewController {
