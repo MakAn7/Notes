@@ -2,7 +2,8 @@
 Приложение заметки .
 В данном приложении использую:
 - UIKIt
-- MVC -> Clean Swift
+- Clean Swift
+- Unit Testing
 - Сustom UITableView
 - Custom TableViewCell
 - Animations
@@ -12,4 +13,3 @@
 - Верстку Кодом
 - Хранение данных в UserDefault
 - Кэширование Data
-- Перехожу на архитектуру Clean Swift
